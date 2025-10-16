@@ -23,4 +23,12 @@ body {
   font-family: var(--font-gilroy), sans-serif;
 }
 
+/* Gradient border line */
+.gradient-border-line {
+  width: 100%;
+  height: 1.5px;
+  border: 1.5px solid;
+  border-image-source: linear-gradient(90deg, #3198DF 0%, #36D4FF 49%, #00FF84 100%);
+  border-image-slice: 1;
+}
 

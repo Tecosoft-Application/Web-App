@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 
-import HeaderSection from "@/container/header/page";
+// import HeaderSection from "@/container/header/page";
 import FooterSection from "@/container/footer/page";
 
 const gilroy = localFont({
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={gilroy.variable}>
         {/* <body> */}
-        <HeaderSection />
+        {/* <HeaderSection /> */}
 
         {children}
         <FooterSection />

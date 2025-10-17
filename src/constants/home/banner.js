@@ -4,5 +4,5 @@ export const bannerContent = {
     "With the power of IIoT, AI, and Digital Twins, Tecosoft transforms operations across industries into intelligent connected ecosystems.",
     
   image:
-    "https://c.animaapp.com/mgqdaffada4zul/img/tecosoft-ai-hi-res-logo-white-1.png",
+    "",
 };

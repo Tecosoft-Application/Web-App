@@ -1,8 +1,21 @@
-import React, { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+// ***************************** Import packages ***********************************************
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Menu, X, ArrowDown } from "lucide-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 250);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { name: "Platform", href: "#" },
@@ -12,19 +25,30 @@ const Navbar = () => {
     { name: "Why TecoSoft", href: "#" },
   ];
 
+  const logoSrc = isScrolled
+    ? "./assets/tecosoft-black.svg"
+    : "./assets/tecosoft-logo.svg";
+
+
+  const navTextColor = isScrolled
+    ? "text-black/90 hover:text-black"
+    : "text-white/90 hover:text-white";
+
+  const hamburgerColor = isScrolled
+    ? "text-black hover:bg-black/10"
+    : "text-white hover:bg-white/10";
+    
+  const navBg = isScrolled ? "bg-white shadow-md" : "bg-transparent";
+
   return (
-    <header className=" top-0 w-full z-50 bg-transparent backdrop-blur-sm">
+    <header className={`fixed top-0 w-full z-50 ${navBg}`}>
       <nav className="max-w-[90%] lg:max-w-7xl mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
         {/* Logo */}
-        <img
-          src="./assets/tecosoft-logo.svg"
-          alt="Tecosoft Logo"
-          className="h-8 lg:h-10 w-auto"
-        />
+        <img src={logoSrc} alt="Tecosoft Logo" className="h-8 lg:h-10 w-auto" />
 
         {/* Hamburger Button - Mobile */}
         <button
-          className="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+          className={`lg:hidden p-2 rounded-lg transition-colors ${hamburgerColor}`}
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -37,14 +61,14 @@ const Navbar = () => {
             <li key={item.name}>
               <a
                 href={item.href}
-                className="text-base text-white/90 hover:text-white font-medium transition-colors flex items-center gap-1"
+                className={`text-base font-medium transition-colors flex items-center gap-1 ${navTextColor}`}
               >
                 {item.name}
-                <ChevronDown size={16} className="opacity-70" />
+                <ArrowDown size={16} className={` ${navTextColor}`} />
               </a>
             </li>
           ))}
-          <li className="ml-20" >
+          <li className="ml-20">
             <a
               href="#demo"
               className="bg-[#0eb05c] text-white px-6 py-2.5 rounded-lg hover:bg-[#0d9d52] transition-colors font-medium flex items-center gap-2"
@@ -64,7 +88,7 @@ const Navbar = () => {
       >
         <div className="absolute top-6 left-6">
           <img
-            src="./assets/tecosoft-logo.svg"
+            src={logoSrc}
             alt="Tecosoft Logo"
             className="h-8 lg:h-10 w-auto"
           />
@@ -72,10 +96,9 @@ const Navbar = () => {
 
         {/* Close Button in Mobile Menu */}
         <div className="absolute top-6 right-6">
-       
           <button
             onClick={() => setOpen(false)}
-            className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className={`p-2 rounded-lg transition-colors ${hamburgerColor}`}
             aria-label="Close menu"
           >
             <X size={32} />
@@ -83,14 +106,12 @@ const Navbar = () => {
         </div>
 
         <div className="pt-24 px-8 bg-[#1a4d8f]">
-      
-
           <ul className="flex flex-col gap-6">
             {navItems.map((item) => (
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-xl text-white font-medium block py-2 hover:text-[#0eb05c] transition-colors"
+                  className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white"
                   onClick={() => setOpen(false)}
                 >
                   {item.name}
@@ -152,7 +173,6 @@ const ClientSlider = () => {
         .animate-scroll {
           animation: scroll 25s linear infinite;
         }
-
       `}</style>
     </div>
   );
@@ -177,21 +197,20 @@ const HeaderSection = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           background:
-            'url("/assets/images/banner-cover.svg") no-repeat center center',
+            'url("/assets/images/banner-black-cover.svg") no-repeat center center',
           backgroundSize: "cover",
         }}
       />
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-100">
         <Navbar />
 
         <div className="max-w-[90%] lg:max-w-7xl mx-auto px-4 lg:px-0">
           <div className="pt-30 pb-15 lg:pt-48 lg:pb-24">
             {/* Hero Heading */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[90px] font-bold text-white leading-tight lg:leading-[1.1] mb-6">
-              Building Intelligent 
-              Ecosystems for the{" "}
+              Building Intelligent Ecosystems for the{" "}
               <span className="text-[#0eb05c] block lg:inline">
                 Next-Gen Industries
               </span>

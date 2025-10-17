@@ -79,7 +79,9 @@ const FooterSection = () => {
                 </h3>
               </div>
               <div>
-                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">Email</h4>
+                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">
+                  Email
+                </h4>
                 <a
                   href="mailto:info@tecosoft.ai.com"
                   className="text-[#4ACEFF] hover:text-white transition-colors text-sm md:text-base"
@@ -88,7 +90,9 @@ const FooterSection = () => {
                 </a>
               </div>
               <div>
-                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">Phone</h4>
+                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">
+                  Phone
+                </h4>
                 <a
                   href="tel:+919876543210"
                   className="text-[#4ACEFF] hover:text-white transition-colors text-sm md:text-base"
@@ -97,7 +101,9 @@ const FooterSection = () => {
                 </a>
               </div>
               <div>
-                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">Address</h4>
+                <h4 className="text-[#13F495] font-semibold mb-1 text-base md:text-lg">
+                  Address
+                </h4>
                 <p className="text-[#4ACEFF] text-sm md:text-base leading-relaxed">
                   1158 rue De La Souveraine Québec,
                   <br />
@@ -258,7 +264,8 @@ const FooterSection = () => {
               Copyright © 2025 Tecosoft®. All Rights Reserved.
             </p>
             <p className="text-center sm:text-right">
-              Made with <span className="text-[#13F495] font-semibold">LOVE</span> by{" "}
+              Made with{" "}
+              <span className="text-[#13F495] font-semibold">LOVE</span> by{" "}
               <a
                 href="https://www.applogiq.org"
                 className="hover:text-white transition-colors underline"

@@ -47,9 +47,9 @@ const Industry = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-[600px] md:min-h-[900px] items-center pt-12 md:pt-[60px] pb-12 px-4 sm:px-8 md:px-12 lg:px-[116px] relative self-stretch w-full overflow-hidden bg-gradient-to-br from-[#00BCEF] via-[#0066B2] to-[#002363]">
+    <div className="flex flex-col min-h-[600px] md:min-h-[900px] items-center pt-8 md:pt-[40px] pb-8 px-4 sm:px-8 md:px-12 lg:px-[116px] relative self-stretch w-full overflow-hidden bg-gradient-to-br from-[#00BCEF] via-[#0066B2] to-[#002363]">
       {/* Header */}
-      <div className="flex flex-col items-center gap-2 mb-12 md:mb-16 z-10">
+      <div className="flex flex-col items-center gap-2 mb-8 md:mb-10 z-10">
         <h2 className="text-white text-2xl md:text-4xl lg:text-5xl font-semibold text-center">
           {industryContent.header.title}
         </h2>
@@ -59,14 +59,20 @@ const Industry = () => {
       </div>
 
       <div className="flex flex-col md:flex-wrap w-full max-w-[1276px] items-center justify-center gap-6 md:gap-0 relative">
-        {/* Center Image with Static Circle Waves */}
+        {/* Center Image with Animated Circle Waves */}
         <div className="relative w-full max-w-[400px] md:max-w-[600px] lg:w-[780px] h-auto md:h-[737px] flex items-center justify-center">
-          {/* Static Circle Waves */}
+          {/* Animated Circle Waves */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/20"></div>
-            <div className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] rounded-full border-2 border-white/15"></div>
-            <div className="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full border-2 border-white/10"></div>
-            <div className="absolute w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full border-2 border-white/5"></div>
+            {/* Changed animation timing to 'linear' for a smoother, constant speed */}
+            {/* <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/20 [animation:ping_4s_linear_infinite]"></div>
+            <div className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] rounded-full border-2 border-white/15 [animation:ping_4s_linear_infinite] [animation-delay:1s]"></div>
+            <div className="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full border-2 border-white/10 [animation:ping_4s_linear_infinite] [animation-delay:2s]"></div>
+            <div className="absolute w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full border-2 border-white/5 [animation:ping_4s_linear_infinite] [animation-delay:3s]"></div> */}
+            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite]"></div>
+            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:1s]"></div>
+            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:2s]"></div>
+            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:3s]"></div>
+            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:4s]"></div>
           </div>
 
           {/* Center Icon */}

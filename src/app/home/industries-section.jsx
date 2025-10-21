@@ -1,57 +1,94 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+// Define industries array outside the component
+const industries = [
+  {
+    name: "Manufacturing",
+    description:
+      "Complete visibility into production, quality, tools and maintenance, enabling data-driven decisions and optimized workflows to maximize OEE.",
+    image: "./assets/images/industry/manufacturing.svg",
+    seletct: "manufacturing",
+  },
+  {
+    name: "Energy & Utilities",
+    description:
+      "Intelligent monitoring and predictive analytics for equipment and energy usage, supporting proactive maintenance and optimized operations.",
+    image: "./assets/images/industry/energy.svg",
+    seletct: "energy",
+  },
+  {
+    name: "Oil & Gas",
+    description:
+      "Virtual modeling and predictive monitoring of assets to ensure safe, efficient, and uninterrupted operations.",
+    image: "./assets/images/industry/oil.svg",
+    seletct: "oil",
+  },
+  {
+    name: "Healthcare",
+    description:
+      "AI-enabled digital twins and analytics to enhance diagnostics, streamline workflows, and provide real-time operational insights.",
+    image: "./assets/images/industry/health-care.svg",
+    seletct: "healthcare",
+  },
+  {
+    name: "Logistics & Warehousing",
+    description:
+      "Data-driven oversight of supply chains, fleet, and warehouse operations to improve efficiency and anticipate operational bottlenecks.",
+    image: "./assets/images/industry/ware-house.svg",
+    seletct: "logistics",
+  },
+  {
+    name: "Smart City",
+    description:
+      "Connected monitoring and analytics for infrastructure, utilities, and citizen services, supporting sustainable, intelligent urban operations.",
+    image: "./assets/images/industry/smart-city.svg",
+    seletct: "smart-city",
+  },
+];
 
 const IndustriesSection = () => {
   const [selectedIndustry, setSelectedIndustry] = useState("manufacturing");
+  // false means fully colored, true means grayscale (transitioning)
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  // State to hold the image path that is currently rendered
+  const [currentDisplayImage, setCurrentDisplayImage] = useState(
+    industries[0].image
+  );
 
-  const industries = [
-    {
-      name: "Manufacturing",
-      description:
-        "Complete visibility into production, quality, tools and maintenance, enabling data-driven decisions and optimized workflows to maximize OEE.",
-      image: "./assets/images/industry/manufacturing.svg",
-      seletct: "manufacturing"
-    },
-    {
-      name: "Energy & Utilities",
-      description:
-        "Intelligent monitoring and predictive analytics for equipment and energy usage, supporting proactive maintenance and optimized operations.",
-      image: "./assets/images/industry/energy.svg",
-      seletct: "energy"
-    },
-    {
-      name: "Oil & Gas",
-      description:
-        "Virtual modeling and predictive monitoring of assets to ensure safe, efficient, and uninterrupted operations.",
-      image: "./assets/images/industry/oil.svg",
-      seletct: "oil"
-    },
-    {
-      name: "Healthcare",
-      description:
-        "AI-enabled digital twins and analytics to enhance diagnostics, streamline workflows, and provide real-time operational insights.",
-      image: "./assets/images/industry/health-care.svg",
-      seletct: "healthcare"
-    },
-    {
-      name: "Logistics & Warehousing",
-      description:
-        "Data-driven oversight of supply chains, fleet, and warehouse operations to improve efficiency and anticipate operational bottlenecks.",
-      image: "./assets/images/industry/ware-house.svg",
-      seletct: "logistics"
-    },
-    {
-      name: "Smart City",
-      description:
-        "Connected monitoring and analytics for infrastructure, utilities, and citizen services, supporting sustainable, intelligent urban operations.",
-      image: "./assets/images/industry/smart-city.svg",
-      seletct: "smart-city"
-    },
-  ];
-
-  // Get the selected industry object
+  // Get the selected industry object (for the description)
   const selectedIndustryObj = industries.find(
     (industry) => industry.seletct === selectedIndustry
   );
+
+  // Handle the image swapping animation when industry changes
+  useEffect(() => {
+    const newImage = industries.find(
+      (industry) => industry.seletct === selectedIndustry
+    )?.image;
+
+    // Only run if the new image is different from the one displayed
+    if (newImage && newImage !== currentDisplayImage) {
+      // 1. Start fade-out (go to gray, remove gradient overlay)
+      setIsTransitioning(true);
+
+      // 2. Wait for the fade-out to complete (700ms)
+      const fadeOutTimer = setTimeout(() => {
+        // 3. Swap the image source (while still gray)
+        setCurrentDisplayImage(newImage);
+
+        // 4. Wait a moment for React to render the new image
+        const fadeInTimer = setTimeout(() => {
+          // 5. Start fade-in (go to color, show gradient overlay)
+          setIsTransitioning(false);
+        }, 50);
+
+        return () => clearTimeout(fadeInTimer);
+      }, 700); // Must match CSS transition duration
+
+      // Cleanup timer if component unmounts or industry changes again
+      return () => clearTimeout(fadeOutTimer);
+    }
+  }, [selectedIndustry, currentDisplayImage]);
 
   return (
     <div className="flex flex-col items-start gap-10 md:gap-[60px] px-4 sm:px-8 md:px-12 lg:px-[100px] py-12 md:py-20 relative self-stretch w-full flex-[0_0_auto] bg-white">
@@ -72,10 +109,10 @@ const IndustriesSection = () => {
               <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
                 <button
                   onClick={() => setSelectedIndustry(industry.seletct)}
-                  className={`relative self-stretch mt-[-1.00px] font-semibold text-xl md:text-2xl lg:text-[26px] tracking-[0] leading-[normal] text-left transition-all duration-300 ${
+                  className={`relative self-stretch mt-[-1.00px] font-semibold text-xl md:text-2xl lg:text-[26px] tracking-[0] leading-[normal] text-left transition-all duration-300 cursor-pointer ${
                     selectedIndustry === industry.seletct
                       ? "text-[#111111]"
-                      : "text-[#999999] hover:text-[#111111]"
+                      : "text-[#999999] hover:text-[#555555]"
                   }`}
                 >
                   {industry.name}
@@ -84,7 +121,7 @@ const IndustriesSection = () => {
                 {/* Show description only for selected industry */}
                 {selectedIndustry === industry.seletct && (
                   <p className="relative self-stretch font-normal text-base md:text-lg lg:text-xl tracking-[0] leading-relaxed md:leading-[26px] text-[#666666] transition-all duration-300">
-                    {industry.description}
+                    {selectedIndustryObj?.description}
                   </p>
                 )}
               </div>
@@ -101,23 +138,24 @@ const IndustriesSection = () => {
         </div>
 
         <div className="relative w-full lg:w-[600px] max-w-full">
-          {/* Image with grayscale filter that transitions to color */}
+          {/* Image with grayscale filter that transitions */}
           <img
             className="relative w-full transition-all duration-700 ease-in-out"
             alt="Industry visualization"
-            src={selectedIndustryObj?.image || "./assets/images/industry/manufacturing.svg"}
+            src={currentDisplayImage}
             style={{
-              filter: selectedIndustry ? 'grayscale(0%)' : 'grayscale(100%)',
+              filter: isTransitioning ? "grayscale(100%)" : "grayscale(0%)",
             }}
           />
-          
-          {/* Gradient overlay that fades in when industry is selected */}
+
+          {/* Gradient overlay that fades in/out */}
           <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-            style={{ 
-              background: "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
+            className="absolute inset-0 pointer-events-none transition-opacity duration-800 ease-in-out"
+            style={{
+              background:
+                "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               mixBlendMode: "overlay",
-              opacity: selectedIndustry ? 1 : 0
+              opacity: isTransitioning ? 0 : 1,
             }}
           />
         </div>

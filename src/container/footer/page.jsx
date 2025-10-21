@@ -14,7 +14,13 @@ const FooterSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-24 py-8 md:py-12 lg:py-16 relative z-10">
         {/* Hero CTA Section */}
-        <div className="border border-white/20 rounded-2xl lg:rounded-3xl px-6 sm:px-8 md:px-10 lg:px-12 py-8 md:py-10 lg:py-12 mb-8 md:mb-12">
+        <div
+          className="border border-white/20 rounded-2xl lg:rounded-3xl px-6 sm:px-8 md:px-10 lg:px-12 py-8 md:py-10 lg:py-12 mb-8 md:mb-12"
+          style={{
+            background: 'url("/assets/footer-dot.png") no-repeat center center',
+            backgroundSize: "contain",
+          }}
+        >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8">
             <div className="flex-1">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-2 text-white leading-tight">

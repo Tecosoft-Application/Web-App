@@ -1,10 +1,10 @@
 import React from "react";
 
 const StatsSection = () => {
-  
   const titleFirstLine = "Turning Operational Data into";
   const titleSecondLine = "Actionable Intelligence";
-  const subtitle = "Tecosoft turns operational and asset data into actionable intelligence with AI and Digital Twin technology - enabling predictive insights, optimized workflows, and reliable, efficient, data-driven decision making";
+  const subtitle =
+    "Tecosoft turns operational and asset data into actionable intelligence with AI and Digital Twin technology - enabling predictive insights, optimized workflows, and reliable, efficient, data-driven decision making";
 
   const stats = [
     {
@@ -52,10 +52,14 @@ const StatsSection = () => {
 
   const StatCard = ({ icon, alt, number, unit, description }) => (
     <div className="flex flex-col items-start gap-6 md:gap-8 lg:gap-10 p-6 md:p-8 relative w-full md:flex-1 bg-white rounded-2xl overflow-hidden border-[1.5px] border-solid border-[#cccccc] hover:border-[#00b7ff]">
-      <img className="relative w-12 h-12 md:w-[60px] md:h-[60px]" alt={alt} src={icon} />
+      <img
+        className="relative w-12 h-12 md:w-[60px] md:h-[60px]"
+        alt={alt}
+        src={icon}
+      />
       <div className="flex flex-col items-start gap-2 relative w-full">
         <div className="inline-flex items-baseline gap-2 md:gap-2.5 relative flex-wrap">
-          <div className="relative w-fit [font-family:'Gilroy-Semibold',Helvetica] font-normal text-[#222222] text-4xl md:text-[50px] tracking-[0] leading-tight md:leading-[50px]">
+          <div className="relative w-fit  font-semibold text-[#222222] text-4xl md:text-[50px] tracking-[0] leading-tight md:leading-[50px]">
             {number}
           </div>
           {unit && (
@@ -72,7 +76,11 @@ const StatsSection = () => {
   );
 
   const StatsRow = ({ items, alignment = "start" }) => (
-    <div className={`flex flex-col md:flex-row ${alignment === "center" ? "items-center" : "items-start"} gap-6 md:gap-8 lg:gap-[46px] relative w-full`}>
+    <div
+      className={`flex flex-col md:flex-row ${
+        alignment === "center" ? "items-center" : "items-start"
+      } gap-6 md:gap-8 lg:gap-[46px] relative w-full`}
+    >
       {items.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}
@@ -93,7 +101,7 @@ const StatsSection = () => {
             {titleSecondLine}
           </div>
         </div>
-        <p className="relative w-full opacity-75 [font-family:'Gilroy-Regular',Helvetica] font-normal text-[#333333] text-sm sm:text-base md:text-lg text-center tracking-[0] leading-6 md:leading-7 px-2">
+        <p className="relative w-full   font-normal text-[#333333] text-sm sm:text-base md:text-lg text-center tracking-[0] leading-6 md:leading-7 px-2">
           {subtitle}
         </p>
       </div>

@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 250);
+      setIsScrolled(window.scrollY > 150);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -29,7 +29,6 @@ const Navbar = () => {
     ? "./assets/tecosoft-black.svg"
     : "./assets/tecosoft-logo.svg";
 
-
   const navTextColor = isScrolled
     ? "text-black/90 hover:text-black"
     : "text-white/90 hover:text-white";
@@ -37,75 +36,69 @@ const Navbar = () => {
   const hamburgerColor = isScrolled
     ? "text-black hover:bg-black/10"
     : "text-white hover:bg-white/10";
-    
+
   const navBg = isScrolled ? "bg-white shadow-md" : "bg-transparent";
 
   return (
     <header className={`fixed top-0 w-full z-50 ${navBg}`}>
       <nav className="max-w-[90%] lg:max-w-7xl mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
-        {/* Logo */}
-        <img src={logoSrc} alt="Tecosoft Logo" className="h-8 lg:h-10 w-auto" />
+        {/* Logo - Changes based on menu state */}
+        <div className="relative z-50">
+          <img
+            src={open ? "./assets/tecosoft-logo.svg" : logoSrc}
+            alt="Tecosoft Logo"
+            className="h-8 lg:h-9 w-auto"
+          />
+        </div>
 
-        {/* Hamburger Button - Mobile */}
-        <button
-          className={`lg:hidden p-2 rounded-lg transition-colors ${hamburgerColor}`}
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={28} /> : <Menu size={28} />}
-        </button>
-
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Hidden on Mobile */}
         <ul className="hidden lg:flex gap-8 items-center">
           {navItems.map((item) => (
             <li key={item.name}>
               <a
                 href={item.href}
-                className={`text-base font-medium transition-colors flex items-center gap-1 ${navTextColor}`}
+                className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor}`}
               >
                 {item.name}
-                <ArrowDown size={16} className={` ${navTextColor}`} />
+                <ArrowDown size={16} className={navTextColor} />
               </a>
             </li>
           ))}
-          <li className="ml-20">
-            <a
-              href="#demo"
-              className="bg-[#0eb05c] text-white px-6 py-2.5 rounded-lg hover:bg-[#0d9d52] transition-colors font-medium flex items-center gap-2"
-            >
-              Book a Demo
-              <span>→</span>
-            </a>
-          </li>
         </ul>
+
+        {/* Right Side: Hamburger (Mobile) / CTA Button (Desktop) */}
+        <div className="flex items-center relative z-50">
+          {/* Hamburger Button - Mobile Only with conditional color */}
+          <button
+            className={`lg:hidden p-2 rounded-lg transition-colors ${
+              open ? "text-white hover:bg-white/10" : hamburgerColor
+            }`}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
+          {/* CTA Button - Desktop Only */}
+          <a
+            href="#demo"
+            className="hidden lg:flex bg-[#0eb05c] text-white px-6 py-2 rounded-lg hover:bg-[#0d9d52] transition-colors font-semibold items-center gap-2"
+          >
+            Book a Demo
+            <span>→</span>
+          </a>
+        </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-[#1a4d8f] z-40 transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-0 bg-[#1a4d8f] transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ zIndex: 25 }}
       >
-        <div className="absolute top-6 left-6">
-          <img
-            src={logoSrc}
-            alt="Tecosoft Logo"
-            className="h-8 lg:h-10 w-auto"
-          />
-        </div>
-
-        {/* Close Button in Mobile Menu */}
-        <div className="absolute top-6 right-6">
-          <button
-            onClick={() => setOpen(false)}
-            className={`p-2 rounded-lg transition-colors ${hamburgerColor}`}
-            aria-label="Close menu"
-          >
-            <X size={32} />
-          </button>
-        </div>
-
-        <div className="pt-24 px-8 bg-[#1a4d8f]">
+        {/* Menu content */}
+        <div className="pt-20 px-8 h-full overflow-y-auto">
           <ul className="flex flex-col gap-6">
             {navItems.map((item) => (
               <li key={item.name}>
@@ -145,7 +138,7 @@ const ClientSlider = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden pb-12">
+    <div className="relative overflow-hidden pt-8 lg:pt-10 ">
       <div className="flex animate-scroll gap-12 lg:gap-16">
         {/* Duplicate for seamless loop */}
         {[...clients, ...clients].map((client, index) => (
@@ -205,7 +198,6 @@ const HeaderSection = () => {
       {/* Content */}
       <div className="relative z-100">
         <Navbar />
-
         <div className="max-w-[90%] lg:max-w-7xl mx-auto px-4 lg:px-0">
           <div className="pt-30 pb-15 lg:pt-48 lg:pb-24">
             {/* Hero Heading */}
@@ -216,13 +208,30 @@ const HeaderSection = () => {
               </span>
             </h1>
 
-            {/* Subheading */}
-            <p className="text-base sm:text-lg lg:text-[22px] font-medium text-white/90 max-w-3xl mb-8 leading-relaxed">
-              With IIoT, AI, and Digital Twins, Tecosoft transforms operations
-              across industries into intelligent connected ecosystems.
-            </p>
+            <div className="relative flex flex-col lg:flex-row lg:items-center mb-4">
+              <p className="text-base sm:text-lg lg:text-[22px] font-medium text-white/90 max-w-3xl leading-relaxed mb-6 lg:mb-0">
+                With the power of IIoT, AI, and Digital Twins, Tecosoft
+                transforms operations <br className="lg:hidden" />
+                across industries into intelligent connected ecosystems.
+              </p>
 
-            {/* CTA Button - Mobile */}
+              {/* Horizontal Line - Desktop Only (Absolute) */}
+              <img
+                src="/assets/icons/h-line.svg"
+                alt=""
+                className="hidden lg:block absolute left-[50%] right-0 bottom-3 -translate-y-1/2 h-auto w-[460px] max-w-full"
+              />
+
+              {/* Book a Demo Link - Desktop */}
+              <a
+                href="#demo"
+                className="hidden lg:flex items-center gap-2 text-white font-medium text-lg whitespace-nowrap hover:text-[#0eb05c] transition-colors cursor-pointer ml-auto pt-13 "
+              >
+                Book a Demo
+                <span className="text-xl">→</span>
+              </a>
+            </div>
+            {/* Book a Demo Button - Mobile */}
             <div className="lg:hidden mb-12">
               <a
                 href="#demo"
@@ -232,10 +241,10 @@ const HeaderSection = () => {
                 <span>→</span>
               </a>
             </div>
-          </div>
 
-          {/* Client Logos Slider */}
-          <ClientSlider />
+            {/* Client Logos Slider */}
+            <ClientSlider />
+          </div>
         </div>
       </div>
     </section>

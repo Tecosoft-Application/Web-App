@@ -6,29 +6,38 @@ const ProductCard = ({ image, title, subtitle, description, delay = 0 }) => {
 
   return (
     <div
-      className="  flex flex-col items-center justify-between p-6 md:p-8 lg:p-10 relative flex-1 rounded-xl transition-all duration-500 group cursor-pointer "
+      className="flex flex-col items-center justify-between p-6 md:p-8 lg:p-10 relative flex-1 rounded-xl transition-all duration-500 group cursor-pointer"
       style={{
-        background: "rgba(255, 255, 255, 0.03)",
+        position: "relative",
         backdropFilter: "blur(10px)",
-        border: "1.5px solid transparent",
-        // backgroundImage: isHovered
-        //   ? "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), linear-gradient(90deg, rgba(49,152,223,1) 0%, rgba(54,212,255,1) 49%, rgba(0,255,132,1) 100%)"
-        //   : "linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), linear-gradient(90deg, rgba(49,152,223,0.5) 0%, rgba(54,212,255,0.5) 49%, rgba(0,255,132,0.5) 100%)",
-        // backgroundImage:
-        // "linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), linear-gradient(90deg, rgba(49,152,223,0.5) 0%, rgba(54,212,255,0.5) 49%, rgba(0,255,132,0.5) 100%)",
-        backgroundOrigin: "border-box",
-        backgroundClip: "padding-box, border-box",
+        WebkitBackdropFilter: "blur(10px)",
         transform: isHovered ? "translateY(-10px)" : "translateY(0)",
         boxShadow: isHovered
           ? "0 20px 40px rgba(54,212,255,0.3)"
           : "0 4px 15px rgba(0,0,0,0.2)",
-        borderBottom: "1.25px solid",
-        borderImageSource: "linear-gradient(90deg, #36D4FE 0%, #00FF84 100%)",
-        borderImageSlice: 1,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Gradient Border using pseudo-element */}
+      <div
+        style={{
+          content: '""',
+          position: "absolute",
+          inset: 0,
+          borderRadius: "10px",
+          padding: "1.5px", // This is your border width
+          background: isHovered
+            ? "linear-gradient(90deg, #3198DF 0%, #36D4FF 49%, #00FF84 100%)"
+            : "linear-gradient(90deg, rgba(49,152,223,0.5) 0%, rgba(54,212,255,0.5) 49%, rgba(0,255,132,0.5) 100%)",
+          mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMask:
+            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          maskComposite: "exclude",
+          WebkitMaskComposite: "destination-out",
+          pointerEvents: "none",
+        }}
+      />
       {/* Product Image */}
       <div className="w-full h-40 md:h-48 lg:h-44 flex items-center justify-center mb-6 md:mb-8 relative overflow-hidden ">
         <img

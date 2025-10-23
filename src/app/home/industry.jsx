@@ -19,6 +19,7 @@ const Industry = () => {
         position: "md:top-[194px] md:left-2",
         width: "md:w-[480px]",
         border: false,
+        animationDelay: "0s",
       },
       {
         id: 2,
@@ -30,6 +31,7 @@ const Industry = () => {
         position: "md:top-[76px] md:left-[711px]",
         width: "md:w-[550px]",
         border: true,
+        animationDelay: "1s",
       },
       {
         id: 3,
@@ -41,19 +43,61 @@ const Industry = () => {
         position: "md:top-[540px] md:left-[648px]",
         width: "md:w-[480px]",
         border: false,
+        animationDelay: "2s",
       },
     ],
     arrowIcon: "./assets/icons/solutions/right-arrow.svg",
   };
 
   return (
-    <div className="flex flex-col min-h-[600px] md:min-h-[900px] items-center pt-8 md:pt-[40px] pb-8 px-4 sm:px-8 md:px-12 lg:px-[116px] relative self-stretch w-full overflow-hidden bg-gradient-to-br from-[#00BCEF] via-[#0066B2] to-[#002363]">
+    <div className="flex flex-col min-h-[600px] md:min-h-[900px] items-center pt-8 md:pt-[40px] pb-4 px-4 sm:px-8 md:px-12 lg:px-[116px] relative self-stretch w-full overflow-hidden bg-gradient-to-br from-[#00BCEF] via-[#0066B2] to-[#002363]">
+      {/* Add keyframes for floating animation */}
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-20px);
+            }
+          }
+          
+          @keyframes ripple {
+            0% {
+              transform: scale(0.8);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(2.5);
+              opacity: 0;
+            }
+          }
+          
+          .float-animation {
+            animation: float 3s ease-in-out infinite;
+          }
+
+          .ripple-animation {
+            animation: ripple 4s ease-out infinite;
+          }
+        `}
+      </style>
+
       {/* Header */}
       <div className="flex flex-col items-center gap-2 mb-8 md:mb-10 z-10">
         <h2 className="text-white text-2xl md:text-4xl lg:text-5xl font-semibold text-center">
           {industryContent.header.title}
         </h2>
-        <h2 className="text-[#0EB05C] text-2xl md:text-4xl lg:text-5xl font-semibold text-center">
+        <h2
+          className="text-2xl md:text-4xl lg:text-5xl font-semibold text-center"
+          style={{
+            background:
+              "linear-gradient(231.12deg, #00D7FF 0.05%, #00FF84 88.08%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           {industryContent.header.subtitle}
         </h2>
       </div>
@@ -61,24 +105,34 @@ const Industry = () => {
       <div className="flex flex-col md:flex-wrap w-full max-w-[1276px] items-center justify-center gap-6 md:gap-0 relative">
         {/* Center Image with Animated Circle Waves */}
         <div className="relative w-full max-w-[400px] md:max-w-[600px] lg:w-[780px] h-auto md:h-[737px] flex items-center justify-center">
-          {/* Animated Circle Waves */}
+          {/* Animated Circle Waves - 5 Visible Lines */}
           <div className="absolute inset-0 flex items-center justify-center">
-            {/* Changed animation timing to 'linear' for a smoother, constant speed */}
-            {/* <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/20 [animation:ping_4s_linear_infinite]"></div>
-            <div className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] rounded-full border-2 border-white/15 [animation:ping_4s_linear_infinite] [animation-delay:1s]"></div>
-            <div className="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full border-2 border-white/10 [animation:ping_4s_linear_infinite] [animation-delay:2s]"></div>
-            <div className="absolute w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full border-2 border-white/5 [animation:ping_4s_linear_infinite] [animation-delay:3s]"></div> */}
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite]"></div>
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:1s]"></div>
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:2s]"></div>
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:3s]"></div>
-            <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/18 [animation:ping_4s_linear_infinite] [animation-delay:4s]"></div>
+            <div
+              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/30 ripple-animation"
+              style={{ animationDelay: "0s" }}
+            ></div>
+            <div
+              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/30 ripple-animation"
+              style={{ animationDelay: "0.8s" }}
+            ></div>
+            <div
+              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/30 ripple-animation"
+              style={{ animationDelay: "1.6s" }}
+            ></div>
+            <div
+              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/30 ripple-animation"
+              style={{ animationDelay: "2.4s" }}
+            ></div>
+            <div
+              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-full border-2 border-white/30 ripple-animation"
+              style={{ animationDelay: "3.2s" }}
+            ></div>
           </div>
 
           {/* Center Icon */}
           <div className="relative w-[150px] h-[150px] md:w-[180px] md:h-[180px] rounded-full bg-white flex items-center justify-center shadow-lg">
             <img
-              className="w-20 h-20 md:w-24 md:h-24"
+              className="w-[150px] h-[150px] md:w-[180px] md:h-[180px]"
               alt="Center icon"
               src={industryContent.centerImage}
             />
@@ -97,7 +151,10 @@ const Industry = () => {
               card.border
                 ? "border-2 border-[#4fc5db] shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:shadow-[0_8px_30px_rgba(79,197,219,0.4)]"
                 : "shadow-[0_4px_20px_rgba(5,128,173,0.16)] hover:shadow-[0_8px_30px_rgba(5,128,173,0.25)]"
-            } transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer relative`}
+            } transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer relative float-animation`}
+            style={{
+              animationDelay: card.animationDelay,
+            }}
           >
             {/* Arrow Icon - Hidden by default, visible on hover */}
             <div className="absolute top-4 right-4 md:top-5 md:right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

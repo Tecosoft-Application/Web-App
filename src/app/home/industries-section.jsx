@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 // Define industries array outside the component
 const industries = [
@@ -80,15 +81,15 @@ const IndustriesSection = () => {
         const fadeInTimer = setTimeout(() => {
           // 5. Start fade-in (go to color, show gradient overlay)
           setIsTransitioning(false);
-        }, 50);
+        }, 1100);
 
         return () => clearTimeout(fadeInTimer);
-      }, 700); // Must match CSS transition duration
+      }); // Must match CSS transition duration
 
       // Cleanup timer if component unmounts or industry changes again
       return () => clearTimeout(fadeOutTimer);
     }
-  }, [selectedIndustry, currentDisplayImage]);
+  }, [selectedIndustry]);
 
   return (
     <div className="flex flex-col items-start gap-10 md:gap-[60px] px-4 sm:px-8 md:px-12 lg:px-[100px] py-12 md:py-20 relative self-stretch w-full flex-[0_0_auto] bg-white">
@@ -138,18 +139,29 @@ const IndustriesSection = () => {
         </div>
 
         <div className="relative w-full lg:w-[600px] max-w-full">
+          <motion.img
+            key={currentDisplayImage}
+            src={currentDisplayImage}
+            alt="Industry visualization"
+            className="relative w-full"
+            initial={{ opacity: 0.5, filter: "grayscale(100%)" }}
+            animate={{ opacity: 1, filter: "grayscale(0%)" }}
+            exit={{ opacity: 0, filter: "grayscale(100%)" }}
+            transition={{ duration: 2, delay: 0.5 }}
+          />
+
           {/* Image with grayscale filter that transitions */}
-          <img
+          {/* <img
             className="relative w-full transition-all duration-700 ease-in-out"
             alt="Industry visualization"
             src={currentDisplayImage}
             style={{
               filter: isTransitioning ? "grayscale(100%)" : "grayscale(0%)",
             }}
-          />
+          /> */}
 
           {/* Gradient overlay that fades in/out */}
-          <div
+          {/* <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-800 ease-in-out"
             style={{
               background:
@@ -157,7 +169,7 @@ const IndustriesSection = () => {
               mixBlendMode: "overlay",
               opacity: isTransitioning ? 0 : 1,
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

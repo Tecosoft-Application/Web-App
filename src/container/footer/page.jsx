@@ -2,17 +2,8 @@ import React from "react";
 
 const FooterSection = () => {
   return (
-    <footer className="relative bg-gradient-to-br from-[#0c4a8a] via-[#1565b8] to-[#0d5aa7] overflow-hidden">
-      {/* Decorative dots pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full"></div>
-        <div className="absolute top-20 left-32 w-2 h-2 bg-white rounded-full"></div>
-        <div className="absolute top-40 left-20 w-2 h-2 bg-white rounded-full"></div>
-        <div className="absolute top-60 right-40 w-2 h-2 bg-white rounded-full"></div>
-        <div className="absolute top-32 right-20 w-2 h-2 bg-white rounded-full"></div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-24 py-4 md:py-5 lg:py-6 pt-2  relative z-10">
+    <footer className="relative bg-gradient-to-br from-[#0c4a8a] via-[#1565b8] to-[#0d5aa7] overflow-hidden  pt-3">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-24 py-4 md:py-5 lg:py-6 pt-2 relative z-10">
         {/* Hero CTA Section */}
         <div
           className="border border-white/20 rounded-2xl lg:rounded-3xl px-6 sm:px-8 md:px-10 lg:px-12 py-8 md:py-10 lg:py-12 mb-8 md:mb-12"

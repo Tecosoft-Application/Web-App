@@ -1,106 +1,129 @@
+// ***************************** Import packages ***********************************************
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import styles from "./navbar.module.css";
+
+import React, { useState, useEffect } from "react";
+import { Menu, X, ArrowDown } from "lucide-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 150);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navItems = [
-    { name: "Platform", href: "/" },
-    { name: "Solutions", href: "/" },
-    { name: "Industries", href: "/" },
-    { name: "Company", href: "/" },
-    { name: "Why TecoSoft", href: "/" },
+    { name: "Platform", href: "#" },
+    { name: "Solutions", href: "#" },
+    { name: "Industries", href: "#" },
+    { name: "Company", href: "#" },
+    { name: "Why TecoSoft", href: "#" },
   ];
 
+  const logoSrc = isScrolled
+    ? "./assets/tecosoft-black.svg"
+    : "./assets/tecosoft-logo.svg";
+
+  const navTextColor = isScrolled
+    ? "text-black/90 hover:text-black"
+    : "text-white/90 hover:text-white";
+
+  const hamburgerColor = isScrolled
+    ? "text-black hover:bg-black/10"
+    : "text-white hover:bg-white/10";
+
+  const navBg = isScrolled ? "bg-white shadow-md" : "bg-transparent";
+
   return (
-    <header className={`${styles.header} fixed top-0 w-full z-50`}>
-      <nav className="max-w-7xl mx-auto  flex items-center justify-between py-4">
-        <Image
-          src="/assets/tecosoft-logo.svg"
-          alt="Logo"
-          width={159}
-          height={36}
-        />
+    <header className={`fixed top-0 w-full z-50 ${navBg}`}>
+      <nav className="max-w-[90%] lg:max-w-7xl mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
+        {/* Logo - Changes based on menu state */}
+        <div className="relative z-50">
+          <img
+            src={open ? "./assets/tecosoft-logo.svg" : logoSrc}
+            alt="Tecosoft Logo"
+            className="h-8 lg:h-9 w-auto"
+          />
+        </div>
 
-        {/* Hamburger / Close Button */}
-        <button
-          className="lg:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? (
-            // Close Icon
-            <svg width="32" height="32" fill="none">
-              <path
-                stroke="currentColor"
-                strokeWidth="2"
-                d="M6 6L26 26M26 6L6 26"
-              />
-            </svg>
-          ) : (
-            // Hamburger Icon
-            <svg width="32" height="32" fill="none">
-              <path
-                stroke="currentColor"
-                strokeWidth="2"
-                d="M6 10h20M6 16h20M6 22h20"
-              />
-            </svg>
-          )}
-        </button>
-
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Hidden on Mobile */}
         <ul className="hidden lg:flex gap-8 items-center">
           {navItems.map((item) => (
             <li key={item.name}>
-              <Link
+              <a
                 href={item.href}
-                className="text-lg text-[#ffffff] hover:text-blue-700"
+                className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor}`}
               >
                 {item.name}
-              </Link>
+                <ArrowDown size={16} className={navTextColor} />
+              </a>
             </li>
           ))}
-          <li>
-            <Link
-              href="/demo"
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Book a Demo
-            </Link>
-          </li>
         </ul>
+
+        {/* Right Side: Hamburger (Mobile) / CTA Button (Desktop) */}
+        <div className="flex items-center relative z-50">
+          {/* Hamburger Button - Mobile Only with conditional color */}
+          <button
+            className={`lg:hidden p-2 rounded-lg transition-colors ${
+              open ? "text-white hover:bg-white/10" : hamburgerColor
+            }`}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
+          {/* CTA Button - Desktop Only */}
+          <a
+            href="#demo"
+            className="hidden lg:flex bg-[#0eb05c] text-white px-6 py-2 rounded-lg hover:bg-[#0d9d52] transition-colors font-semibold items-center gap-2"
+          >
+            Book a Demo
+            <span>→</span>
+          </a>
+        </div>
       </nav>
 
-      {/* Mobile Menu */}
-      {open && (
-        <div className="lg:hidden fixed inset-0 z-40 pt-24 px-8 bg-white">
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`lg:hidden fixed inset-0 bg-[#1a4d8f] transition-transform duration-300 ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ zIndex: 25 }}
+      >
+        {/* Menu content */}
+        <div className="pt-20 px-8 h-full overflow-y-auto">
           <ul className="flex flex-col gap-6">
             {navItems.map((item) => (
               <li key={item.name}>
-                <Link
+                <a
                   href={item.href}
-                  className="text-xl text-gray-800"
+                  className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white"
                   onClick={() => setOpen(false)}
                 >
                   {item.name}
-                </Link>
+                </a>
               </li>
             ))}
-            <li>
-              <Link
-                href="/demo"
-                className="bg-green-500 text-white px-4 py-2 rounded block text-center mt-6"
+            <li className="mt-5 mb-3">
+              <a
+                href="#demo"
+                className="bg-[#0eb05c] text-white px-6 py-3 rounded-lg hover:bg-[#0d9d52] transition-colors font-medium flex items-center justify-center gap-2"
                 onClick={() => setOpen(false)}
               >
                 Book a Demo
-              </Link>
+                <span>→</span>
+              </a>
             </li>
           </ul>
         </div>
-      )}
+      </div>
     </header>
   );
 };

@@ -5,12 +5,12 @@ import StatsSection from "./stats-section";
 import IndustriesSection from "./industries-section";
 import Industry from "./industry";
 import Products from "./products-section";
-import HeaderSection from "@/container/header/page";
+import BannerSection from "./banner-section";
 
 const HomePage = () => {
   return (
     <>
-      <HeaderSection />
+      <BannerSection />
       <StatsSection />
       <Industry />
       <Products />

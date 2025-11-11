@@ -1,7 +1,16 @@
+"use client";
 import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
-const ProductCard = ({ image, title, subtitle, description, delay = 0 }) => {
+interface ProductCardProps {
+  image: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  delay?: number;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ image, title, subtitle, description, delay = 0 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (

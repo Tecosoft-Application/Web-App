@@ -1,11 +1,34 @@
+"use client";
 import React, { useState } from "react";
+
+interface IndustryCard {
+  id: number;
+  title: string;
+  description: string;
+  normalIcon: string;
+  hoverIcon: string;
+  position: string;
+  width: string;
+  border: boolean;
+  animationDelay: string;
+}
+
+interface IndustryContent {
+  header: {
+    title: string;
+    subtitle: string;
+  };
+  centerImage: string;
+  cards: IndustryCard[];
+  arrowIcon: string;
+}
 
 const Industry = () => {
   // Hover state to track which card is being hovered
-  const [hover, setHover] = useState(null);
+  const [hover, setHover] = useState<number | null>(null);
 
   // Content configuration
-  const industryContent = {
+  const industryContent: IndustryContent = {
     header: {
       title: "Smart Solutions,",
       subtitle: "Built for Your Industry",

@@ -1,8 +1,16 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+interface Industry {
+  name: string;
+  description: string;
+  image: string;
+  seletct: string;
+}
+
 // Define industries array outside the component
-const industries = [
+const industries: Industry[] = [
   {
     name: "Manufacturing",
     description:
@@ -59,7 +67,7 @@ const IndustriesSection = () => {
   // Get the selected industry object (for the description)
   const selectedIndustryObj = industries.find(
     (industry) => industry.seletct === selectedIndustry
-  );
+  ) as Industry | undefined;
 
   // Handle the image swapping animation when industry changes
   useEffect(() => {

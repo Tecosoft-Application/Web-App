@@ -11,8 +11,19 @@ const Z_INDEX = {
   INTERACTIVE: 1001, // Logo and hamburger above all for interaction
 };
 
+interface NavItem {
+  name: string;
+  href: string;
+}
+
+interface MobileNavbarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  navItems: NavItem[];
+}
+
 // Mobile Navigation Component - Separated for better maintainability
-const MobileNavbar = ({ isOpen, onClose, navItems }) => {
+const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, onClose, navItems }) => {
   return (
     <div
       className={`lg:hidden fixed inset-0 bg-[#1a4d8f] transition-transform duration-300 h-[550px] ${

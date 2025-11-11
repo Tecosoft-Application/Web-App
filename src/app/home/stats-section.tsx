@@ -1,9 +1,27 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 import { useInView, animate } from "framer-motion";
 
+interface AnimatedStatProps {
+  to: string;
+}
+
+interface StatCardProps {
+  icon: string;
+  alt: string;
+  number: string;
+  unit?: string;
+  description: string;
+}
+
+interface StatsRowProps {
+  items: StatCardProps[];
+  alignment?: "start" | "center";
+}
+
 const StatsSection = () => {
-  const AnimatedStat = ({ to }) => {
-    const ref = useRef(null);
+  const AnimatedStat: React.FC<AnimatedStatProps> = ({ to }) => {
+    const ref = useRef<HTMLSpanElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     const number = parseInt(String(to).replace(/,/g, "").replace("+", ""));
@@ -74,7 +92,7 @@ const StatsSection = () => {
     },
   ];
 
-  const StatCard = ({ icon, alt, number, unit, description }) => (
+  const StatCard: React.FC<StatCardProps> = ({ icon, alt, number, unit, description }) => (
     <div className="flex flex-col items-start gap-3 lg:gap-6 p-3 md:p-5 relative w-full md:flex-1 bg-white rounded-2xl overflow-hidden border-[1.5px] border-solid border-[#cccccc] hover:border-[#00b7ff]">
       <img
         className="relative w-8 h-8 md:w-[48px] md:h-[48px]"
@@ -99,7 +117,7 @@ const StatsSection = () => {
     </div>
   );
 
-  const StatsRow = ({ items, alignment = "start" }) => (
+  const StatsRow: React.FC<StatsRowProps> = ({ items, alignment = "start" }) => (
     <div
       className={`flex flex-col md:flex-row ${
         alignment === "center" ? "items-center" : "items-start"

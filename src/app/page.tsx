@@ -1,6 +1,8 @@
 // ***************************** Import packages ***********************************************
+import type { Metadata } from "next";
 import Homepage from "./home/page";
-export const metadata = {
+
+export const metadata: Metadata = {
   title: "",
   description: "",
 };

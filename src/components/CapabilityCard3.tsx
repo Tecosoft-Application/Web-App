@@ -1,0 +1,15 @@
+"use client";
+
+const img = "/assets/platform/eagle/banner-full.png";
+
+export default function CapabilityCard3() {
+  return (
+    <div className="bg-[#005b80] box-border content-stretch flex flex-col gap-[36px] items-start overflow-clip p-[40px] rounded-[16px] w-[1152px] relative shadow-[0px_20px_60px_rgba(0,0,0,0.2)]">
+      <p className="font-['Gilroy:Semibold',sans-serif] leading-[39px] not-italic relative shrink-0 text-[32px] text-white w-[308px]">{`Supported Protocols & Drivers`}</p>
+      <p className="font-['Gilroy:Regular',sans-serif] leading-[24px] not-italic relative shrink-0 text-[#ccf1ff] text-[16px] w-[610px]">Supported protocols include Modbus, OPC/UA, MQTT, MTConnect, FANUC FOCAS, HTTP, and digital or analog I/O, enabling seamless communication between diverse industrial equipment, sensors, and control systems for smooth data exchange and interoperability.</p>
+      <div className="absolute h-[250px] right-[80px] top-1/2 -translate-y-1/2 w-[350px]" data-name="Generated Image November 01, 2025 - 4_47PM 1 1">
+        <img alt="" className="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-full" src={img} />
+      </div>
+    </div>
+  );
+}

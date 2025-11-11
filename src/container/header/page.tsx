@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, ArrowDown } from "lucide-react";
 
 // Z-index layer constants for consistent stacking
@@ -62,24 +63,30 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, onClose, navItems }
 };
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   console.log(open, isScrolled);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollThreshold = window.innerWidth < 500 ? 60 : 150; // sm screen (≤640px) → 90, others → 150
-      setIsScrolled(window.scrollY > scrollThreshold);
-    };
+    const isHomePage = pathname === "/" || pathname === "/home";
 
-    window.addEventListener("scroll", handleScroll);
+    if (isHomePage) {
+      const handleScroll = () => {
+        const scrollThreshold = window.innerWidth < 500 ? 60 : 150; // sm screen (≤640px) → 90, others → 150
+        setIsScrolled(window.scrollY > scrollThreshold);
+      };
 
-    // Run once on mount to set initial state
-    handleScroll();
+      window.addEventListener("scroll", handleScroll);
+      handleScroll(); // Set initial state on mount
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      return () => window.removeEventListener("scroll", handleScroll);
+    } else {
+      // On other pages, the header is always in the "scrolled" state.
+      setIsScrolled(true);
+    }
+  }, [pathname]);
 
   const navItems = [
     { name: "Platform", href: "#" },

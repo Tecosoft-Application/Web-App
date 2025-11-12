@@ -1,34 +1,19 @@
+"use client";
+
 import React from "react";
+import { usePathname } from "next/navigation";
+import FooterCard from "@/components/FooterCard";
+import { getFooterCardConfig } from "@/components/FooterCard/footerCardConfig";
 
 const FooterSection = () => {
+  const pathname = usePathname();
+  const footerCardConfig = getFooterCardConfig(pathname);
+
   return (
     <footer className="relative bg-gradient-to-br from-[#0c4a8a] via-[#1565b8] to-[#0d5aa7] overflow-hidden  pt-3">
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-24 py-4 md:py-5 lg:py-6 pt-2 relative z-10">
         {/* Hero CTA Section */}
-        <div
-          className="border border-white/20 rounded-2xl lg:rounded-3xl px-6 sm:px-8 md:px-10 lg:px-12 py-8 md:py-10 lg:py-12 mb-8 md:mb-12"
-          style={{
-            background: 'url("/assets/footer-dot.png") no-repeat  center ',
-            backgroundSize: "cover",
-          }}
-        >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8">
-            <div className="flex-1">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-2 text-white leading-tight">
-                Next-Gen Industry is Here
-              </h2>
-              <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-[#13F495] leading-tight">
-                Are You Ready to Lead?
-              </p>
-            </div>
-            <div className="w-full md:w-auto">
-              <button className="w-full md:w-auto bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap">
-                Talk to an Expert
-                <span>→</span>
-              </button>
-            </div>
-          </div>
-        </div>
+        <FooterCard {...footerCardConfig} />
 
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 md:mb-12">

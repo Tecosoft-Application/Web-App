@@ -130,17 +130,17 @@ const slides = [
 export default function BenefitsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slide : any = slides[currentSlide];
+  const slide: any = slides[currentSlide];
 
   return (
     <div
-      className="relative h-[720px]"
-      style={{ backgroundColor: 'rgba(232, 249, 255, 1)' }}
+      className="relative h-[650px] w-full overflow-hidden"
+      style={{ backgroundColor: "rgba(232, 249, 255, 1)" }}
       data-name="Benefits"
     >
       <div
         className="absolute h-[649.752px] left-0 top-0 w-[1512.25px]"
-        style={{ backgroundColor: 'rgba(232, 249, 255, 1)' }}
+        style={{ backgroundColor: "rgba(232, 249, 255, 1)" }}
         data-name="Union"
       >
         <svg
@@ -162,8 +162,8 @@ export default function BenefitsSection() {
         Smarter operations with connected machine insights.
       </p>
       <p className="absolute font-['Gilroy:Medium',sans-serif] leading-[22px] left-[756px] not-italic text-[#8e8e8e] text-[16px] text-center top-[114px] translate-x-[-50%] w-[450px]">
-        Optimize operations with real-time machine insights to
-        cut costs, boost uptime, and scale efficiently.
+        Optimize operations with real-time machine insights to cut costs, boost
+        uptime, and scale efficiently.
       </p>
 
       {/* Left Side - Circle with Icons - Wrapper */}
@@ -180,10 +180,7 @@ export default function BenefitsSection() {
               filter={`url(#filter0_i_benefits_circle_${slide.id})`}
               id="Ellipse 15"
             >
-              <path
-                d={svgPathsMain.p42c4780}
-                fill="var(--fill-0, #005B80)"
-              />
+              <path d={svgPathsMain.p42c4780} fill="var(--fill-0, #005B80)" />
             </g>
             <defs>
               <filter
@@ -195,10 +192,7 @@ export default function BenefitsSection() {
                 x="0"
                 y="0"
               >
-                <feFlood
-                  floodOpacity="0"
-                  result="BackgroundImageFix"
-                />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   in="SourceGraphic"
                   in2="BackgroundImageFix"
@@ -271,9 +265,7 @@ export default function BenefitsSection() {
                 viewBox={slide.arcViewBox}
               >
                 <g id="Ellipse 15">
-                  <g
-                    filter={`url(#filter0_i_benefits_arc_${slide.id})`}
-                  >
+                  <g filter={`url(#filter0_i_benefits_arc_${slide.id})`}>
                     <path
                       d={slide.arcSvgPaths[slide.arcPath]}
                       fill="var(--fill-0, #069235)"
@@ -295,10 +287,7 @@ export default function BenefitsSection() {
                     x="0"
                     y="0"
                   >
-                    <feFlood
-                      floodOpacity="0"
-                      result="BackgroundImageFix"
-                    />
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
                     <feBlend
                       in="SourceGraphic"
                       in2="BackgroundImageFix"
@@ -390,10 +379,7 @@ export default function BenefitsSection() {
               className="overflow-clip relative size-[26px]"
               data-name="square-arrow-up-left-sharp"
             >
-              <div
-                className="absolute inset-[10.417%]"
-                data-name="elements"
-              >
+              <div className="absolute inset-[10.417%]" data-name="elements">
                 <div className="absolute inset-[-3.947%]">
                   <svg
                     className="block size-full"
@@ -430,10 +416,7 @@ export default function BenefitsSection() {
           data-name="cloud"
           onMouseEnter={() => setCurrentSlide(4)}
         >
-          <div
-            className="relative size-[26px]"
-            data-name="cloud-inner"
-          >
+          <div className="relative size-[26px]" data-name="cloud-inner">
             <div
               className="absolute inset-[16.67%_8.33%_20.83%_8.33%]"
               data-name="elements"
@@ -471,10 +454,7 @@ export default function BenefitsSection() {
             className="relative size-[24px]"
             data-name="vuesax/linear/diagram"
           >
-            <div
-              className="absolute inset-[3.846%]"
-              data-name="diagram"
-            >
+            <div className="absolute inset-[3.846%]" data-name="diagram">
               <svg
                 className="block size-full"
                 fill="none"
@@ -613,10 +593,7 @@ export default function BenefitsSection() {
       {/* Navigation Arrows */}
       <button
         onClick={() =>
-          setCurrentSlide(
-            (prev) =>
-              (prev - 1 + slides.length) % slides.length,
-          )
+          setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
         }
         className="absolute bg-white cursor-pointer left-[1412px] rounded-[60px] top-[260px] w-[50px] transition-all hover:bg-gray-50"
       >
@@ -658,9 +635,7 @@ export default function BenefitsSection() {
       </button>
 
       <button
-        onClick={() =>
-          setCurrentSlide((prev) => (prev + 1) % slides.length)
-        }
+        onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
         className="absolute bg-white cursor-pointer left-[1412px] rounded-[60px] top-[322px] w-[50px] transition-all hover:bg-gray-50"
       >
         <div className="box-border content-stretch flex gap-[10px] items-center overflow-clip p-[15px] relative rounded-[inherit] w-[50px]">
@@ -676,11 +651,7 @@ export default function BenefitsSection() {
             >
               <g
                 id="iconoir:arrow-down"
-                opacity={
-                  currentSlide === slides.length - 1
-                    ? "0.3"
-                    : "1"
-                }
+                opacity={currentSlide === slides.length - 1 ? "0.3" : "1"}
               >
                 <path
                   d={svgPathsMain.p1c8af000}

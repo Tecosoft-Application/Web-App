@@ -1,8 +1,8 @@
 // ***************************** Import packages ***********************************************
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, ArrowDown } from "lucide-react";
 
 // Z-index layer constants for consistent stacking
@@ -10,11 +10,14 @@ const Z_INDEX = {
   HEADER: 1000, // Main header layer
   MOBILE_MENU: 999, // Mobile menu behind header
   INTERACTIVE: 1001, // Logo and hamburger above all for interaction
+  DROPDOWN: 1002, // Dropdown above header
 };
 
 interface NavItem {
   name: string;
   href: string;
+  hasDropdown?: boolean;
+  dropdownItems?: { name: string; href: string }[];
 }
 
 interface MobileNavbarProps {
@@ -25,6 +28,20 @@ interface MobileNavbarProps {
 
 // Mobile Navigation Component - Separated for better maintainability
 const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, onClose, navItems }) => {
+  const router = useRouter();
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+
+  const handleNavigation = (href: string) => {
+    if (href !== "#") {
+      router.push(href);
+      onClose();
+    }
+  };
+
+  const toggleExpand = (itemName: string) => {
+    setExpandedItem(expandedItem === itemName ? null : itemName);
+  };
+
   return (
     <div
       className={`lg:hidden fixed inset-0 bg-[#1a4d8f] transition-transform duration-300 h-[550px] ${
@@ -37,13 +54,44 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, onClose, navItems }
         <ul className="flex flex-col gap-6">
           {navItems.map((item) => (
             <li key={item.name}>
-              <a
-                href={item.href}
-                className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white"
-                onClick={onClose}
-              >
-                {item.name}
-              </a>
+              {item.hasDropdown ? (
+                <div>
+                  <button
+                    onClick={() => toggleExpand(item.name)}
+                    className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white w-full text-left flex items-center justify-between"
+                  >
+                    {item.name}
+                    <ArrowDown
+                      size={18}
+                      className={`transition-transform ${
+                        expandedItem === item.name ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {expandedItem === item.name && item.dropdownItems && (
+                    <ul className="mt-2 ml-4 flex flex-col gap-3">
+                      {item.dropdownItems.map((dropdownItem) => (
+                        <li key={dropdownItem.name}>
+                          <button
+                            onClick={() => handleNavigation(dropdownItem.href)}
+                            className="text-lg font-normal block py-1 hover:text-[#0eb05c] transition-colors text-white/90"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <a
+                  href={item.href}
+                  className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white"
+                  onClick={onClose}
+                >
+                  {item.name}
+                </a>
+              )}
             </li>
           ))}
           <li className="mt-5 mb-3">
@@ -64,8 +112,11 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, onClose, navItems }
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   console.log(open, isScrolled);
 
@@ -88,8 +139,37 @@ const Navbar = () => {
     }
   }, [pathname]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleDropdownClick = (itemName: string) => {
+    setOpenDropdown(openDropdown === itemName ? null : itemName);
+  };
+
+  const handleDropdownItemClick = (href: string) => {
+    router.push(href);
+    setOpenDropdown(null);
+  };
+
   const navItems = [
-    { name: "Platform", href: "#" },
+    {
+      name: "Platform",
+      href: "#",
+      hasDropdown: true,
+      dropdownItems: [
+        { name: "Eagle", href: "/eagle" },
+        { name: "Tecosoft Analytics", href: "/tecosoft-analytics" },
+      ],
+    },
     { name: "Solutions", href: "#" },
     { name: "Industries", href: "#" },
     { name: "Company", href: "#" },
@@ -133,14 +213,47 @@ const Navbar = () => {
           {/* Desktop Menu - Hidden on Mobile */}
           <ul className="hidden lg:flex gap-8 items-center">
             {navItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor}`}
-                >
-                  {item.name}
-                  <ArrowDown size={16} className={navTextColor} />
-                </a>
+              <li key={item.name} className="relative">
+                {item.hasDropdown ? (
+                  <div ref={item.name === "Platform" ? dropdownRef : null}>
+                    <button
+                      onClick={() => handleDropdownClick(item.name)}
+                      className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor}`}
+                    >
+                      {item.name}
+                      <ArrowDown
+                        size={16}
+                        className={`transition-transform ${
+                          openDropdown === item.name ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {openDropdown === item.name && item.dropdownItems && (
+                      <div
+                        className="absolute top-full mt-2 bg-white rounded-lg shadow-lg py-2 min-w-[220px] border border-gray-100"
+                        style={{ zIndex: Z_INDEX.DROPDOWN }}
+                      >
+                        {item.dropdownItems.map((dropdownItem) => (
+                          <button
+                            key={dropdownItem.name}
+                            onClick={() => handleDropdownItemClick(dropdownItem.href)}
+                            className="w-full text-left px-4 py-3 text-[15px] font-medium text-gray-700 hover:bg-[#0eb05c]/10 hover:text-[#0eb05c] transition-colors"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <a
+                    href={item.href}
+                    className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor}`}
+                  >
+                    {item.name}
+                    <ArrowDown size={16} className={navTextColor} />
+                  </a>
+                )}
               </li>
             ))}
           </ul>

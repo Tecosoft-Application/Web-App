@@ -1,18 +1,19 @@
+
+
 // ***************************** Import packages ***********************************************
 import type { Metadata } from "next";
-import Homepage from "./_home/page";
+import React from "react";
+import Analytics from "./tecosoft-analytics";
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
+  title: "home page tech soft",
+  description: "home page tech soft",
 };
 
-export default function Home() {
+export default function page() {
   return (
     <>
-      <main>
-        <Homepage />
-      </main>
+      <Analytics />
     </>
   );
 }

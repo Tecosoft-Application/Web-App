@@ -121,7 +121,7 @@ const Navbar = () => {
   console.log(open, isScrolled);
 
   useEffect(() => {
-    const isHomePage = pathname === "/" || pathname === "/home";
+    const isHomePage = pathname === "/";
 
     if (isHomePage) {
       const handleScroll = () => {

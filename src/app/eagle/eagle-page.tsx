@@ -21,6 +21,7 @@ const imgFrame1171277145Features =
   "/assets/platform/eagle/operator-dashboard.png";
 const img1 = "/assets/platform/eagle/img1.png";
 const img2 = "/assets/platform/eagle/img2.png";
+const imgStaticHeroMobile = "/assets/platform/eagle/5.svg";
 // const imgTecosoftAiHiResLogoWhite1 = "/assets/platform/eagle/d82897defa1640fa802c61d738f15516e26fef5f.png";
 
 // Animation variants
@@ -423,7 +424,7 @@ function Frame() {
 function Frame26() {
   return (
     <motion.div
-      className="bg-white box-border content-stretch flex gap-[10px] items-center justify-center px-[12px] py-[6px] relative rounded-[60px] shrink-0"
+      className="bg-white box-border content-stretch flex gap-[10px] items-center justify-center px-[12px] py-[6px] relative rounded-[60px] shrink-0 max-lg:px-[10px] max-lg:py-[5px]"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{
@@ -438,7 +439,7 @@ function Frame26() {
         aria-hidden="true"
         className="absolute border border-[#07af40] border-solid inset-0 pointer-events-none rounded-[60px]"
       />
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13.5px] text-nowrap whitespace-pre">
+      <p className="font-['Gilroy:Semibold',sans-serif] leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13.5px] text-nowrap whitespace-pre max-lg:text-[12px] max-lg:leading-[16px]">
         Connected Ecosystem
       </p>
     </motion.div>
@@ -472,14 +473,14 @@ function IconoirArrowDown5() {
 function Frame3() {
   return (
     <motion.div
-      className="bg-[#07af40] box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 cursor-pointer"
+      className="bg-[#07af40] box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 cursor-pointer max-lg:px-[12px] max-lg:py-[8px]"
       whileHover={{
         scale: 1.05,
         transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
       }}
       whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
     >
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[15px] text-nowrap text-white whitespace-pre">
+      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[15px] text-nowrap text-white whitespace-pre max-lg:text-[13px] max-lg:leading-[18px]">
         Book a Demo
       </p>
       <div
@@ -502,7 +503,7 @@ function Frame3() {
 function Frame24() {
   return (
     <motion.div
-      className="box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 w-[144px] cursor-pointer"
+      className="box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 w-[144px] cursor-pointer max-lg:px-[12px] max-lg:py-[8px] max-lg:w-auto"
       whileHover={{
         scale: 1.05,
         borderColor: "#07af40",
@@ -514,7 +515,7 @@ function Frame24() {
         aria-hidden="true"
         className="absolute border border-[#d2d2d2] border-solid inset-0 pointer-events-none"
       />
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[#4f4f4f] text-[15px] text-nowrap whitespace-pre">
+      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[#4f4f4f] text-[15px] text-nowrap whitespace-pre max-lg:text-[13px] max-lg:leading-[18px]">
         See Capabilities
       </p>
     </motion.div>
@@ -524,7 +525,7 @@ function Frame24() {
 function Frame25() {
   return (
     <motion.div
-      className="content-stretch flex gap-[16px] items-center relative shrink-0"
+      className="content-stretch flex gap-[16px] items-center relative shrink-0 max-lg:gap-[12px]"
       variants={fadeInUp}
     >
       <Frame3 />
@@ -536,21 +537,21 @@ function Frame25() {
 function Frame40() {
   return (
     <motion.div
-      className="absolute content-stretch flex flex-col gap-[16px] items-center left-[281px] top-[140px] w-[950px]"
+      className="absolute content-stretch flex flex-col gap-[16px] items-center left-[281px] top-[140px] w-[950px] max-lg:left-[50%] max-lg:translate-x-[-50%] max-lg:top-[40px] max-lg:w-[90%] max-lg:max-w-[700px] max-lg:gap-[12px]"
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
     >
       <Frame26 />
       <motion.p
-        className="font-['Gilroy:Semibold',sans-serif] leading-[76px] min-w-full not-italic relative shrink-0 text-[#282828] text-[0px] text-[60px] text-center tracking-[-0.9px] w-[min-content]"
+        className="font-['Gilroy:Semibold',sans-serif] leading-[76px] min-w-full not-italic relative shrink-0 text-[#282828] text-[0px] text-[60px] text-center tracking-[-0.9px] w-[min-content] max-lg:text-[32px] max-lg:leading-[40px]"
         variants={fadeInUp}
       >
         <span className="text-[#07af40]">EAGLE:</span>
         <span>{` The Edge Platform Powering Every Connected Factory`}</span>
       </motion.p>
       <motion.p
-        className="font-['Gilroy:Medium',sans-serif] leading-[23px] not-italic opacity-75 relative shrink-0 text-[#636363] text-[16px] text-center w-[820px]"
+        className="font-['Gilroy:Medium',sans-serif] leading-[23px] not-italic opacity-75 relative shrink-0 text-[#636363] text-[16px] text-center w-[820px] max-lg:w-full max-lg:text-[13px] max-lg:leading-[18px]"
         variants={fadeInUp}
       >
         EAGLE transforms disconnected machines and assets into a connected
@@ -681,7 +682,7 @@ function HeroSection() {
     >
       {/* Background elements */}
       <div
-        className="absolute h-[680px] left-0 top-0 w-[1512px] pointer-events-none"
+        className="absolute h-[680px] left-0 top-0 w-[1512px] pointer-events-none max-lg:w-full max-lg:h-[400px]"
         data-name="Rectangle"
       >
         <div
@@ -697,7 +698,7 @@ function HeroSection() {
         </div>
       </div>
       <div
-        className="absolute h-[649.752px] left-0 top-[70.25px] w-[1512.25px] pointer-events-none"
+        className="absolute h-[649.752px] left-0 top-[70.25px] w-[1512.25px] pointer-events-none max-lg:hidden"
         data-name="Union"
       >
         <svg
@@ -731,16 +732,26 @@ function HeroSection() {
       {/* <Frame /> */}
 
       {/* Hero content - scrolls normally */}
-      <div className="relative h-[420px]">
+      <div className="relative h-[420px] max-lg:h-[250px] max-lg:mt-[70px]">
         <Frame40 />
       </div>
 
       {/* Sticky product section - pins while animation plays */}
-      <div className="h-[1800px] relative w-full">
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center">
+      <div className="h-[1800px] relative w-full max-lg:h-auto max-lg:pb-[40px]">
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center max-lg:static max-lg:h-auto max-lg:pt-[90px]">
+          {/* Static SVG Image for Mobile */}
+          <div className="hidden max-lg:flex max-lg:justify-center w-full px-4">
+            <img
+              src={imgStaticHeroMobile}
+              alt="Eagle Platform Connected Factory"
+              className="w-full max-w-[550px] h-auto"
+            />
+          </div>
+
+          {/* Animated Product Section for Desktop */}
           <motion.div
             ref={productContainerRef}
-            className="relative h-[630px] w-[1152px]"
+            className="relative h-[630px] w-[1152px] max-lg:hidden"
             data-name="1"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -804,7 +815,7 @@ function HeroSection() {
 
             {/* Right side products with parallax */}
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%]"
               style={{
                 left: rightProduct1X,
                 top: rightProduct1Y,
@@ -813,25 +824,25 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="Digital Counter Display Unit"
+                  alt="Manual Machine"
                   className="absolute h-[478.67%] left-[-397.24%] max-w-none top-[-92.39%] w-[564.39%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-90px)] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 997,
                 top: 184,
                 opacity: labelOpacity,
               }}
             >
-              Digital Counter/Display Unit
+              Manual Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%] max-lg:translate-y-[-50%]"
               style={{
                 left: rightProduct2X,
                 top: rightProduct2Y,
@@ -840,25 +851,25 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="Variable Frequency Drive"
+                  alt="Press Break"
                   className="absolute h-[399.69%] left-[-328.88%] max-w-none top-[-161.47%] w-[472.96%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 997,
                 top: 382,
                 opacity: labelOpacity,
               }}
             >
-              Variable Frequency Drive
+              Press Break
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%]"
               style={{
                 left: rightProduct3X,
                 top: rightProduct3Y,
@@ -867,26 +878,26 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="Digital Pressure Gauge"
+                  alt="Laser Cutting"
                   className="absolute h-[438.07%] left-[-368.09%] max-w-none top-[-288.75%] w-[516.52%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 997,
                 top: 580,
                 opacity: labelOpacity,
               }}
             >
-              Digital Pressure Gauge
+              Laser Cutting
             </motion.p>
 
             {/* Left side products with parallax */}
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px]"
               style={{
                 left: leftProduct1X,
                 top: leftProduct1Y,
@@ -895,25 +906,25 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="CNC VMC Machine"
+                  alt="CNC Machine"
                   className="absolute h-[505.98%] left-[-104.33%] max-w-none top-[-23.11%] w-[596.59%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[90px] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 155,
                 top: 184,
                 opacity: labelOpacity,
               }}
             >
-              CNC/VMC Machine
+              CNC Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-y-[-50%]"
               style={{
                 left: leftProduct2X,
                 top: leftProduct2Y,
@@ -922,25 +933,25 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="CNC Lathe Machine"
+                  alt="VMC Machine"
                   className="absolute h-[436.44%] left-[-182.11%] max-w-none top-[-17.57%] w-[516.45%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 155,
                 top: 378,
                 opacity: labelOpacity,
               }}
             >
-              CNC/Lathe Machine
+              VMC Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10"
+              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px]"
               style={{
                 left: leftProduct3X,
                 top: leftProduct3Y,
@@ -949,26 +960,26 @@ function HeroSection() {
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
                 <img
-                  alt="Industrial Controller Gateway"
+                  alt="HMC Machine"
                   className="absolute h-[533.58%] left-[-352.75%] max-w-none top-[-25.99%] w-[629.13%]"
                   src={img}
                 />
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px]"
               style={{
                 left: 155,
                 top: 580,
                 opacity: labelOpacity,
               }}
             >
-              Industrial Controller/Gateway
+              HMC Machine
             </motion.p>
 
             {/* Center product - always visible with subtle scale */}
             <motion.div
-              className="absolute rounded-[16px] h-[391px] left-[313px] top-[103.5px] w-[526px] z-20"
+              className="absolute rounded-[16px] h-[391px] left-[313px] top-[103.5px] w-[526px] z-20 max-lg:!scale-100 max-lg:h-[280px] max-lg:w-[380px] max-lg:left-[50%] max-lg:top-[50%] max-lg:translate-x-[-50%] max-lg:translate-y-[-50%]"
               style={{ scale: centerScale }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[16px]">
@@ -979,7 +990,7 @@ function HeroSection() {
                 />
               </div>
             </motion.div>
-            <p className="absolute font-['Gilroy:Semibold',sans-serif] leading-[24px] left-[576.5px] not-italic text-[#007aaa] text-[20px] text-center text-nowrap top-[494.88px] translate-x-[-50%] whitespace-pre z-20">
+            <p className="absolute font-['Gilroy:Semibold',sans-serif] leading-[24px] left-[576.5px] not-italic text-[#007aaa] text-[20px] text-center text-nowrap top-[494.88px] translate-x-[-50%] whitespace-pre z-20 max-lg:left-[50%] max-lg:bottom-[-30px] max-lg:top-auto max-lg:text-[14px]">
               Industrial Display/HMI Panel
             </p>
           </motion.div>
@@ -2375,10 +2386,10 @@ export default function App() {
       data-name="Eagle"
     >
       <HeroSection />
-      <Features />
+      {/* <Features />
       <HardwareSlider />
       <CapabilitiesSection />
-      <BenefitsSection />
+      <BenefitsSection /> */}
     </div>
   );
 }

@@ -2,13 +2,13 @@
 
 export default function CapabilityCard1() {
   const protocols = [
-    { name: "OPC UA", logo: "/assets/protocols/opc-ua.png" },
-    { name: "Modbus", logo: "/assets/protocols/modbus.png" },
-    { name: "MTConnect", logo: "/assets/protocols/mtconnect.png" },
-    { name: "MQTT", logo: "/assets/protocols/mqtt.png" },
-    { name: "FANUC", logo: "/assets/protocols/fanuc.png" },
-    { name: "I/O", logo: "/assets/protocols/io.png" },
-    { name: "HTTP", logo: "/assets/protocols/http.png" },
+    { name: "OPC UA", logo: "/assets/platform/eagle/opcua.png" },
+    { name: "Modbus", logo: "/assets/platform/eagle/modbus.png" },
+    { name: "MTConnect", logo: "/assets/platform/eagle/mtconnect.png" },
+    { name: "MQTT", logo: "/assets/platform/eagle/mqtt.png" },
+    { name: "FANUC", logo: "/assets/platform/eagle/fanuc.png" },
+    { name: "I/O", logo: "/assets/platform/eagle/iot.png" },
+    { name: "HTTP", logo: "/assets/platform/eagle/http.png" },
   ];
 
   return (

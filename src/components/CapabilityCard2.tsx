@@ -2,13 +2,10 @@
 
 export default function CapabilityCard2() {
   const protocols = [
-    { name: "OPC UA", logo: "/assets/protocols/opc-ua.png" },
-    { name: "Modbus", logo: "/assets/protocols/modbus.png" },
-    { name: "MTConnect", logo: "/assets/protocols/mtconnect.png" },
-    { name: "MQTT", logo: "/assets/protocols/mqtt.png" },
-    { name: "FANUC", logo: "/assets/protocols/fanuc.png" },
-    { name: "I/O", logo: "/assets/protocols/io.png" },
-    { name: "HTTP", logo: "/assets/protocols/http.png" },
+    { name: "CNC", logo: "/assets/platform/eagle/CNC.png" },
+    { name: "VMC", logo: "/assets/platform/eagle/VMC.png" },
+    { name: "HMC", logo: "/assets/platform/eagle/HMC.png" },
+    { name: "Molding Machine", logo: "/assets/platform/eagle/molding_machine.png" },
   ];
 
   return (
@@ -19,7 +16,7 @@ export default function CapabilityCard2() {
         {protocols.map((protocol, index) => (
           <div
             key={index}
-            className="flex items-center justify-center h-[80px]"
+            className="flex items-center justify-center h-[156px]"
           >
             <img
               src={protocol.logo}

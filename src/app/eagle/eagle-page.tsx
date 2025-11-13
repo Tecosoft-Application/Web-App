@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useIsomorphicLayoutEffect, useMotionValue } from "framer-motion";
 import svgPaths from "../../imports/svg-uk9fn56ilf";
 import svgPathsFeatures from "../../imports/svg-ssflelrdzm";
 import svgPathsHardware from "../../imports/svg-pycttavgg8";
@@ -83,6 +83,65 @@ const cardAnimation : any = {
       ease: [0.25, 0.1, 0.25, 1],
     },
   }),
+};
+
+const useHasMounted = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  return hasMounted;
+};
+
+const useIsMobile = () => {
+  const hasMounted = useHasMounted();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!hasMounted) return;
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, [hasMounted]);
+
+  return hasMounted ? isMobile : false; // Return a consistent value on the server
+};
+
+// Custom hook to get responsive values based on screen width (1024px - 1800px)
+const useResponsiveValues = () => {
+  const hasMounted = useHasMounted();
+  const [scale, setScale] = useState(1);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!hasMounted) return;
+
+    const calculateScale = () => {
+      const width = window.innerWidth;
+      // Reference width is 1536px (where the design works perfectly)
+      const referenceWidth = 1536;
+
+      // For screens between 1024px and 1800px, calculate a scale factor
+      if (width >= 1024 && width <= 1800) {
+        // Calculate scale relative to reference width
+        // At 1536px: scale = 1.0 (perfect)
+        // At 1024px: scale = 0.667
+        // At 1800px: scale = 1.172
+        const scaleFactor = width / referenceWidth;
+        setScale(scaleFactor);
+      } else if (width < 1024) {
+        setScale(1024 / referenceWidth);
+      } else {
+        setScale(1800 / referenceWidth);
+      }
+    };
+
+    calculateScale();
+    window.addEventListener("resize", calculateScale);
+    return () => window.removeEventListener("resize", calculateScale);
+  }, [hasMounted]);
+
+  return hasMounted ? scale : 1;
 };
 
 function Group() {
@@ -422,9 +481,31 @@ function Frame() {
 }
 
 function Frame26() {
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
+
+  const badgePaddingX = !isMobile ? 12 * responsiveScale : undefined;
+  const badgePaddingY = !isMobile ? 6 * responsiveScale : undefined;
+  const badgeFontSize = !isMobile ? 13.5 * responsiveScale : undefined;
+  const badgeLineHeight = !isMobile ? 18 * responsiveScale : undefined;
+  const badgeGap = !isMobile ? 10 * responsiveScale : undefined;
+
   return (
     <motion.div
-      className="bg-white box-border content-stretch flex gap-[10px] items-center justify-center px-[12px] py-[6px] relative rounded-[60px] shrink-0 max-lg:px-[10px] max-lg:py-[5px]"
+      className="bg-white box-border content-stretch flex items-center justify-center relative rounded-[60px] shrink-0 transition-all duration-300 ease-out
+        lg:px-0 lg:py-0
+        max-lg:px-[12px] max-lg:py-[5px]
+        max-md:px-[11px] max-md:py-[4px]
+        max-sm:px-[10px] max-sm:py-[4px]
+        max-[375px]:px-[9px] max-[375px]:py-[3px]
+        max-[320px]:px-[8px] max-[320px]:py-[3px]"
+      style={{
+        paddingLeft: badgePaddingX,
+        paddingRight: badgePaddingX,
+        paddingTop: badgePaddingY,
+        paddingBottom: badgePaddingY,
+        gap: badgeGap,
+      }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{
@@ -439,7 +520,18 @@ function Frame26() {
         aria-hidden="true"
         className="absolute border border-[#07af40] border-solid inset-0 pointer-events-none rounded-[60px]"
       />
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13.5px] text-nowrap whitespace-pre max-lg:text-[12px] max-lg:leading-[16px]">
+      <p
+        className="font-['Gilroy:Semibold',sans-serif] not-italic relative shrink-0 text-[#636363] text-nowrap whitespace-pre transition-all duration-300 ease-out
+          max-lg:text-[12px] max-lg:leading-[16px]
+          max-md:text-[11px] max-md:leading-[15px]
+          max-sm:text-[10.5px] max-sm:leading-[14px]
+          max-[375px]:text-[10px] max-[375px]:leading-[13px]
+          max-[320px]:text-[9px] max-[320px]:leading-[12px]"
+        style={{
+          fontSize: badgeFontSize,
+          lineHeight: `${badgeLineHeight}px`,
+        }}
+      >
         Connected Ecosystem
       </p>
     </motion.div>
@@ -471,20 +563,56 @@ function IconoirArrowDown5() {
 }
 
 function Frame3() {
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
+
+  const buttonPaddingX = !isMobile ? 14 * responsiveScale : undefined;
+  const buttonPaddingY = !isMobile ? 10 * responsiveScale : undefined;
+  const buttonFontSize = !isMobile ? 15 * responsiveScale : undefined;
+  const buttonLineHeight = !isMobile ? 20 * responsiveScale : undefined;
+  const buttonGap = !isMobile ? 8 * responsiveScale : undefined;
+
   return (
     <motion.div
-      className="bg-[#07af40] box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 cursor-pointer max-lg:px-[12px] max-lg:py-[8px]"
+      className="bg-[#07af40] box-border content-stretch flex items-center justify-center relative shrink-0 cursor-pointer transition-all duration-300 ease-out rounded-sm
+        lg:px-0 lg:py-0
+        max-lg:px-[14px] max-lg:py-[9px]
+        max-md:px-[13px] max-md:py-[8px]
+        max-sm:px-[12px] max-sm:py-[7px] max-sm:w-full
+        max-[375px]:px-[11px] max-[375px]:py-[6px]
+        max-[320px]:px-[10px] max-[320px]:py-[5px]"
+      style={{
+        paddingLeft: buttonPaddingX,
+        paddingRight: buttonPaddingX,
+        paddingTop: buttonPaddingY,
+        paddingBottom: buttonPaddingY,
+        gap: buttonGap,
+      }}
       whileHover={{
         scale: 1.05,
         transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
       }}
       whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
     >
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[15px] text-nowrap text-white whitespace-pre max-lg:text-[13px] max-lg:leading-[18px]">
+      <p
+        className="font-['Gilroy:Semibold',sans-serif] not-italic relative shrink-0 text-nowrap text-white whitespace-pre transition-all duration-300 ease-out
+          max-lg:text-[14px] max-lg:leading-[18px]
+          max-md:text-[13px] max-md:leading-[17px]
+          max-sm:text-[12px] max-sm:leading-[16px]
+          max-[375px]:text-[11.5px] max-[375px]:leading-[15px]
+          max-[320px]:text-[11px] max-[320px]:leading-[14px]"
+        style={{
+          fontSize: buttonFontSize,
+          lineHeight: `${buttonLineHeight}px`,
+        }}
+      >
         Book a Demo
       </p>
       <div
-        className="flex h-[calc(1px*((var(--transform-inner-width)*1)+(var(--transform-inner-height)*0)))] items-center justify-center relative shrink-0 w-[calc(1px*((var(--transform-inner-height)*1)+(var(--transform-inner-width)*0)))]"
+        className="flex h-[calc(1px*((var(--transform-inner-width)*1)+(var(--transform-inner-height)*0)))] items-center justify-center relative shrink-0 w-[calc(1px*((var(--transform-inner-height)*1)+(var(--transform-inner-width)*0)))]
+          max-sm:h-[12px] max-sm:w-[12px]
+          max-[375px]:h-[11px] max-[375px]:w-[11px]
+          max-[320px]:h-[10px] max-[320px]:w-[10px]"
         style={
           {
             "--transform-inner-width": "14",
@@ -501,9 +629,33 @@ function Frame3() {
 }
 
 function Frame24() {
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
+
+  const buttonPaddingX = !isMobile ? 14 * responsiveScale : undefined;
+  const buttonPaddingY = !isMobile ? 10 * responsiveScale : undefined;
+  const buttonFontSize = !isMobile ? 15 * responsiveScale : undefined;
+  const buttonLineHeight = !isMobile ? 20 * responsiveScale : undefined;
+  const buttonGap = !isMobile ? 8 * responsiveScale : undefined;
+  const buttonWidth = !isMobile ? 144 * responsiveScale : undefined;
+
   return (
     <motion.div
-      className="box-border content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 w-[144px] cursor-pointer max-lg:px-[12px] max-lg:py-[8px] max-lg:w-auto"
+      className="box-border content-stretch flex items-center justify-center relative shrink-0 cursor-pointer transition-all duration-300 ease-out rounded-sm
+        lg:px-0 lg:py-0 lg:w-auto
+        max-lg:px-[14px] max-lg:py-[9px] max-lg:w-auto
+        max-md:px-[13px] max-md:py-[8px]
+        max-sm:px-[12px] max-sm:py-[7px] max-sm:w-full
+        max-[375px]:px-[11px] max-[375px]:py-[6px]
+        max-[320px]:px-[10px] max-[320px]:py-[5px]"
+      style={{
+        paddingLeft: buttonPaddingX,
+        paddingRight: buttonPaddingX,
+        paddingTop: buttonPaddingY,
+        paddingBottom: buttonPaddingY,
+        gap: buttonGap,
+        width: buttonWidth,
+      }}
       whileHover={{
         scale: 1.05,
         borderColor: "#07af40",
@@ -513,9 +665,20 @@ function Frame24() {
     >
       <div
         aria-hidden="true"
-        className="absolute border border-[#d2d2d2] border-solid inset-0 pointer-events-none"
+        className="absolute border border-[#d2d2d2] border-solid inset-0 pointer-events-none rounded-sm"
       />
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] not-italic relative shrink-0 text-[#4f4f4f] text-[15px] text-nowrap whitespace-pre max-lg:text-[13px] max-lg:leading-[18px]">
+      <p
+        className="font-['Gilroy:Semibold',sans-serif] not-italic relative shrink-0 text-[#4f4f4f] text-nowrap whitespace-pre transition-all duration-300 ease-out
+          max-lg:text-[14px] max-lg:leading-[18px]
+          max-md:text-[13px] max-md:leading-[17px]
+          max-sm:text-[12px] max-sm:leading-[16px]
+          max-[375px]:text-[11.5px] max-[375px]:leading-[15px]
+          max-[320px]:text-[11px] max-[320px]:leading-[14px]"
+        style={{
+          fontSize: buttonFontSize,
+          lineHeight: `${buttonLineHeight}px`,
+        }}
+      >
         See Capabilities
       </p>
     </motion.div>
@@ -523,9 +686,22 @@ function Frame24() {
 }
 
 function Frame25() {
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
+  const buttonGroupGap = !isMobile ? 16 * responsiveScale : undefined;
+
   return (
     <motion.div
-      className="content-stretch flex gap-[16px] items-center relative shrink-0 max-lg:gap-[12px]"
+      className="content-stretch flex items-center relative shrink-0 transition-all duration-300 ease-out
+        lg:gap-0
+        max-lg:gap-[12px]
+        max-md:gap-[10px]
+        max-sm:gap-[8px] max-sm:flex-col max-sm:w-full
+        max-[375px]:gap-[7px]
+        max-[320px]:gap-[6px]"
+      style={{
+        gap: buttonGroupGap,
+      }}
       variants={fadeInUp}
     >
       <Frame3 />
@@ -535,23 +711,80 @@ function Frame25() {
 }
 
 function Frame40() {
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
+
+  // Base values at 1536px reference width
+  const baseLeft = 281;
+  const baseWidth = 950;
+  const baseTop = 140;
+  const baseTitleSize = 60;
+  const baseTitleLineHeight = 68;
+  const baseDescSize = 16;
+  const baseDescLineHeight = 18;
+  const baseDescWidth = 820;
+  const baseGap = 16;
+
+  // Scaled values (only for desktop >= 1024px)
+  const scaledLeft = !isMobile ? baseLeft * responsiveScale : undefined;
+  const scaledWidth = !isMobile ? baseWidth * responsiveScale : undefined;
+  const scaledTop = !isMobile ? baseTop * responsiveScale : undefined;
+  const scaledTitleSize = !isMobile ? baseTitleSize * responsiveScale : undefined;
+  const scaledTitleLineHeight = !isMobile ? baseTitleLineHeight * responsiveScale : undefined;
+  const scaledDescSize = !isMobile ? baseDescSize * responsiveScale : undefined;
+  const scaledDescLineHeight = !isMobile ? baseDescLineHeight * responsiveScale : undefined;
+  const scaledDescWidth = !isMobile ? baseDescWidth * responsiveScale : undefined;
+  const scaledGap = !isMobile ? baseGap * responsiveScale : undefined;
+
   return (
     <motion.div
-      className="absolute content-stretch flex flex-col gap-[16px] items-center left-[281px] top-[140px] w-[950px] max-lg:left-[50%] max-lg:translate-x-[-50%] max-lg:top-[40px] max-lg:w-[90%] max-lg:max-w-[700px] max-lg:gap-[12px]"
+      className="absolute content-stretch flex flex-col items-center transition-all duration-300 ease-out
+        max-lg:left-[50%] max-lg:translate-x-[-50%] max-lg:top-[52px] max-lg:w-[92%] max-lg:max-w-[700px] max-lg:gap-[12px] max-lg:px-5
+        max-md:top-[47px] max-md:gap-[10px] max-md:px-4
+        max-sm:top-[42px] max-sm:gap-[8px] max-sm:px-3
+        max-[375px]:top-[37px] max-[375px]:gap-[6px] max-[375px]:px-2
+        max-[320px]:top-[35px]"
+      style={!isMobile ? {
+        left: scaledLeft,
+        top: scaledTop,
+        width: scaledWidth,
+        gap: scaledGap,
+      } : undefined}
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
     >
       <Frame26 />
       <motion.p
-        className="font-['Gilroy:Semibold',sans-serif] leading-[76px] min-w-full not-italic relative shrink-0 text-[#282828] text-[0px] text-[60px] text-center tracking-[-0.9px] w-[min-content] max-lg:text-[32px] max-lg:leading-[40px]"
+        className="font-['Gilroy:Semibold',sans-serif] not-italic relative shrink-0 text-[#282828] text-center transition-all duration-300 ease-out
+          lg:w-[min-content] lg:min-w-full
+          max-lg:w-full max-lg:text-[clamp(32px,4.5vw,42px)] max-lg:leading-[clamp(40px,5.5vw,52px)] max-lg:tracking-[-0.2px]
+          max-md:text-[clamp(26px,4.8vw,34px)] max-md:leading-[clamp(34px,6vw,42px)]
+          max-sm:text-[clamp(22px,5.2vw,28px)] max-sm:leading-[clamp(28px,6.5vw,36px)]
+          max-[375px]:text-[21px] max-[375px]:leading-[27px]
+          max-[320px]:text-[19px] max-[320px]:leading-[25px]"
+        style={!isMobile ? {
+          fontSize: scaledTitleSize,
+          lineHeight: `${scaledTitleLineHeight}px`,
+          letterSpacing: -0.9 * responsiveScale,
+        } : undefined}
         variants={fadeInUp}
       >
         <span className="text-[#07af40]">EAGLE:</span>
         <span>{` The Edge Platform Powering Every Connected Factory`}</span>
       </motion.p>
       <motion.p
-        className="font-['Gilroy:Medium',sans-serif] leading-[23px] not-italic opacity-75 relative shrink-0 text-[#636363] text-[16px] text-center w-[820px] max-lg:w-full max-lg:text-[13px] max-lg:leading-[18px]"
+        className="font-['Gilroy:Medium',sans-serif] not-italic opacity-75 relative shrink-0 text-[#636363] text-center transition-all duration-300 ease-out
+          max-lg:w-full max-lg:text-[14px] max-lg:leading-[20px]
+          max-md:text-[13px] max-md:leading-[19px]
+          max-sm:text-[12px] max-sm:leading-[17px]
+          max-[375px]:text-[11.5px] max-[375px]:leading-[16px]
+          max-[320px]:text-[11px] max-[320px]:leading-[15px]"
+        style={!isMobile ? {
+          fontSize: scaledDescSize,
+          lineHeight: `${scaledDescLineHeight}px`,
+          width: scaledDescWidth,
+        } : undefined}
         variants={fadeInUp}
       >
         EAGLE transforms disconnected machines and assets into a connected
@@ -565,6 +798,8 @@ function Frame40() {
 function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const productContainerRef = useRef<HTMLDivElement>(null);
+  const responsiveScale = useResponsiveValues();
+  const isMobile = useIsMobile();
 
   // Track scroll progress of the entire hero section
   const { scrollYProgress } = useScroll({
@@ -582,13 +817,26 @@ function HeroSection() {
   const labelOpacityStart = 0.5;
   const labelOpacityEnd = 0.65;
 
+  // Responsive positions based on screen size
+  // Base values at 1536px reference width (where the design works perfectly)
+  const centerX = 500;
+  const leftEndX = 80;
+  const rightEndX = 922;
+  const startY = 240;
+
+  // Scale positions based on screen width
+  const scaledCenterX = centerX * responsiveScale;
+  const scaledLeftEndX = leftEndX * responsiveScale;
+  const scaledRightEndX = rightEndX * responsiveScale;
+  const scaledStartY = startY * responsiveScale;
+
   // Left side products - move from center to left (all at same time)
   const leftProduct1X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 80]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledLeftEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct1Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 30]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 30 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct1Opacity = useSpring(
@@ -597,11 +845,11 @@ function HeroSection() {
   );
 
   const leftProduct2X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 80]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledLeftEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct2Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 224]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 224 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct2Opacity = useSpring(
@@ -610,11 +858,11 @@ function HeroSection() {
   );
 
   const leftProduct3X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 80]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledLeftEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct3Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 426]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 426 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const leftProduct3Opacity = useSpring(
@@ -624,11 +872,11 @@ function HeroSection() {
 
   // Right side products - move from center to right (all at same time)
   const rightProduct1X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 922]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledRightEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct1Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 30]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 30 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct1Opacity = useSpring(
@@ -637,11 +885,11 @@ function HeroSection() {
   );
 
   const rightProduct2X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 922]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledRightEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct2Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 228]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 228 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct2Opacity = useSpring(
@@ -650,11 +898,11 @@ function HeroSection() {
   );
 
   const rightProduct3X = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [500, 922]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledCenterX, scaledRightEndX]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct3Y = useSpring(
-    useTransform(scrollYProgress, [animationStart, animationEnd], [240, 426]),
+    useTransform(scrollYProgress, [animationStart, animationEnd], [scaledStartY, 426 * responsiveScale]),
     { stiffness: 120, damping: 35, mass: 0.6 }
   );
   const rightProduct3Opacity = useSpring(
@@ -662,11 +910,31 @@ function HeroSection() {
     { stiffness: 120, damping: 35 }
   );
 
-  // Labels opacity only (positions are fixed)
+  // Labels opacity only (positions are fixed but scaled)
   const labelOpacity = useSpring(
     useTransform(scrollYProgress, [labelOpacityStart, labelOpacityEnd], [0, 1]),
     { stiffness: 120, damping: 35 }
   );
+
+  // Responsive label positions
+  const rightLabelX = 997 * responsiveScale;
+  const leftLabelX = 155 * responsiveScale;
+  const labelY1 = 184 * responsiveScale;
+  const labelY2 = 378 * responsiveScale;
+  const labelY3 = 580 * responsiveScale;
+  const centerLabelX = 576.5 * responsiveScale;
+  const centerLabelY = 494.88 * responsiveScale;
+
+  // Responsive container dimensions
+  const containerWidth = 1152 * responsiveScale;
+  const containerHeight = 630 * responsiveScale;
+
+  // Responsive product sizes
+  const productSize = 150 * responsiveScale;
+  const centerProductWidth = 526 * responsiveScale;
+  const centerProductHeight = 391 * responsiveScale;
+  const centerProductLeft = 313 * responsiveScale;
+  const centerProductTop = 103.5 * responsiveScale;
 
   // Center product - subtle scale effect
   const centerScale = useSpring(
@@ -682,7 +950,16 @@ function HeroSection() {
     >
       {/* Background elements */}
       <div
-        className="absolute h-[680px] left-0 top-0 w-[1512px] pointer-events-none max-lg:w-full max-lg:h-[400px]"
+        className="absolute left-0 top-0 pointer-events-none transition-all duration-300 ease-out
+          max-lg:w-full max-lg:h-[520px]
+          max-md:h-[470px]
+          max-sm:h-[420px]
+          max-[375px]:h-[380px]
+          max-[320px]:h-[360px]"
+        style={!isMobile ? {
+          height: 680 * responsiveScale,
+          width: 1512 * responsiveScale,
+        } : undefined}
         data-name="Rectangle"
       >
         <div
@@ -698,7 +975,12 @@ function HeroSection() {
         </div>
       </div>
       <div
-        className="absolute h-[649.752px] left-0 top-[70.25px] w-[1512.25px] pointer-events-none max-lg:hidden"
+        className="absolute left-0 pointer-events-none max-lg:hidden transition-all duration-300 ease-out"
+        style={!isMobile ? {
+          height: 649.752 * responsiveScale,
+          top: 70.25 * responsiveScale,
+          width: 1512.25 * responsiveScale,
+        } : undefined}
         data-name="Union"
       >
         <svg
@@ -732,33 +1014,75 @@ function HeroSection() {
       {/* <Frame /> */}
 
       {/* Hero content - scrolls normally */}
-      <div className="relative h-[420px] max-lg:h-[250px] max-lg:mt-[70px]">
+      <div
+        className="relative transition-all duration-300 ease-out
+          max-lg:h-[310px] max-lg:mt-[85px]
+          max-md:h-[285px] max-md:mt-[75px]
+          max-sm:h-[265px] max-sm:mt-[65px]
+          max-[375px]:h-[245px] max-[375px]:mt-[55px]
+          max-[320px]:h-[235px] max-[320px]:mt-[50px]"
+        style={!isMobile ? {
+          height: 420 * responsiveScale,
+        } : undefined}
+      >
         <Frame40 />
       </div>
 
       {/* Sticky product section - pins while animation plays */}
-      <div className="h-[1800px] relative w-full max-lg:h-auto max-lg:pb-[40px]">
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center max-lg:static max-lg:h-auto max-lg:pt-[90px]">
+      <div className="h-[1800px] relative w-full
+        lg:h-[1800px]
+        max-lg:h-auto max-lg:pb-[50px]
+        max-md:pb-[40px]
+        max-sm:pb-[30px]
+        max-[375px]:pb-[25px]
+        max-[320px]:pb-[20px]">
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center
+          lg:sticky lg:top-0 lg:h-screen
+          max-lg:static max-lg:h-auto max-lg:pt-[100px]
+          max-md:pt-[80px]
+          max-sm:pt-[60px]
+          max-[375px]:pt-[50px]
+          max-[320px]:pt-[40px]">
           {/* Static SVG Image for Mobile */}
-          <div className="hidden max-lg:flex max-lg:justify-center w-full px-4">
-            <img
+          <div className="hidden max-lg:flex max-lg:justify-center w-full
+            max-lg:px-5
+            max-md:px-4
+            max-sm:px-3
+            max-[375px]:px-2">
+            <motion.img
               src={imgStaticHeroMobile}
               alt="Eagle Platform Connected Factory"
-              className="w-full max-w-[550px] h-auto"
+              className="w-full h-auto
+                max-lg:max-w-[600px]
+                max-md:max-w-[520px]
+                max-sm:max-w-[420px]
+                max-[375px]:max-w-[360px]
+                max-[320px]:max-w-[300px]"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             />
           </div>
 
           {/* Animated Product Section for Desktop */}
           <motion.div
             ref={productContainerRef}
-            className="relative h-[630px] w-[1152px] max-lg:hidden"
+            className="relative max-lg:hidden transition-all duration-300 ease-out"
+            style={{
+              width: containerWidth,
+              height: containerHeight,
+            }}
             data-name="1"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div
-              className="absolute h-[630px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[1152px]"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
+              style={{
+                width: containerWidth,
+                height: containerHeight,
+              }}
               data-name="Subtract"
             >
               <div className="absolute inset-[-0.79%_-0.43%]">
@@ -815,11 +1139,13 @@ function HeroSection() {
 
             {/* Right side products with parallax */}
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%] transition-all duration-300 ease-out"
               style={{
                 left: rightProduct1X,
                 top: rightProduct1Y,
                 opacity: rightProduct1Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -831,22 +1157,25 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-90px)] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-90px)] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 997,
-                top: 184,
+                left: rightLabelX,
+                top: labelY1,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               Manual Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%] max-lg:translate-y-[-50%]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%] max-lg:translate-y-[-50%] transition-all duration-300 ease-out"
               style={{
                 left: rightProduct2X,
                 top: rightProduct2Y,
                 opacity: rightProduct2Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -858,22 +1187,25 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 997,
-                top: 382,
+                left: rightLabelX,
+                top: labelY2,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               Press Break
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[calc(100%-40px)] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-x-[-100%] transition-all duration-300 ease-out"
               style={{
                 left: rightProduct3X,
                 top: rightProduct3Y,
                 opacity: rightProduct3Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -885,11 +1217,12 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[calc(100%-50px)] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 997,
-                top: 580,
+                left: rightLabelX,
+                top: labelY3,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               Laser Cutting
@@ -897,11 +1230,13 @@ function HeroSection() {
 
             {/* Left side products with parallax */}
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[40px] max-lg:!top-[20px] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] transition-all duration-300 ease-out"
               style={{
                 left: leftProduct1X,
                 top: leftProduct1Y,
                 opacity: leftProduct1Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -913,22 +1248,25 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[90px] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[90px] max-lg:!top-[125px] max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 155,
-                top: 184,
+                left: leftLabelX,
+                top: labelY1,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               CNC Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-y-[-50%]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[40px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] max-lg:translate-y-[-50%] transition-all duration-300 ease-out"
               style={{
                 left: leftProduct2X,
                 top: leftProduct2Y,
                 opacity: leftProduct2Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -940,22 +1278,25 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!top-[50%] max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 155,
-                top: 378,
+                left: leftLabelX,
+                top: labelY2,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               VMC Machine
             </motion.p>
 
             <motion.div
-              className="absolute rounded-[12px] size-[150px] z-10 max-lg:!left-[40px] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px]"
+              className="absolute rounded-[12px] z-10 max-lg:!left-[40px] max-lg:!bottom-[20px] max-lg:!top-auto max-lg:!opacity-100 max-lg:w-[100px] max-lg:h-[100px] transition-all duration-300 ease-out"
               style={{
                 left: leftProduct3X,
                 top: leftProduct3Y,
                 opacity: leftProduct3Opacity,
+                width: productSize,
+                height: productSize,
               }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[12px]">
@@ -967,11 +1308,12 @@ function HeroSection() {
               </div>
             </motion.div>
             <motion.p
-              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-[16px] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px]"
+              className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-10 max-lg:!left-[50px] max-lg:!bottom-[-5px] max-lg:!top-auto max-lg:!opacity-100 max-lg:text-[12px] transition-all duration-300 ease-out"
               style={{
-                left: 155,
-                top: 580,
+                left: leftLabelX,
+                top: labelY3,
                 opacity: labelOpacity,
+                fontSize: 16 * responsiveScale,
               }}
             >
               HMC Machine
@@ -979,8 +1321,14 @@ function HeroSection() {
 
             {/* Center product - always visible with subtle scale */}
             <motion.div
-              className="absolute rounded-[16px] h-[391px] left-[313px] top-[103.5px] w-[526px] z-20 max-lg:!scale-100 max-lg:h-[280px] max-lg:w-[380px] max-lg:left-[50%] max-lg:top-[50%] max-lg:translate-x-[-50%] max-lg:translate-y-[-50%]"
-              style={{ scale: centerScale }}
+              className="absolute rounded-[16px] z-20 max-lg:!scale-100 max-lg:h-[280px] max-lg:w-[380px] max-lg:left-[50%] max-lg:top-[50%] max-lg:translate-x-[-50%] max-lg:translate-y-[-50%] transition-all duration-300 ease-out"
+              style={{
+                scale: centerScale,
+                width: centerProductWidth,
+                height: centerProductHeight,
+                left: centerProductLeft,
+                top: centerProductTop,
+              }}
             >
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[16px]">
                 <img
@@ -990,7 +1338,14 @@ function HeroSection() {
                 />
               </div>
             </motion.div>
-            <p className="absolute font-['Gilroy:Semibold',sans-serif] leading-[24px] left-[576.5px] not-italic text-[#007aaa] text-[20px] text-center text-nowrap top-[494.88px] translate-x-[-50%] whitespace-pre z-20 max-lg:left-[50%] max-lg:bottom-[-30px] max-lg:top-auto max-lg:text-[14px]">
+            <p
+              className="absolute font-['Gilroy:Semibold',sans-serif] leading-[24px] not-italic text-[#007aaa] text-center text-nowrap translate-x-[-50%] whitespace-pre z-20 max-lg:left-[50%] max-lg:bottom-[-30px] max-lg:top-auto max-lg:text-[14px] transition-all duration-300 ease-out"
+              style={{
+                left: centerLabelX,
+                top: centerLabelY,
+                fontSize: 20 * responsiveScale,
+              }}
+            >
               Industrial Display/HMI Panel
             </p>
           </motion.div>
@@ -1001,18 +1356,20 @@ function HeroSection() {
 }
 
 function Features() {
+  const isMobile = useIsMobile();
+
   return (
     <div
-      className="relative shrink-0 w-full flex items-center justify-center py-[100px]"
+      className="relative shrink-0 w-full flex items-center justify-center py-[100px] max-lg:py-[60px]"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(0, 184, 219, 0.1) 0%, rgba(0, 184, 219, 0.1) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%))",
       }}
     >
-      <div className="relative h-[840px] w-[1512px]" data-name="Features">
-        <div className="absolute bottom-0 flex h-[150px] items-center justify-center left-0 w-[1512px]">
+      <div className="relative lg:h-[840px] lg:w-[1512px] w-full px-4 lg:px-0 grid grid-cols-1 lg:block gap-4" data-name="Features">
+        <div className="absolute bottom-0 flex h-[150px] items-center justify-center left-0 w-full lg:w-[1512px] max-lg:hidden">
           <div className="flex-none scale-y-[-100%]">
-            <div className="h-[150px] relative w-[1512px]">
+            <div className="h-[150px] relative w-full lg:w-[1512px]">
               <img
                 alt=""
                 className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"
@@ -1021,7 +1378,7 @@ function Features() {
             </div>
           </div>
         </div>
-        <div className="absolute h-[150px] left-0 top-0 w-[1512px]">
+        <div className="absolute h-[150px] left-0 top-0 w-full lg:w-[1512px] max-lg:hidden">
           <img
             alt=""
             className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"
@@ -1031,13 +1388,21 @@ function Features() {
 
         {/* Card 1: Data Acquisition & Preprocessing */}
         <motion.div
-          className="group absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] items-start justify-end left-[180px] overflow-clip p-[16px] rounded-[12px] size-[220px] top-[127px]"
-          custom={0}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] items-start justify-end lg:left-[180px] overflow-clip p-[16px] rounded-[12px] lg:size-[220px] lg:top-[127px] h-[220px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 0}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Data Acquisition & Preprocessing. EAGLE connects to any machine, sensor, or system to collect and preprocess data at the source."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1053,6 +1418,7 @@ function Features() {
           <div
             className="overflow-clip relative shrink-0 size-[30px]"
             data-name="floppy-disk"
+            aria-hidden="true"
           >
             <div className="absolute inset-[8.33%_12.5%]" data-name="elements">
               <div className="absolute inset-[-3.75%_-4.17%]">
@@ -1096,13 +1462,21 @@ function Features() {
 
         {/* Card 2: Integrates to MES/ERP/Cloud */}
         <motion.div
-          className="group absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] h-[98px] items-center left-[424px] p-[16px] rounded-[12px] top-[127px] w-[620px]"
-          custom={1}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[424px] p-[16px] rounded-[12px] lg:top-[127px] lg:w-[620px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 1}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Integrates to MES/ERP/Cloud. Seamlessly forward data to MES, ERP, and cloud systems through built-in APIs."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1122,7 +1496,7 @@ function Features() {
                   "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               }}
             />
-            <div
+          <div aria-hidden="true"
               className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0 z-10"
               data-name="vuesax/linear/refresh-square-2"
             >
@@ -1180,13 +1554,21 @@ function Features() {
 
         {/* Card 3: Flexible Edge Intelligence */}
         <motion.div
-          className="group absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] h-[98px] items-center left-[424px] p-[16px] rounded-[12px] top-[249px] w-[620px]"
-          custom={2}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[424px] p-[16px] rounded-[12px] lg:top-[249px] lg:w-[620px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 2}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Flexible Edge Intelligence. Smart edge logic enables faster decisions and lighter upstream data processing."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1206,7 +1588,7 @@ function Features() {
                   "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               }}
             />
-            <div
+          <div aria-hidden="true"
               className="relative shrink-0 size-[30px] z-10"
               data-name="vuesax/linear/cpu"
             >
@@ -1352,13 +1734,21 @@ function Features() {
 
         {/* Card 4: One-box Solution */}
         <motion.div
-          className="group absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[220px] items-start justify-end left-[180px] overflow-clip p-[16px] rounded-[12px] top-[371px] w-[440px]"
-          custom={3}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[220px] items-start justify-end lg:left-[180px] overflow-clip p-[16px] rounded-[12px] lg:top-[371px] lg:w-[440px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 3}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="One-box Solution. A single, ruggedized device for data acquisition, processing, and control."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1374,6 +1764,7 @@ function Features() {
           <div
             className="relative shrink-0 size-[30px]"
             data-name="vuesax/linear/3d-square"
+            aria-hidden="true"
           >
             <div
               className="absolute contents inset-0"
@@ -1436,13 +1827,21 @@ function Features() {
 
         {/* Card 5: Real-time KPIs */}
         <motion.div
-          className="group absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] h-[98px] items-center left-[180px] p-[16px] rounded-[12px] top-[615px] w-[440px]"
-          custom={4}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[180px] p-[16px] rounded-[12px] lg:top-[615px] lg:w-[440px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 4}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Real-time KPIs. Edge metrics reveal instant performance insights with minimal latency."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1462,7 +1861,7 @@ function Features() {
                   "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               }}
             />
-            <div
+          <div aria-hidden="true"
               className="relative shrink-0 size-[30px] z-10"
               data-name="vuesax/linear/cloud"
             >
@@ -1514,13 +1913,21 @@ function Features() {
 
         {/* Card 6: Connect • Collect • Control */}
         <motion.div
-          className="group absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] h-[120px] items-center left-[644px] p-[16px] rounded-[12px] top-[371px] w-[400px]"
-          custom={5}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[120px] items-center lg:left-[644px] p-[16px] rounded-[12px] lg:top-[371px] lg:w-[400px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 5}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Connect, Collect, Control. Connect devices, gather telemetry, and control machines from the edge platform."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1540,7 +1947,7 @@ function Features() {
                   "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               }}
             />
-            <div
+          <div aria-hidden="true"
               className="relative shrink-0 size-[30px] z-10"
               data-name="vuesax/linear/link"
             >
@@ -1590,13 +1997,21 @@ function Features() {
 
         {/* Card 7: Closed-loop System */}
         <motion.div
-          className="group absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start justify-end left-[644px] overflow-clip p-[16px] rounded-[12px] top-[515px] w-[400px]"
-          custom={6}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start justify-end lg:left-[644px] overflow-clip p-[16px] rounded-[12px] lg:top-[515px] lg:w-[400px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 6}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Closed-loop System. Enables automated adjustments and optimizations based on real-time data."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1612,6 +2027,7 @@ function Features() {
           <div
             className="relative shrink-0 size-[30px]"
             data-name="vuesax/linear/grid-lock"
+            aria-hidden="true"
           >
             <div
               className="absolute contents inset-0"
@@ -1702,13 +2118,21 @@ function Features() {
 
         {/* Card 8: Operator Dashboard */}
         <motion.div
-          className="group absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[364px] items-start justify-end left-[1068px] overflow-clip p-[16px] rounded-[12px] top-[127px] w-[264px]"
-          custom={7}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[220px] lg:h-[364px] items-start justify-end lg:left-[1068px] overflow-clip p-[16px] rounded-[12px] lg:top-[127px] lg:w-[264px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 7}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Operator Dashboard. Intuitive interface for real-time monitoring and control."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1724,6 +2148,7 @@ function Features() {
           <div
             className="relative shrink-0 size-[30px]"
             data-name="vuesax/linear/3d-square"
+            aria-hidden="true"
           >
             <div
               className="absolute contents inset-0"
@@ -1786,13 +2211,21 @@ function Features() {
 
         {/* Card 9: Store & Forward */}
         <motion.div
-          className="group absolute bg-white box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start left-[1068px] p-[16px] rounded-[12px] top-[515px] w-[264px]"
-          custom={8}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={cardAnimation}
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start lg:left-[1068px] p-[16px] rounded-[12px] lg:top-[515px] lg:w-[264px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          custom={isMobile ? undefined : 8}
+          initial={isMobile ? "visible" : "hidden"}
+          whileInView={isMobile ? undefined : "visible"}
+          exit={isMobile ? undefined : "exit"}
+          viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
+          variants={isMobile ? undefined : cardAnimation}
+          role="button"
+          tabIndex={0}
+          aria-label="Store & Forward. Local buffering prevents data loss and ensures delivery after reconnection."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.currentTarget.click();
+            }
+          }}
         >
           <div
             aria-hidden="true"
@@ -1812,7 +2245,7 @@ function Features() {
                   "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
               }}
             />
-            <div
+          <div aria-hidden="true"
               className="relative shrink-0 size-[30px] z-10"
               data-name="vuesax/linear/driver"
             >
@@ -2013,7 +2446,7 @@ function HardwareSlider() {
 
   return (
     <motion.div
-      className="bg-white relative shrink-0 w-[1512px] h-[720px]"
+      className="bg-white relative shrink-0 w-full lg:w-[1512px] h-auto lg:h-[720px] py-[60px] lg:py-0"
       data-name="Hardware features"
       initial="hidden"
       whileInView="visible"
@@ -2028,13 +2461,13 @@ function HardwareSlider() {
     >
       {/* Header */}
       <motion.div
-        className="absolute content-stretch flex gap-[32px] items-start justify-center left-[581px] top-[50px]"
+        className="lg:absolute relative content-stretch flex gap-[32px] max-lg:gap-[16px] items-center max-lg:items-center justify-center lg:left-[581px] lg:top-[50px] max-lg:mb-[40px]"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="h-[84px] relative shrink-0 w-[78px]">
+        <div className="h-[84px] max-lg:h-[60px] relative shrink-0 w-[78px] max-lg:w-[56px]">
           <div className="absolute inset-[-21.43%_-25.64%_-26.19%_-25.64%]">
             <svg
               className="block size-full"
@@ -2173,7 +2606,7 @@ function HardwareSlider() {
         {/* Title */}
         <motion.p
           key={`title-${currentSlide}`}
-          className="absolute font-['Gilroy:Bold',sans-serif] font-bold leading-[24px] left-[426px] not-italic text-[#282828] text-[20px] text-center top-[408px] whitespace-pre z-20 w-[180px]"
+          className="lg:absolute relative font-['Gilroy:Bold',sans-serif] font-bold leading-[24px] max-lg:leading-[22px] lg:left-[426px] not-italic text-[#282828] text-[20px] max-lg:text-[18px] text-center lg:top-[408px] max-lg:whitespace-normal whitespace-pre z-20 w-[180px] max-lg:w-full max-lg:mb-[20px]"
           initial={{ opacity: 0, y: 10 }}
           animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
@@ -2256,7 +2689,7 @@ function HardwareSlider() {
         </motion.div>
 
         {/* Connector Line 2 - Middle */}
-        <div className="absolute h-[53px] left-[348px] top-[250px] w-[448.003px] z-20">
+        <div className="absolute h-[53px] left-[348px] top-[250px] w-[448.003px] z-20 max-lg:hidden">
           <svg
             className="block size-full"
             fill="none"
@@ -2347,7 +2780,7 @@ function HardwareSlider() {
       </div>
 
       {/* Pagination Dots */}
-      <div className="absolute h-[14px] left-[652px] top-[644px] w-[208px]">
+      <div className="lg:absolute relative h-[14px] lg:left-[652px] lg:top-[644px] w-[208px] max-lg:mx-auto max-lg:mt-[20px]">
         <svg
           className="block size-full"
           fill="none"
@@ -2386,10 +2819,10 @@ export default function App() {
       data-name="Eagle"
     >
       <HeroSection />
-      {/* <Features />
+      <Features />
       <HardwareSlider />
       <CapabilitiesSection />
-      <BenefitsSection /> */}
+      <BenefitsSection />
     </div>
   );
 }

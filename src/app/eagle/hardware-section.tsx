@@ -22,6 +22,8 @@ function HardwareSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const hardwareData = [
     {
@@ -117,11 +119,46 @@ function HardwareSection() {
     }
   }, [currentSlide, isInView]);
 
+  // Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      // Swipe left - next slide
+      setCurrentSlide((prev) => (prev + 1) % hardwareData.length);
+      setHasAnimated(false);
+      setTimeout(() => setHasAnimated(true), 100);
+    }
+
+    if (isRightSwipe) {
+      // Swipe right - previous slide
+      setCurrentSlide((prev) => (prev - 1 + hardwareData.length) % hardwareData.length);
+      setHasAnimated(false);
+      setTimeout(() => setHasAnimated(true), 100);
+    }
+
+    // Reset touch values
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   const currentHardware = hardwareData[currentSlide];
 
   return (
     <motion.div
-      className="bg-white relative shrink-0 w-full lg:w-[1512px] h-auto lg:h-[720px] py-[60px] lg:py-0"
+      className="bg-white relative shrink-0 w-full max-w-[95vw] lg:max-w-[1512px] xl:max-w-[1400px] 2xl:max-w-[1600px] mx-auto h-auto lg:h-[600px] xl:h-[680px] 2xl:h-[720px] py-[60px] lg:py-0 transition-all duration-300"
       data-name="Hardware features"
       initial="hidden"
       whileInView="visible"
@@ -136,13 +173,13 @@ function HardwareSection() {
     >
       {/* Header */}
       <motion.div
-        className="lg:absolute relative content-stretch flex gap-[32px] max-lg:gap-[16px] items-center max-lg:items-center justify-center lg:left-[581px] lg:top-[50px] max-lg:mb-[40px]"
+        className="lg:absolute relative content-stretch flex gap-[24px] xl:gap-[32px] max-lg:gap-[16px] items-center max-lg:items-center justify-center lg:left-[38.4%] lg:top-[6.94%] max-lg:mb-[40px]"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="h-[84px] max-lg:h-[60px] relative shrink-0 w-[78px] max-lg:w-[56px]">
+        <div className="h-[70px] xl:h-[84px] max-lg:h-[60px] relative shrink-0 w-[65px] xl:w-[78px] max-lg:w-[56px]">
           <div className="absolute inset-[-21.43%_-25.64%_-26.19%_-25.64%]">
             <svg
               className="block size-full"
@@ -239,16 +276,133 @@ function HardwareSection() {
             </svg>
           </div>
         </div>
-        <p className="font-['Gilroy:Semibold',sans-serif] leading-[42px] not-italic relative shrink-0 text-[#0098d4] text-[33px] w-[240px]">
+        <p className="font-['Gilroy:Semibold',sans-serif] leading-[36px] xl:leading-[42px] not-italic relative shrink-0 text-[#0098d4] text-[28px] xl:text-[33px] w-[200px] xl:w-[240px]">
           Edge Hardware Highlights
         </p>
       </motion.div>
 
-      {/* Main Content Container */}
-      <div className="absolute left-[49.7px] top-[75.89px] w-[1412px] h-[590px]">
+      {/* Mobile Content - Visible only on mobile */}
+      <div
+        className="lg:hidden flex flex-col items-center px-4 space-y-6 relative"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Navigation Arrows for Mobile */}
+        <div className="absolute left-0 right-0 top-[140px] flex justify-between px-2 z-10 pointer-events-none">
+          <motion.button
+            onClick={() => {
+              setCurrentSlide((prev) => (prev - 1 + hardwareData.length) % hardwareData.length);
+              setHasAnimated(false);
+              setTimeout(() => setHasAnimated(true), 100);
+            }}
+            className="pointer-events-auto bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white transition-colors"
+            whileTap={{ scale: 0.9 }}
+            aria-label="Previous slide"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18L9 12L15 6" stroke="#0098d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </motion.button>
+          <motion.button
+            onClick={() => {
+              setCurrentSlide((prev) => (prev + 1) % hardwareData.length);
+              setHasAnimated(false);
+              setTimeout(() => setHasAnimated(true), 100);
+            }}
+            className="pointer-events-auto bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white transition-colors"
+            whileTap={{ scale: 0.9 }}
+            aria-label="Next slide"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18L15 12L9 6" stroke="#0098d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </motion.button>
+        </div>
+
+        {/* Hardware Image for Mobile */}
+        <motion.div
+          key={`mobile-image-${currentSlide}`}
+          className="relative w-full max-w-[400px] h-[280px] flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={hasAnimated ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-[#E8F4F8] to-[#F0F9FB] rounded-[16px]" />
+          <div className="relative w-[90%] h-[90%]">
+            <img
+              alt={currentHardware.title}
+              className="w-full h-full object-contain"
+              src={currentHardware.image}
+              style={{ mixBlendMode: "multiply" }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Slide Counter for Mobile */}
+        <div className="flex items-center gap-2">
+          <motion.h3
+            key={`mobile-title-${currentSlide}`}
+            className="font-['Gilroy:Bold',sans-serif] font-bold text-[20px] text-[#282828] text-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
+            {currentHardware.title}
+          </motion.h3>
+        </div>
+
+        {/* Progress Indicator */}
+        <div className="flex items-center gap-2 text-[14px] text-[#8e8e8e] font-['Gilroy:Medium',sans-serif]">
+          <span>{currentSlide + 1}</span>
+          <span>/</span>
+          <span>{hardwareData.length}</span>
+        </div>
+
+        {/* Features for Mobile */}
+        <div className="w-full max-w-[500px] space-y-4 pb-4">
+          {currentHardware.features.map((feature, index) => (
+            <motion.div
+              key={`mobile-feature-${currentSlide}-${index}`}
+              className="flex items-start gap-3 p-4 bg-white rounded-[12px] shadow-sm border border-gray-100"
+              initial={{ opacity: 0, x: -20 }}
+              animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.15, ease: "easeOut" }}
+            >
+              <div className="flex-shrink-0 mt-1">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7" fill="#069235" stroke="white" strokeWidth="2" />
+                </svg>
+              </div>
+              <p className="font-['Gilroy:Medium',sans-serif] text-[15px] leading-[22px] text-[#636363]">
+                {feature}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Swipe Hint - Animated */}
+        <motion.div
+          className="flex items-center gap-2 text-[13px] text-[#b0b0b0] font-['Gilroy:Regular',sans-serif] pb-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 3, repeat: 2, repeatDelay: 2 }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Swipe to explore more</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M9 5L16 12L9 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.div>
+      </div>
+
+      {/* Desktop Content Container - Hidden on mobile */}
+      <div className="max-lg:hidden absolute left-[3.3%] top-[10.54%] w-[93.4%] h-[81.94%]">
         {/* Background Box for Image */}
         <motion.div
-          className="absolute left-[130px] top-[118px] rounded-[16px] size-[386px] bg-gradient-to-br from-[#E8F4F8] to-[#F0F9FB] z-0"
+          className="absolute left-[9.2%] top-[20%] rounded-[12px] xl:rounded-[16px] w-[27.35%] h-[65.42%] bg-gradient-to-br from-[#E8F4F8] to-[#F0F9FB] z-0"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -258,7 +412,7 @@ function HardwareSection() {
         {/* Hardware Image - Rotated */}
         <motion.div
           key={`image-${currentSlide}`}
-          className="absolute left-[80px] top-[150px] w-[524.757px] h-[370.991px] z-1"
+          className="absolute left-[5.67%] top-[25.42%] w-[37.17%] h-[62.88%] z-1"
           style={{ transformOrigin: "center" }}
           initial={{ opacity: 0, scale: 0.8, rotate: 328 }}
           animate={
@@ -281,7 +435,7 @@ function HardwareSection() {
         {/* Title */}
         <motion.p
           key={`title-${currentSlide}`}
-          className="lg:absolute relative font-['Gilroy:Bold',sans-serif] font-bold leading-[24px] max-lg:leading-[22px] lg:left-[426px] not-italic text-[#282828] text-[20px] max-lg:text-[18px] text-center lg:top-[408px] max-lg:whitespace-normal whitespace-pre z-20 w-[180px] max-lg:w-full max-lg:mb-[20px]"
+          className="lg:absolute relative font-['Gilroy:Bold',sans-serif] font-bold leading-[22px] xl:leading-[24px] max-lg:leading-[22px] lg:left-[30.18%] not-italic text-[#282828] text-[18px] xl:text-[20px] max-lg:text-[18px] text-center lg:top-[69.15%] max-lg:whitespace-normal whitespace-pre z-20 w-[150px] xl:w-[180px] max-lg:w-full max-lg:mb-[20px]"
           initial={{ opacity: 0, y: 10 }}
           animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
@@ -292,7 +446,7 @@ function HardwareSection() {
         {/* Feature Texts */}
         <motion.p
           key={`feature1-${currentSlide}`}
-          className="absolute font-['Gilroy:Medium',sans-serif] leading-[23px] left-[910px] not-italic text-[#636363] text-[18px] top-[136px] w-[350px] z-20"
+          className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] xl:leading-[23px] left-[64.45%] not-italic text-[#636363] text-[16px] xl:text-[18px] top-[23.05%] w-[24.79%] z-20"
           initial={{ opacity: 0, x: 20 }}
           animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
           transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
@@ -301,7 +455,7 @@ function HardwareSection() {
         </motion.p>
         <motion.p
           key={`feature2-${currentSlide}`}
-          className="absolute font-['Gilroy:Medium',sans-serif] leading-[23px] left-[824px] not-italic text-[#636363] text-[18px] top-[295px] w-[458px] z-20"
+          className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] xl:leading-[23px] left-[58.36%] not-italic text-[#636363] text-[16px] xl:text-[18px] top-[50%] w-[32.44%] z-20"
           initial={{ opacity: 0, x: 20 }}
           animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
           transition={{ duration: 0.6, delay: 0.75, ease: "easeOut" }}
@@ -310,7 +464,7 @@ function HardwareSection() {
         </motion.p>
         <motion.p
           key={`feature3-${currentSlide}`}
-          className="absolute font-['Gilroy:Medium',sans-serif] leading-[23px] left-[968px] not-italic text-[#636363] text-[18px] top-[439px] w-[314px] z-20"
+          className="absolute font-['Gilroy:Medium',sans-serif] leading-[20px] xl:leading-[23px] left-[68.56%] not-italic text-[#636363] text-[16px] xl:text-[18px] top-[74.41%] w-[22.24%] z-20"
           initial={{ opacity: 0, x: 20 }}
           animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
           transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
@@ -319,7 +473,7 @@ function HardwareSection() {
         </motion.p>
 
         {/* Connector Line 1 - Top */}
-        <div className="absolute h-[115px] left-[452px] top-[144px] w-[430px] z-20">
+        <div className="absolute h-[19.49%] left-[32.01%] top-[24.41%] w-[30.45%] z-20">
           <svg
             className="block size-full"
             fill="none"
@@ -341,7 +495,7 @@ function HardwareSection() {
         {/* Green Dot 1 */}
         <motion.div
           key={`dot1-${currentSlide}`}
-          className="absolute left-[882px] size-[16px] top-[136px] z-20"
+          className="absolute left-[62.47%] w-[1.13%] h-[2.71%] top-[23.05%] z-20"
           initial={{ scale: 0 }}
           animate={hasAnimated ? { scale: 1 } : { scale: 0 }}
           transition={{ duration: 0.3, delay: 1.2, ease: "backOut" }}
@@ -364,7 +518,7 @@ function HardwareSection() {
         </motion.div>
 
         {/* Connector Line 2 - Middle */}
-        <div className="absolute h-[53px] left-[348px] top-[250px] w-[448.003px] z-20 max-lg:hidden">
+        <div className="absolute h-[8.98%] left-[24.65%] top-[42.37%] w-[31.72%] z-20 max-lg:hidden">
           <svg
             className="block size-full"
             fill="none"
@@ -386,7 +540,7 @@ function HardwareSection() {
         {/* Green Dot 2 */}
         <motion.div
           key={`dot2-${currentSlide}`}
-          className="absolute left-[796px] size-[16px] top-[295px] z-20"
+          className="absolute left-[56.37%] w-[1.13%] h-[2.71%] top-[50%] z-20"
           initial={{ scale: 0 }}
           animate={hasAnimated ? { scale: 1 } : { scale: 0 }}
           transition={{ duration: 0.3, delay: 1.35, ease: "backOut" }}
@@ -409,7 +563,7 @@ function HardwareSection() {
         </motion.div>
 
         {/* Connector Line 3 - Bottom */}
-        <div className="absolute h-[40px] left-[268px] top-[407px] w-[672.005px] z-20">
+        <div className="absolute h-[6.78%] left-[18.98%] top-[68.98%] w-[47.59%] z-20">
           <svg
             className="block size-full"
             fill="none"
@@ -431,7 +585,7 @@ function HardwareSection() {
         {/* Green Dot 3 */}
         <motion.div
           key={`dot3-${currentSlide}`}
-          className="absolute left-[940px] size-[16px] top-[439px] z-20"
+          className="absolute left-[66.57%] w-[1.13%] h-[2.71%] top-[74.41%] z-20"
           initial={{ scale: 0 }}
           animate={hasAnimated ? { scale: 1 } : { scale: 0 }}
           transition={{ duration: 0.3, delay: 1.5, ease: "backOut" }}
@@ -455,7 +609,7 @@ function HardwareSection() {
       </div>
 
       {/* Pagination Dots */}
-      <div className="lg:absolute relative h-[14px] lg:left-[652px] lg:top-[644px] w-[208px] max-lg:mx-auto max-lg:mt-[20px]">
+      <div className="lg:absolute relative h-[12px] xl:h-[14px] lg:left-[43.12%] lg:top-[89.44%] w-[180px] xl:w-[208px] max-lg:mx-auto max-lg:mt-[20px]">
         <svg
           className="block size-full"
           fill="none"
@@ -475,9 +629,10 @@ function HardwareSection() {
                   setHasAnimated(false);
                   setTimeout(() => setHasAnimated(true), 100);
                 }}
-                className="cursor-pointer"
-                whileHover={{ scale: 1.2 }}
-                transition={{ duration: 0.3 }}
+                className="cursor-pointer hover:opacity-80 transition-opacity"
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               />
             ))}
           </g>

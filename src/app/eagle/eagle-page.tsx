@@ -14,7 +14,7 @@ export default function EagePage() {
     >
       <HeroSection />
       <FeatureSection />
-      {/* <HardwareSection /> */}
+      <HardwareSection />
       {/* <CapabilitiesSection /> */}
       {/* <BenefitsSection /> */}
     </div>

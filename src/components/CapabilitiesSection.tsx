@@ -18,13 +18,13 @@ export default function CapabilitiesSection() {
   const card1Opacity = useTransform(scrollYProgress, [0.28, 0.33], [1, 0]);
 
   // Card 2 animations - moves up second (0.33 to 0.66)
-  const card2Y = useTransform(scrollYProgress, [0, 0.33, 0.66], [92, 0, -500]);
+  const card2Y = useTransform(scrollYProgress, [0, 0.33, 0.66], [52, 0, -500]);
   const card2Scale = useTransform(scrollYProgress, [0, 0.33], [0.913, 1]);
   const card2Blur = useTransform(scrollYProgress, [0, 0.33], [2.21, 0]);
   const card2Opacity = useTransform(scrollYProgress, [0.61, 0.66], [1, 0]);
 
   // Card 3 animations - moves up last (0.66 to 1)
-  const card3Y = useTransform(scrollYProgress, [0, 0.33, 0.66], [158, 118, 0]);
+  const card3Y = useTransform(scrollYProgress, [0, 0.33, 0.66], [118, 78, 0]);
   const card3Scale = useTransform(scrollYProgress, [0, 0.33, 0.66], [0.826, 0.869, 1]);
   const card3Blur = useTransform(scrollYProgress, [0, 0.66], [2, 0]);
 

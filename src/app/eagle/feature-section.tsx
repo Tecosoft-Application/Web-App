@@ -58,6 +58,31 @@ const useIsMobile = () => {
   return hasMounted ? isMobile : false; // Return a consistent value on the server
 };
 
+// Enhanced animation variants with smoother transitions
+const cardAnimationEnhanced: any = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.15,
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+  exit: (i: number) => ({
+    opacity: 0,
+    y: 40,
+    scale: 0.95,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
 function FeatureSection() {
   const isMobile = useIsMobile();
 
@@ -70,12 +95,15 @@ function FeatureSection() {
       }}
     >
       <div
-        className="relative lg:h-[840px] lg:w-[1512px] w-full px-4 lg:px-0 grid grid-cols-1 lg:block gap-4"
+        className="relative w-full max-w-[95vw] lg:max-w-[1512px] xl:max-w-[1400px] 2xl:max-w-[1600px] px-4 lg:px-0 grid grid-cols-1 lg:block gap-4 mx-auto lg:h-[700px] xl:h-[800px] 2xl:h-[840px] transition-all duration-300"
         data-name="Features"
+        style={{
+          aspectRatio: "1512/840",
+        }}
       >
-        <div className="absolute bottom-0 flex h-[150px] items-center justify-center left-0 w-full lg:w-[1512px] max-lg:hidden">
+        <div className="absolute bottom-0 flex h-[120px] xl:h-[140px] 2xl:h-[150px] items-center justify-center left-0 w-full max-lg:hidden">
           <div className="flex-none scale-y-[-100%]">
-            <div className="h-[150px] relative w-full lg:w-[1512px]">
+            <div className="h-[120px] xl:h-[140px] 2xl:h-[150px] relative w-full">
               <img
                 alt=""
                 className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"
@@ -84,7 +112,7 @@ function FeatureSection() {
             </div>
           </div>
         </div>
-        <div className="absolute h-[150px] left-0 top-0 w-full lg:w-[1512px] max-lg:hidden">
+        <div className="absolute h-[120px] xl:h-[140px] 2xl:h-[150px] left-0 top-0 w-full max-lg:hidden">
           <img
             alt=""
             className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"
@@ -94,13 +122,13 @@ function FeatureSection() {
 
         {/* Card 1: Data Acquisition & Preprocessing */}
         <motion.div
-          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] items-start justify-end lg:left-[180px] overflow-clip p-[16px] rounded-[12px] lg:size-[220px] lg:top-[127px] h-[220px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] items-start justify-end lg:left-[11.9%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:w-[14.55%] lg:h-[26.19%] lg:top-[15.12%] h-[200px] xl:h-[220px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-105 transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 0}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Data Acquisition & Preprocessing. EAGLE connects to any machine, sensor, or system to collect and preprocess data at the source."
@@ -122,7 +150,7 @@ function FeatureSection() {
             <div className="absolute bg-gradient-to-b from-[rgba(0,0,0,0)] inset-0 rounded-[12px] to-75% to-[rgba(0,0,0,0.6)]" />
           </div>
           <div
-            className="overflow-clip relative shrink-0 size-[30px]"
+            className="overflow-clip relative shrink-0 size-[26px] xl:size-[30px]"
             data-name="floppy-disk"
             aria-hidden="true"
           >
@@ -161,20 +189,20 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[6px] items-start relative shrink-0 w-full">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[21px] not-italic relative shrink-0 text-[18px] text-white w-full">{`Data Acquisition & Preprocessing`}</p>
+          <div className="content-stretch flex flex-col gap-[4px] xl:gap-[6px] items-start relative shrink-0 w-full">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[19px] xl:leading-[21px] not-italic relative shrink-0 text-[16px] xl:text-[18px] text-white w-full">{`Data Acquisition & Preprocessing`}</p>
           </div>
         </motion.div>
 
         {/* Card 2: Integrates to MES/ERP/Cloud */}
         <motion.div
-          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[424px] p-[16px] rounded-[12px] lg:top-[127px] lg:w-[620px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[14px] xl:gap-[16px] lg:h-[11.67%] items-center lg:left-[28%] p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[15.12%] lg:w-[41%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.02] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 1}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Integrates to MES/ERP/Cloud. Seamlessly forward data to MES, ERP, and cloud systems through built-in APIs."
@@ -208,7 +236,7 @@ function FeatureSection() {
               data-name="vuesax/linear/refresh-square-2"
             >
               <div
-                className="[grid-area:1_/_1] aspect-[40/40] h-[30px] ml-0 mt-0 relative"
+                className="[grid-area:1_/_1] aspect-[40/40] h-[26px] xl:h-[30px] ml-0 mt-0 relative"
                 data-name="refresh-square-2"
               >
                 <svg
@@ -248,11 +276,11 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="basis-0 content-stretch flex flex-col gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[22px] relative shrink-0 text-[#282828] text-[18px] text-nowrap whitespace-pre">
+          <div className="basis-0 content-stretch flex flex-col gap-[4px] xl:gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[22px] relative shrink-0 text-[#282828] text-[16px] xl:text-[18px] text-nowrap whitespace-pre">
               Integrates to MES/ERP/Cloud
             </p>
-            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[15px] w-[min-content]">
+            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[18px] xl:leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[13px] xl:text-[15px] w-[min-content]">
               Seamlessly forward data to MES, ERP, and cloud systems through
               built-in APIs.
             </p>
@@ -261,13 +289,13 @@ function FeatureSection() {
 
         {/* Card 3: Flexible Edge Intelligence */}
         <motion.div
-          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[424px] p-[16px] rounded-[12px] lg:top-[249px] lg:w-[620px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[14px] xl:gap-[16px] lg:h-[11.67%] items-center lg:left-[28%] p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[29.64%] lg:w-[41%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.02] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 2}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Flexible Edge Intelligence. Smart edge logic enables faster decisions and lighter upstream data processing."
@@ -297,7 +325,7 @@ function FeatureSection() {
             />
             <div
               aria-hidden="true"
-              className="relative shrink-0 size-[30px] z-10"
+              className="relative shrink-0 size-[26px] xl:size-[30px] z-10"
               data-name="vuesax/linear/cpu"
             >
               <div
@@ -429,11 +457,11 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="basis-0 content-stretch flex flex-col gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[22px] relative shrink-0 text-[#282828] text-[18px] text-nowrap whitespace-pre">
+          <div className="basis-0 content-stretch flex flex-col gap-[4px] xl:gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[22px] relative shrink-0 text-[#282828] text-[16px] xl:text-[18px] text-nowrap whitespace-pre">
               Flexible Edge Intelligence
             </p>
-            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[15px] w-[min-content]">
+            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[18px] xl:leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[13px] xl:text-[15px] w-[min-content]">
               Smart edge logic enables faster decisions and lighter upstream
               data processing.
             </p>
@@ -442,13 +470,13 @@ function FeatureSection() {
 
         {/* Card 4: One-box Solution */}
         <motion.div
-          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[220px] items-start justify-end lg:left-[180px] overflow-clip p-[16px] rounded-[12px] lg:top-[371px] lg:w-[440px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[200px] xl:h-[220px] items-start justify-end lg:left-[11.9%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[44.17%] lg:w-[29.1%] lg:h-[26.19%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.03] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 3}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="One-box Solution. A single, ruggedized device for data acquisition, processing, and control."
@@ -470,7 +498,7 @@ function FeatureSection() {
             <div className="absolute bg-gradient-to-b from-[rgba(0,0,0,0)] inset-0 rounded-[12px] to-75% to-[rgba(0,0,0,0.6)]" />
           </div>
           <div
-            className="relative shrink-0 size-[30px]"
+            className="relative shrink-0 size-[26px] xl:size-[30px]"
             data-name="vuesax/linear/3d-square"
             aria-hidden="true"
           >
@@ -526,8 +554,8 @@ function FeatureSection() {
               </svg>
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[6px] items-start relative shrink-0 w-full">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[23px] not-italic relative shrink-0 text-[18px] text-white w-full">
+          <div className="content-stretch flex flex-col gap-[4px] xl:gap-[6px] items-start relative shrink-0 w-full">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[23px] not-italic relative shrink-0 text-[16px] xl:text-[18px] text-white w-full">
               One-box Solution
             </p>
           </div>
@@ -535,13 +563,13 @@ function FeatureSection() {
 
         {/* Card 5: Real-time KPIs */}
         <motion.div
-          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[98px] items-center lg:left-[180px] p-[16px] rounded-[12px] lg:top-[615px] lg:w-[440px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[14px] xl:gap-[16px] lg:h-[11.67%] items-center lg:left-[11.9%] p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[73.21%] lg:w-[29.1%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.02] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 4}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Real-time KPIs. Edge metrics reveal instant performance insights with minimal latency."
@@ -571,7 +599,7 @@ function FeatureSection() {
             />
             <div
               aria-hidden="true"
-              className="relative shrink-0 size-[30px] z-10"
+              className="relative shrink-0 size-[26px] xl:size-[30px] z-10"
               data-name="vuesax/linear/cloud"
             >
               <div
@@ -609,11 +637,11 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="basis-0 content-stretch flex flex-col gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[22px] relative shrink-0 text-[#282828] text-[18px] text-nowrap whitespace-pre">
+          <div className="basis-0 content-stretch flex flex-col gap-[4px] xl:gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[22px] relative shrink-0 text-[#282828] text-[16px] xl:text-[18px] text-nowrap whitespace-pre">
               Real-time KPIs
             </p>
-            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[15px] w-[min-content]">
+            <p className="-webkit-box font-['Gilroy:Regular',sans-serif] leading-[18px] xl:leading-[20px] min-w-full overflow-ellipsis overflow-hidden relative shrink-0 text-[#8e8e8e] text-[13px] xl:text-[15px] w-[min-content]">
               Edge metrics reveal instant performance insights with minimal
               latency.
             </p>
@@ -622,13 +650,13 @@ function FeatureSection() {
 
         {/* Card 6: Connect • Collect • Control */}
         <motion.div
-          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[16px] lg:h-[120px] items-center lg:left-[644px] p-[16px] rounded-[12px] lg:top-[371px] lg:w-[400px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex gap-[14px] xl:gap-[16px] lg:h-[14.29%] items-center lg:left-[42.6%] p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[44.17%] lg:w-[26.5%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.02] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 5}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Connect, Collect, Control. Connect devices, gather telemetry, and control machines from the edge platform."
@@ -658,7 +686,7 @@ function FeatureSection() {
             />
             <div
               aria-hidden="true"
-              className="relative shrink-0 size-[30px] z-10"
+              className="relative shrink-0 size-[24px] lg:size-[22px] xl:size-[30px] z-10"
               data-name="vuesax/linear/link"
             >
               <div
@@ -694,11 +722,11 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="basis-0 content-stretch flex flex-col gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[22px] relative shrink-0 text-[#282828] text-[18px] text-nowrap whitespace-pre">
+          <div className="basis-0 content-stretch flex flex-col gap-[4px] xl:gap-[6px] grow items-start min-h-px min-w-px not-italic relative shrink-0">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[22px] relative shrink-0 text-[#282828] text-[16px] xl:text-[18px] text-nowrap whitespace-pre">
               Connect • Collect • Control
             </p>
-            <p className="font-['Gilroy:Regular',sans-serif] leading-[20px] min-w-full relative shrink-0 text-[#8e8e8e] text-[15px] w-[min-content]">
+            <p className="font-['Gilroy:Regular',sans-serif] leading-[18px] xl:leading-[20px] min-w-full relative shrink-0 text-[#8e8e8e] text-[13px] xl:text-[15px] w-[min-content]">
               Connect devices, gather telemetry, and control machines from the
               edge platform.
             </p>
@@ -707,13 +735,13 @@ function FeatureSection() {
 
         {/* Card 7: Closed-loop System */}
         <motion.div
-          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start justify-end lg:left-[644px] overflow-clip p-[16px] rounded-[12px] lg:top-[515px] lg:w-[400px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[180px] xl:h-[198px] items-start justify-end lg:left-[42.6%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[61.31%] lg:w-[26.5%] lg:h-[23.57%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.03] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 6}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Closed-loop System. Enables automated adjustments and optimizations based on real-time data."
@@ -735,7 +763,7 @@ function FeatureSection() {
             <div className="absolute bg-gradient-to-b from-[rgba(0,0,0,0)] inset-0 rounded-[12px] to-75% to-[rgba(0,0,0,0.6)]" />
           </div>
           <div
-            className="relative shrink-0 size-[30px]"
+            className="relative shrink-0 size-[26px]  lg:size-[28px] xl:size-[30px]"
             data-name="vuesax/linear/grid-lock"
             aria-hidden="true"
           >
@@ -819,8 +847,8 @@ function FeatureSection() {
               </svg>
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[6px] items-start relative shrink-0 w-full">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[23px] not-italic relative shrink-0 text-[18px] text-white w-full">
+          <div className="content-stretch flex flex-col gap-[4px] xl:gap-[6px] items-start relative shrink-0 w-full">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[23px] not-italic relative shrink-0 text-[16px] xl:text-[18px] text-white w-full">
               Closed-loop System
             </p>
           </div>
@@ -828,13 +856,13 @@ function FeatureSection() {
 
         {/* Card 8: Operator Dashboard */}
         <motion.div
-          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[220px] lg:h-[364px] items-start justify-end lg:left-[1068px] overflow-clip p-[16px] rounded-[12px] lg:top-[127px] lg:w-[264px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[220px] lg:h-[43.33%] items-start justify-end lg:left-[70.63%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[15.12%] lg:w-[17.46%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-105 transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 7}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Operator Dashboard. Intuitive interface for real-time monitoring and control."
@@ -856,7 +884,7 @@ function FeatureSection() {
             <div className="absolute bg-gradient-to-b from-[rgba(0,0,0,0)] inset-0 rounded-[12px] to-75% to-[rgba(0,0,0,0.6)]" />
           </div>
           <div
-            className="relative shrink-0 size-[30px]"
+            className="relative shrink-0 size-[26px] xl:size-[30px]"
             data-name="vuesax/linear/3d-square"
             aria-hidden="true"
           >
@@ -912,8 +940,8 @@ function FeatureSection() {
               </svg>
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[6px] items-start relative shrink-0 w-full">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[23px] not-italic relative shrink-0 text-[18px] text-white w-full">
+          <div className="content-stretch flex flex-col gap-[4px] xl:gap-[6px] items-start relative shrink-0 w-full">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[23px] not-italic relative shrink-0 text-[16px] xl:text-[18px] text-white w-full">
               Operator Dashboard
             </p>
           </div>
@@ -921,13 +949,13 @@ function FeatureSection() {
 
         {/* Card 9: Store & Forward */}
         <motion.div
-          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex flex-col gap-[12px] h-[198px] items-start lg:left-[1068px] p-[16px] rounded-[12px] lg:top-[515px] lg:w-[264px] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100"
+          className="group lg:absolute bg-white box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[180px] xl:h-[198px] items-start lg:left-[70.63%] p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[61.31%] lg:w-[17.46%] lg:h-[23.57%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-[1.03] transition-transform duration-500 ease-out"
           custom={isMobile ? undefined : 8}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
           exit={isMobile ? undefined : "exit"}
           viewport={isMobile ? undefined : { once: false, amount: 0.3 }}
-          variants={isMobile ? undefined : cardAnimation}
+          variants={isMobile ? undefined : cardAnimationEnhanced}
           role="button"
           tabIndex={0}
           aria-label="Store & Forward. Local buffering prevents data loss and ensures delivery after reconnection."
@@ -942,7 +970,7 @@ function FeatureSection() {
             className="absolute border-[#dddddd] border-[0.5px] border-solid inset-0 pointer-events-none rounded-[12px]"
           />
           <div
-            className="box-border content-stretch flex flex-col gap-[10px] items-center justify-center overflow-clip px-[28px] py-[29px] relative rounded-[12px] shrink-0 size-[66px]"
+            className="box-border content-stretch flex flex-col gap-[10px] items-center justify-center overflow-clip px-[28px] py-[29px] relative rounded-[12px] shrink-0 size-[60px] lg:size-[55px] xl:size-[70px]"
             style={{
               background:
                 "linear-gradient(227deg, #85868B 21.48%, #444 76.42%)",
@@ -957,7 +985,7 @@ function FeatureSection() {
             />
             <div
               aria-hidden="true"
-              className="relative shrink-0 size-[30px] z-10"
+              className="relative shrink-0 size-[24px] xl:size-[30px] z-10"
               data-name="vuesax/linear/driver"
             >
               <div
@@ -1041,9 +1069,9 @@ function FeatureSection() {
               </div>
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[6px] items-start not-italic relative shrink-0 w-full">
-            <p className="font-['Gilroy:Semibold',sans-serif] leading-[22px] relative shrink-0 text-[#282828] text-[18px] text-nowrap whitespace-pre">{`Store & Forward`}</p>
-            <p className="font-['Gilroy:Regular',sans-serif] leading-[20px] min-w-full relative shrink-0 text-[#8e8e8e] text-[15px] w-[min-content]">
+          <div className="content-stretch flex flex-col gap-[4px] xl:gap-[6px] items-start not-italic relative shrink-0 w-full">
+            <p className="font-['Gilroy:Semibold',sans-serif] leading-[20px] xl:leading-[22px] relative shrink-0 text-[#282828] text-[16px] xl:text-[18px] text-nowrap whitespace-pre">{`Store & Forward`}</p>
+            <p className="font-['Gilroy:Regular',sans-serif] leading-[18px] xl:leading-[20px] min-w-full relative shrink-0 text-[#8e8e8e] text-[13px] xl:text-[15px] w-[min-content] text-ellipsis">
               Local buffering prevents data loss and ensures delivery after
               reconnection.
             </p>

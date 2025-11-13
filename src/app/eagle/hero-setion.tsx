@@ -631,7 +631,7 @@ function HeroSection() {
       data-name="Hero section"
     >
       {/* Background elements */}
-      <div
+      {/* <div
         className="absolute left-0 top-0 pointer-events-none transition-all duration-300 ease-out
           max-lg:w-full max-lg:h-[520px]
           max-md:h-[470px]
@@ -659,7 +659,7 @@ function HeroSection() {
           />
           <div className="absolute bg-gradient-to-b from-[rgba(255,255,255,0.25)] inset-0 to-[#ffffff]" />
         </div>
-      </div>
+      </div> */}
       <div
         className="absolute left-0 pointer-events-none max-lg:hidden transition-all duration-300 ease-out"
         style={

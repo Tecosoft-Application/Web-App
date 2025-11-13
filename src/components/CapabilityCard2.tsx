@@ -1,14 +1,33 @@
 "use client";
 
-const img = "/assets/platform/eagle/banner-full.png";
-
 export default function CapabilityCard2() {
+  const protocols = [
+    { name: "OPC UA", logo: "/assets/protocols/opc-ua.png" },
+    { name: "Modbus", logo: "/assets/protocols/modbus.png" },
+    { name: "MTConnect", logo: "/assets/protocols/mtconnect.png" },
+    { name: "MQTT", logo: "/assets/protocols/mqtt.png" },
+    { name: "FANUC", logo: "/assets/protocols/fanuc.png" },
+    { name: "I/O", logo: "/assets/protocols/io.png" },
+    { name: "HTTP", logo: "/assets/protocols/http.png" },
+  ];
+
   return (
-    <div className="bg-white box-border content-stretch flex flex-col gap-[36px] items-start overflow-clip p-[40px] rounded-[16px] w-[1152px] relative shadow-[0px_20px_60px_rgba(0,0,0,0.2)]">
-      <p className="font-['Gilroy:Semibold',sans-serif] leading-[39px] not-italic relative shrink-0 text-[#005b80] text-[32px] w-[308px]">Universal Machine Connectivity</p>
-      <p className="font-['Gilroy:Regular',sans-serif] leading-[24px] not-italic relative shrink-0 text-[#4f4f4f] text-[16px] w-[610px]">EAGLE connects CNCs, VMCs, HMCs, and molding systems through industry-standard protocols to ensure reliable, unified data flow across machines. It streamlines production monitoring, enhances visibility, and drives smarter, faster decisions in manufacturing environments.</p>
-      <div className="absolute h-[250px] right-[80px] top-1/2 -translate-y-1/2 w-[350px]" data-name="Generated Image November 01, 2025 - 4_47PM 1 1">
-        <img alt="" className="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-full" src={img} />
+    <div className="bg-white box-border content-stretch flex flex-col gap-[36px] items-start overflow-clip p-[48px] rounded-[16px] w-[1152px] relative shadow-[0px_20px_60px_rgba(0,0,0,0.2)]">
+      <p className="font-['Gilroy:Semibold',sans-serif] leading-[40px] not-italic relative shrink-0 text-[#005b80] text-[34px]">{`Supported Protocols & Drivers`}</p>
+
+      <div className="grid grid-cols-4 gap-x-[80px] gap-y-[60px] w-full mt-[20px]">
+        {protocols.map((protocol, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-center h-[80px]"
+          >
+            <img
+              src={protocol.logo}
+              alt={protocol.name}
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

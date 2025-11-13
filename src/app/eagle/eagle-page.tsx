@@ -12,10 +12,10 @@ export default function EagePage() {
       className="content-stretch flex flex-col items-start relative size-full"
       data-name="Eagle"
     >
-      <HeroSection />
+      {/* <HeroSection />
       <FeatureSection />
-      <HardwareSection />
-      {/* <CapabilitiesSection /> */}
+      <HardwareSection /> */}
+      <CapabilitiesSection />
       {/* <BenefitsSection /> */}
     </div>
   );

@@ -27,7 +27,7 @@ export default function BookDemoButton({
         dispatch(openBookDemo());
         onClick?.();
       }}
-      className={className}
+      className={` cursor-pointer ${className}`}
     >
       {children}
     </button>

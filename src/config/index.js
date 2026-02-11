@@ -18,7 +18,7 @@ const config = {
   },
 };
 
-const environment = "staging"; // Change this to 'local', 'staging', or 'production' as needed
+const environment = "local"; // Change this to 'local', 'staging', or 'production' as needed
 
 const hostConfig = {
   WEB_URL: config[environment].url,

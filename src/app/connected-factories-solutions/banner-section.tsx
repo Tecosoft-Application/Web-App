@@ -83,7 +83,7 @@ function Frame2() {
         md:text-[14px] md:leading-[19px]
         lg:text-[15px] lg:leading-[20px]"
       >
-        Book a Demo
+       Request  Demo
       </p>
       <div
         className="flex h-[calc(1px*((var(--transform-inner-width)*1)+(var(--transform-inner-height)*0)))] items-center justify-center relative shrink-0 w-[calc(1px*((var(--transform-inner-height)*1)+(var(--transform-inner-width)*0)))]"

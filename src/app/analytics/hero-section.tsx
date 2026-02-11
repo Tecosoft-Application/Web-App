@@ -91,7 +91,7 @@ function Frame27() {
 function Frame40({ handleScroll }: { handleScroll: () => void }) {
   return (
     <div className="absolute min-[1024px]:left-1/2 min-[1024px]:top-[140px] min-[1024px]:translate-x-[-50%] min-[1024px]:w-[950px] max-[1023px]:static  pt-[85px] min-[768px]:max-[1023px]:pt-[100px] max-[1023px]:mx-auto max-[1023px]:w-[95%] max-[1023px]:px-4 content-stretch flex flex-col gap-[16px] max-[767px]:gap-[12px] items-center">
-      <div onClick={handleScroll} className="cursor-pointer">
+      <div className="">
         <Frame27 />
       </div>
       <p className="font-semibold leading-[76px] min-[768px]:max-[1023px]:leading-[52px] max-[767px]:leading-[40px] min-w-full not-italic relative shrink-0 text-[#07af40] text-[60px] min-[768px]:max-[1023px]:text-[40px] max-[767px]:text-[28px] text-center tracking-[-0.9px] min-[768px]:max-[1023px]:tracking-[-0.6px] max-[767px]:tracking-[-0.4px] w-[min-content]">

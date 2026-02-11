@@ -145,7 +145,7 @@ function JobDetailsView({
         <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 flex-shrink-0">
           <button
             onClick={onApply}
-            className="flex items-center gap-1 rounded-md bg-[#07af40] px-2 py-1.5 xs:px-3 xs:py-2 sm:px-5 sm:py-2.5 text-xs xs:text-sm sm:text-base font-semibold text-white hover:bg-[#069935] transition-colors"
+            className="flex items-center gap-1 rounded-md bg-[#07af40] px-2 py-1.5 xs:px-3 xs:py-2 sm:px-5 sm:py-2.5 text-xs xs:text-sm sm:text-base font-semibold text-white hover:bg-[#069935] transition-colors cursor-pointer"
           >
             <span className="hidden xs:inline">Apply Job</span>
             <span className="xs:hidden">Apply</span>

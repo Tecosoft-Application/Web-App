@@ -72,19 +72,21 @@ export default function LatestWhitepapers() {
     <section className="w-full bg-white">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-16 py-12 lg:py-18">
 
-        <div className="flex justify-between  items-center">
+        <div className="lg:flex lg:justify-between  items-center">
           <div> {/* Section Title */}
             <h2 className="text-[#0098d4] text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10">
               Latest {category === "whitepaper" ? "Whitepapers" : "Case Studies"}
             </h2> </div>
-          <div>       <ToggleTabs
-            tabs={[
-              { label: "Whitepapers", value: "whitepaper" },
-              { label: "Case Studies", value: "casestudy" },
-            ]}
-            defaultValue="whitepaper"
-            onChange={fetchfilterWhitepapers}
-          />
+          <div>
+
+            <ToggleTabs
+              tabs={[
+                { label: "Whitepapers", value: "whitepaper" },
+                { label: "Case Studies", value: "casestudy" },
+              ]}
+              defaultValue="whitepaper"
+              onChange={fetchfilterWhitepapers}
+            />
           </div>
         </div>
 

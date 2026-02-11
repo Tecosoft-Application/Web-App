@@ -145,7 +145,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                     <div className="flex items-center gap-2">
                         <span className="text-[#282828]">by</span>
 
-                        <Avatar src={blogData?.banner_url} name={blogData?.author} size="w-6 h-6" />
+                        <Avatar src={blogData?.author_image_url} name={blogData?.author} size="w-6 h-6" />
 
                         <span className="text-[#282828] font-medium text-capitalize">
                             {blogData?.author}

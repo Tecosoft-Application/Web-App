@@ -10,6 +10,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
     const [blogData, setBlogData] = useState([]) as any;
     const [relatedBlogs, setRelatedBlogs] = useState([]) as any;
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -21,6 +22,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
     const fetchBlogDetails = async () => {
         try {
+            setLoading(true);
             // Fetch blog details using the slug
             const data = await getWhitePaperDetails(slug);
             console.log("Blog Details:", data);
@@ -28,7 +30,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
             setBlogData(data?.detail?.data || null);
 
             //related blogs
-            const getRelatedBlogs = await getWhitePapersAll({ limit: 5 });
+            const getRelatedBlogs = await getWhitePapersAll({ limit: 5, status: "published" });
 
             const relatedBlogsData = getRelatedBlogs?.detail?.data || [];
             console.log("Related Blogs:", relatedBlogsData);
@@ -39,12 +41,88 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
         } catch (error) {
             console.error("Error fetching blog:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     console.log(blogData, "te");
 
 
+
+    if (loading) {
+        return (
+            <div className="bg-white w-full">
+                <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 py-10 sm:py-14 animate-pulse">
+
+                    {/* Back button skeleton */}
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-5 h-5 bg-gray-200 rounded" />
+                        <div className="h-4 bg-gray-200 rounded w-36" />
+                    </div>
+
+                    {/* Meta skeleton */}
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="h-4 bg-gray-200 rounded w-24" />
+                        <div className="h-4 bg-gray-200 rounded w-1" />
+                        <div className="w-6 h-6 bg-gray-200 rounded-full" />
+                        <div className="h-4 bg-gray-200 rounded w-28" />
+                    </div>
+
+                    {/* Title skeleton */}
+                    <div className="space-y-3 mb-4">
+                        <div className="h-8 sm:h-10 bg-gray-200 rounded w-full" />
+                        <div className="h-8 sm:h-10 bg-gray-200 rounded w-3/4" />
+                    </div>
+
+                    {/* Summary skeleton */}
+                    <div className="space-y-2 mb-6">
+                        <div className="h-4 bg-gray-200 rounded w-full" />
+                        <div className="h-4 bg-gray-200 rounded w-full" />
+                        <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    </div>
+
+                    {/* Banner skeleton */}
+                    <div className="w-full h-[220px] sm:h-[320px] md:h-[400px] lg:h-[520px] rounded-xl bg-gray-200 mb-10" />
+
+                    {/* Main layout skeleton */}
+                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
+                        {/* Left content skeleton */}
+                        <div className="flex-1 max-w-[896px] space-y-4">
+                            {[...Array(8)].map((_, i) => (
+                                <div key={i} className="h-4 bg-gray-200 rounded" style={{ width: `${85 + Math.random() * 15}%` }} />
+                            ))}
+                            <div className="h-4 bg-gray-200 rounded w-1/2 mt-6" />
+                            {[...Array(6)].map((_, i) => (
+                                <div key={`p2-${i}`} className="h-4 bg-gray-200 rounded" style={{ width: `${80 + Math.random() * 20}%` }} />
+                            ))}
+                        </div>
+
+                        {/* Right sidebar skeleton */}
+                        <div className="w-full lg:w-[366px] flex-shrink-0 space-y-6">
+                            <div className="h-6 bg-gray-200 rounded w-44" />
+                            <div className="border-t border-gray-200" />
+                            {[...Array(2)].map((_, i) => (
+                                <div key={i} className="space-y-3">
+                                    <div className="h-[180px] bg-gray-200 rounded-xl" />
+                                    <div className="h-5 bg-gray-200 rounded w-full" />
+                                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 bg-gray-200 rounded-full" />
+                                            <div className="h-4 bg-gray-200 rounded w-20" />
+                                        </div>
+                                        <div className="h-4 bg-gray-200 rounded w-24" />
+                                    </div>
+                                    {i === 0 && <div className="border-t border-gray-200 mt-3" />}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white w-full">

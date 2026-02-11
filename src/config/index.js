@@ -7,17 +7,18 @@ const config = {
   },
   staging: {
     url: "http://localhost:3000/",
-    apiUrl: "http://localhost:7001/api/tecosoft-admin/",
+    // apiUrl: "http://localhost:7001/api/tecosoft-admin/",
+    apiUrl: "https://crr2m74m-7001.inc1.devtunnels.ms/api/tecosoft-admin/",
     adminUrl: "http://localhost:3033/",
   },
   production: {
     url: "https://www.tecosoft.ai/",
-    apiUrl: "http://api.tecosoft.ai/",
-    adminUrl: "http://admin.tecosoft.ai/",
+    apiUrl: "https://api.tecosoft.ai/api/tecosoft-admin/",
+    adminUrl: "https://admin.tecosoft.ai/",
   },
 };
 
-const environment = "staging";
+const environment = "staging"; // Change this to 'local', 'staging', or 'production' as needed
 
 const hostConfig = {
   WEB_URL: config[environment].url,

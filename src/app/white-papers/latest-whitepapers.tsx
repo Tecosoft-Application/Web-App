@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 export default function LatestWhitepapers() {
 
   const [latestBlogs, setLatestBlogs] = useState([]) as any;
+  const [category, setCategory] = useState("whitepaper");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
@@ -20,7 +22,8 @@ export default function LatestWhitepapers() {
 
   const fetchLatestWhitepapers = async () => {
     try {
-      await getWhitePapersAll({ pageLimit: 5 }).then((data: any) => {
+      setLoading(true);
+      await getWhitePapersAll({ pageLimit: 5, status: "published", type: "whitepaper" }).then((data: any) => {
         console.log("Latest White Papers Data:", data);
         const blogListData = data.detail.data || [];
 
@@ -29,29 +32,26 @@ export default function LatestWhitepapers() {
 
         setLatestBlogs(blogListData);
       });
-
-    }
-
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching latest white papers:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
 
   const fetchfilterWhitepapers = async (categoryValue: any) => {
-
     console.log("categoryValue:", categoryValue);
-
+    setCategory(categoryValue);
     try {
+      setLoading(true);
       let categorytype = categoryValue;
-      if (categoryValue === "all") {
-        categorytype = "";
-      } else if (categoryValue === "casestudy") {
+      if (categoryValue === "casestudy") {
         categorytype = "casestudy";
       } else if (categoryValue === "whitepaper") {
         categorytype = "whitepaper";
       }
-      await getWhitePapersAll({ pageLimit: 5, type: categorytype }).then((data: any) => {
+      await getWhitePapersAll({ pageLimit: 5, type: categorytype, status: "published" }).then((data: any) => {
         console.log("Latest White Papers Data:", data);
         const blogListData = data.detail.data || [];
 
@@ -60,11 +60,10 @@ export default function LatestWhitepapers() {
 
         setLatestBlogs(blogListData);
       });
-
-    }
-
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching latest white papers:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -76,7 +75,7 @@ export default function LatestWhitepapers() {
         <div className="flex justify-between  items-center">
           <div> {/* Section Title */}
             <h2 className="text-[#0098d4] text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10">
-              Latest Whitepapers
+              Latest {category === "whitepaper" ? "Whitepapers" : "Case Studies"}
             </h2> </div>
           <div>       <ToggleTabs
             tabs={[
@@ -91,69 +90,94 @@ export default function LatestWhitepapers() {
 
 
         {/* Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10  pt-8 lg:pt-12">
+        {loading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8 lg:pt-12 animate-pulse">
+            {/* Left Featured Skeleton */}
+            <div className="lg:col-span-8">
+              <div className="rounded-2xl overflow-hidden bg-gray-200 h-[280px] sm:h-[400px] lg:h-[520px]" />
+            </div>
 
-          {/* Left Featured Blog */}
-          <div className="lg:col-span-8 cursor-pointer" onClick={() => {
-            window.location.href = `/white-papers/${latestBlogs[0]?.id}`;
-          }}>
-            <div className="relative rounded-2xl overflow-hidden group">
+            {/* Right Side Skeleton */}
+            <div className="lg:col-span-4 flex flex-col justify-center">
+              <div className="h-6 w-40 bg-gray-200 rounded mb-6" />
+              <div className="flex flex-col divide-y divide-gray-200">
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="flex items-center gap-4 py-5">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-gray-200 shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-full" />
+                      <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8 lg:pt-12">
 
-              {/* Image */}
-              <img
-                src={latestBlogs[0]?.banner_url}
-                alt="Featured Blog"
-                className="w-full h-[280px] sm:h-[400px] lg:h-[520px] object-cover transition duration-500 group-hover:scale-105"
-              />
+            {/* Left Featured Blog */}
+            <div className="lg:col-span-8 cursor-pointer" onClick={() => {
+              window.location.href = `/white-papers/${latestBlogs[0]?.id}`;
+            }}>
+              <div className="relative rounded-2xl overflow-hidden group">
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent " />
+                {/* Image */}
+                <img
+                  src={latestBlogs[0]?.banner_url}
+                  alt="Featured Blog"
+                  className="w-full h-[280px] sm:h-[400px] lg:h-[520px] object-cover transition duration-500 group-hover:scale-105"
+                />
 
-              {/* Content */}
-              <div className="absolute bottom-0 w-full p-6 sm:p-8 text-white
-                bg-black/30 backdrop-blur-[8px]">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-tight mb-3 line-clamp-1">
-                  {latestBlogs[0]?.title}
-                </h3>
-                <p className="text-sm sm:text-base text-white/85 max-w-[600px] line-clamp-2">
-                  {latestBlogs[0]?.summary}
-                </p>
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent " />
+
+                {/* Content */}
+                <div className="absolute bottom-0 w-full p-6 sm:p-8 text-white
+                  bg-black/30 backdrop-blur-[8px]">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-tight mb-3 line-clamp-1">
+                    {latestBlogs[0]?.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-white/85 max-w-[600px] line-clamp-2">
+                    {latestBlogs[0]?.summary}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Right Side Posts */}
+            <div className="lg:col-span-4 flex flex-col justify-center">
+              <h4 className="text-xl font-semibold text-[#181818] mb-6">
+                Other {category === "whitepaper" ? "Whitepapers" : "Case Studies"}
+              </h4>
+
+              <div className="flex flex-col divide-y divide-gray-200">
+                {latestBlogs?.slice(1, 5).map((data: any, index: number) => (
+                  <div
+                    key={data?.id || index}
+                    className="flex items-center gap-4 py-5 group cursor-pointer"
+                    onClick={() => {
+                      window.location.href = `/white-papers/${data?.id}`;
+                    }}
+                  >
+                    <img
+                      src={data?.banner_url}
+                      alt={data?.title}
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0"
+                    />
+
+                    <p className="text-sm sm:text-base lg:text-lg font-semibold text-[#4f4f4f] group-hover:text-[#0098d4] transition line-clamp-2 ">
+                      {data?.title}
+                    </p>
+                  </div>
+                ))}
               </div>
 
             </div>
-          </div>
-
-          {/* Right Side Posts */}
-          <div className="lg:col-span-4 flex flex-col justify-center">
-            <h4 className="text-xl font-semibold text-[#181818] mb-6">
-              Other Whitepapers
-            </h4>
-
-            <div className="flex flex-col divide-y divide-gray-200">
-              {latestBlogs?.slice(1, 5).map((data: any, index: number) => (
-                <div
-                  key={data?.id || index}
-                  className="flex items-center gap-4 py-5 group cursor-pointer"
-                  onClick={() => {
-                    window.location.href = `/white-papers/${data?.id}`;
-                  }}
-                >
-                  <img
-                    src={data?.banner_url}
-                    alt={data?.title}
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0"
-                  />
-
-                  <p className="text-sm sm:text-base lg:text-lg font-semibold text-[#4f4f4f] group-hover:text-[#0098d4] transition line-clamp-2 ">
-                    {data?.title}
-                  </p>
-                </div>
-              ))}
-            </div>
 
           </div>
-
-        </div>
+        )}
       </div>
     </section>
   );

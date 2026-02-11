@@ -8,6 +8,8 @@ import { useLenis } from "../../../libs/react-lenis";
 import { demoBooking } from "../../api/create";
 import { toast } from "react-toastify";
 import { allowOnlyLetters, allowOnlyNumbers, preventLeadingSpace, preventSpaces } from "@/utills/form-validation";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 interface Props {
   isOpen: boolean;
@@ -41,9 +43,8 @@ const validationSchema = Yup.object({
     .email("Invalid email format"),
   phone: Yup.string()
     .required("Phone number is required")
-    .matches(/^[0-9]+$/, "Only numbers are allowed")
-    .min(10, "Minimum 10 digits required")
-    .max(15, "Maximum 15 digits allowed"),
+    .min(7, "Phone number is too short")
+    .max(15, "Phone number is too long"),
   country: Yup.string().required("Country is required"),
   message: Yup.string().test(
     "no-leading-space",
@@ -108,7 +109,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
       first_name: values?.firstName,
       last_name: values?.lastName,
       email: values?.email,
-      phone: values?.phone,
+      phone: `+${values?.phone}`,
       country: values?.country,
       message: values?.message,
     };
@@ -176,7 +177,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
             validateOnChange={true}
             validateOnBlur={true}
           >
-            {({ errors, touched, isSubmitting }) => (
+            {({ errors, touched, isSubmitting, setFieldValue, setFieldTouched }) => (
               <Form className="grid grid-cols-1 gap-3 xs:gap-4 sm:gap-5 sm:grid-cols-2">
                 {/* First Name */}
                 <div className="min-h-[68px] xs:min-h-[74px]">
@@ -258,22 +259,26 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
                   <label className="block text-xs xs:text-sm font-medium text-[#4F4F4F] mb-1">
                     Phone number <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex">
-                    <span className="flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-2 xs:px-3 text-xs xs:text-sm text-gray-500">
-                      +91
-                    </span>
-                    <Field
-                      name="phone"
-                      maxLength={15}
-                      onKeyPress={allowOnlyNumbers}
-
-                      className={`w-full rounded-r-md border px-3 py-2 text-xs xs:text-sm outline-none focus:ring-1 focus:ring-green-500 ${errors.phone && touched.phone
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-green-500"
-                        }`}
-                      placeholder="Phone number"
-                    />
-                  </div>
+                  <PhoneInput
+                    country={"in"}
+                    enableSearch
+                    searchPlaceholder="Search country"
+                    onChange={(value) => setFieldValue("phone", value)}
+                    onBlur={() => setFieldTouched("phone", true)}
+                    inputStyle={{
+                      width: "100%",
+                      height: "38px",
+                      fontSize: "14px",
+                      borderRadius: "0.375rem",
+                      borderColor: errors.phone && touched.phone ? "#ef4444" : "#d1d5db",
+                    }}
+                    buttonStyle={{
+                      borderColor: errors.phone && touched.phone ? "#ef4444" : "#d1d5db",
+                      borderRadius: "0.375rem 0 0 0.375rem",
+                    }}
+                    containerClass="!w-full"
+                    inputClass="!w-full"
+                  />
                   <div className="h-4 mt-0.5">
                     <ErrorMessage
                       name="phone"

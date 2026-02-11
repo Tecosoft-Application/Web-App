@@ -3,6 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import ClientSlider from "@/components/client";
+import { Book } from "lucide-react";
+import BookDemoButton from "@/components/BookDemoButton";
 
 // Z-index constants - Banner should be below navbar (navbar uses 999-1001)
 const Z_INDEX = {
@@ -73,8 +75,7 @@ const BannerSection = () => {
               />
 
               {/* Book a Demo Link - Desktop */}
-              <a
-                href="#demo"
+              <BookDemoButton
                 className="hidden xl:flex items-center gap-2 text-white font-medium text-lg whitespace-nowrap hover:text-[#0eb05c] transition-colors cursor-pointer ml-auto pt-13 cursor-pointer "
               >
                 Book a Demo
@@ -86,12 +87,11 @@ const BannerSection = () => {
                     height={20}
                   />
                 </span>
-              </a>
+              </BookDemoButton>
             </div>
             {/* Book a Demo Button - Mobile */}
             <div className="lg:hidden mb-12">
-              <a
-                href="#demo"
+              <BookDemoButton
                 className="inline-flex items-center gap-2 bg-[#0eb05c] text-white px-8 py-3 rounded-lg hover:bg-[#0d9d52] transition-colors font-medium text-lg cursor-pointer"
               >
                 Book a Demo
@@ -103,7 +103,7 @@ const BannerSection = () => {
                     height={20}
                   />
                 </span>
-              </a>
+              </BookDemoButton>
             </div>
 
             {/* Client Logos Slider */}

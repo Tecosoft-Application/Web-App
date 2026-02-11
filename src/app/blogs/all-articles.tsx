@@ -2,6 +2,7 @@
 
 import { getBlogAll } from "@/api/list";
 import ArticleCard from "@/components/Blogs/ArticalCards";
+import { stat } from "fs";
 import { useState, useEffect, useCallback, useRef } from "react";
 
 const INITIAL_LIMIT = 6;
@@ -86,6 +87,7 @@ export default function AllArticles() {
       const params = {
         search: searchTerm,
         pageLimit: LOAD_MORE_COUNT,
+        status: "published",
         skip: skip,
       };
 
@@ -175,8 +177,27 @@ export default function AllArticles() {
 
       {/* Loading State */}
       {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#07af40]"></div>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr animate-pulse">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="bg-white rounded-2xl shadow-sm h-full flex flex-col">
+              <div className="h-[200px] w-full rounded-xl bg-gray-200" />
+              <div className="p-5 flex flex-col gap-4 flex-1">
+                <div className="space-y-2">
+                  <div className="h-5 bg-gray-200 rounded w-full" />
+                  <div className="h-5 bg-gray-200 rounded w-3/4" />
+                  <div className="h-4 bg-gray-200 rounded w-full mt-2" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                </div>
+                <div className="flex items-center justify-between mt-auto">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-gray-200" />
+                    <div className="h-4 bg-gray-200 rounded w-20" />
+                  </div>
+                  <div className="h-4 bg-gray-200 rounded w-24" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <>

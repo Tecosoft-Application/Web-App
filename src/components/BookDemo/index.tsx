@@ -43,8 +43,16 @@ const validationSchema = Yup.object({
     .email("Invalid email format"),
   phone: Yup.string()
     .required("Phone number is required")
-    .min(7, "Phone number is too short")
-    .max(15, "Phone number is too long"),
+    .test(
+      "phone-length",
+      "Please enter a valid phone number",
+      (value) => {
+        if (!value) return false;
+        // Remove country code prefix (1-3 digits) — remaining digits should be at least 4
+        const digitsOnly = value.replace(/\D/g, "");
+        return digitsOnly.length >= 9 && digitsOnly.length <= 15;
+      },
+    ),
   country: Yup.string().required("Country is required"),
   message: Yup.string().test(
     "no-leading-space",
@@ -177,7 +185,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
             validateOnChange={true}
             validateOnBlur={true}
           >
-            {({ errors, touched, isSubmitting, setFieldValue, setFieldTouched }) => (
+            {({ errors, touched, isSubmitting, values, setFieldValue, setFieldTouched }) => (
               <Form className="grid grid-cols-1 gap-3 xs:gap-4 sm:gap-5 sm:grid-cols-2">
                 {/* First Name */}
                 <div className="min-h-[68px] xs:min-h-[74px]">
@@ -261,9 +269,13 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
                   </label>
                   <PhoneInput
                     country={"in"}
+                    value={values.phone}
                     enableSearch
                     searchPlaceholder="Search country"
-                    onChange={(value) => setFieldValue("phone", value)}
+                    onChange={(value) => {
+                      setFieldValue("phone", value);
+                      setFieldTouched("phone", true);
+                    }}
                     onBlur={() => setFieldTouched("phone", true)}
                     inputStyle={{
                       width: "100%",

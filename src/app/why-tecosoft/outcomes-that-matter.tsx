@@ -3,6 +3,7 @@
 import React from "react";
 import svgPaths from "@/imports/svg-9v3kh9sdih";
 import BookDemoButton from "@/components/BookDemoButton";
+import { on } from "events";
 
 // =============================================================================
 // SVG PATH CONSTANTS (Simple inline paths)
@@ -112,14 +113,57 @@ function CTAButton({
   );
 }
 
+
+/** CTA Button component */
+function CTAButtonRoute({
+  text,
+  variant = "primary",
+  onClick,
+}: {
+  text: string;
+  variant?: "primary" | "secondary";
+  onClick: () => void;
+}) {
+  const isPrimary = variant === "primary";
+
+  return (
+    <button
+      className={`${isPrimary ? "bg-[#07af40] text-white" : "bg-white text-[#07af40]"} content-stretch flex gap-[8px] items-center justify-center px-[14px] py-[10px] relative shrink-0 w-full sm:w-[172px] cursor-pointer hover:opacity-90 transition-opacity`}
+      // type="button"
+      onClick={onClick}
+    >
+      <span className="font-semibold leading-[20px] not-italic relative shrink-0 text-[15px]">
+        {text}
+      </span>
+      <div
+        className="flex items-center justify-center relative shrink-0 size-[14px]"
+        style={
+          {
+            "--transform-inner-width": "0",
+            "--transform-inner-height": "2196",
+          } as React.CSSProperties
+        }
+      >
+        <div className="flex-none rotate-[-90deg]">
+          <ArrowIcon color={isPrimary ? "white" : "#07AF40"} />
+        </div>
+      </div>
+    </button>
+  );
+}
+
+
 /** CTA Buttons Row */
 function CTAButtonsRow() {
   return (
     <div className="content-stretch flex flex-col sm:flex-row gap-[12px] sm:gap-[16px] items-stretch sm:items-start relative shrink-0 w-full sm:w-auto">
       <CTAButton text={OUTCOMES_DATA.hero.buttons[0].text} variant="primary" />
-      <CTAButton
+      <CTAButtonRoute
         text={OUTCOMES_DATA.hero.buttons[1].text}
         variant="secondary"
+        onClick={() => {
+          window.location.href = "/eagle";
+        }}
       />
     </div>
   );
@@ -482,7 +526,7 @@ export function OutcomesThatMatter() {
         aria-label="Outcomes that matter"
 
       >
-        <HeroSection  />
+        <HeroSection />
         <OutcomeCardsRow />
       </section>
     </div>

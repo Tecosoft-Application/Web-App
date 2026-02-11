@@ -17,7 +17,7 @@ const config = {
   },
 };
 
-const environment = "production";
+const environment = "staging";
 
 const hostConfig = {
   WEB_URL: config[environment].url,

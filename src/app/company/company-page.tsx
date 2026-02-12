@@ -11,11 +11,37 @@ export default function CompanyInfo() {
   const [careersOpen, setCareersOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobData | null>(null);
 
+
+  const scrollTrigger = React.useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+
+    if (scrollTrigger.current) {
+      const headerHeight = document.querySelector("header")?.clientHeight || 0;
+      const targetTop = scrollTrigger.current.offsetTop - headerHeight;
+
+      console.log("headerHeight:", headerHeight);
+      console.log("targetTop:", targetTop);
+      console.log("current scroll position:", window.scrollY);
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: "smooth",
+      });
+    } else {
+      console.log("scrollTrigger.current is null!");
+    }
+  };
+
+
+
   return (
     <div>
       <HeroSection />
-      <MissionSection />
+      <MissionSection handleScroll={handleScroll} />
       <TeamSection />
+      <div ref={scrollTrigger} />
+
       <CareersSection
         setCareersOpen={setCareersOpen}
         setSelectedJob={setSelectedJob}

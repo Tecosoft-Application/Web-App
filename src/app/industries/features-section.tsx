@@ -105,9 +105,10 @@ export default function FeaturesSection() {
             flex
             flex-col
             lg:flex-row
-            items-start
+            items-center
             lg:items-center
-            justify-between
+ justify-center
+            lg:justify-between
             gap-[40px]
             lg:gap-[80px]
           "

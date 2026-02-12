@@ -23,19 +23,28 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
     const fetchBlogDetails = async () => {
         try {
             setLoading(true);
-            // Fetch blog details using the slug
+
+            // Fetch blog details
             const data = await getWhitePaperDetails(slug);
-            console.log("Blog Details:", data);
+            const currentBlog = data?.detail?.data || null;
 
-            setBlogData(data?.detail?.data || null);
+            console.log("Blog Details:", currentBlog);
+            setBlogData(currentBlog);
 
-            //related blogs
-            const getRelatedBlogs = await getWhitePapersAll({ limit: 5, status: "published" });
+            // Fetch related blogs
+            const getRelatedBlogs = await getWhitePapersAll({
+                limit: 5,
+                status: "published",
+            });
 
             const relatedBlogsData = getRelatedBlogs?.detail?.data || [];
             console.log("Related Blogs:", relatedBlogsData);
 
-            const filteredRelatedBlogs = relatedBlogsData.filter((blog: any) => blog.id !== blogData?.id);
+            // Filter properly
+            const filteredRelatedBlogs = relatedBlogsData.filter(
+                (blog: any) => blog.id !== currentBlog?.id
+            );
+
             console.log("Filtered Related Blogs:", filteredRelatedBlogs);
             setRelatedBlogs(filteredRelatedBlogs);
 
@@ -48,7 +57,34 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
     console.log(blogData, "te");
 
-
+    if (!loading && !blogData) {
+        return (
+            <div className="bg-white w-full">
+                <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 py-10 sm:py-14">
+                    <BackButton />
+                    <div className="flex flex-col items-center justify-center py-24 lg:py-32">
+                        <svg
+                            className="w-20 h-20 text-gray-300 mb-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={1.2}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5"
+                            />
+                        </svg>
+                        <p className="text-xl font-semibold text-gray-400">Whitepaper not found</p>
+                        <p className="text-sm text-gray-400 mt-2">
+                            The whitepaper you&apos;re looking for doesn&apos;t exist or has been removed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (

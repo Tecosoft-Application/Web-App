@@ -30,7 +30,7 @@ export default function Industries() {
   return (
     <div className="w-full" data-name="Industries">
       <HeroSection onboardClick={onboardClick} />
-      <Solutions />
+      <Solutions  />
       <IndustriesSection moveToNextSection={moveToNextSection} />
       <TecosoftDashboardSection />
       <FeaturesSection />

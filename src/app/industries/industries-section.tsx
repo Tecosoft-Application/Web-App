@@ -55,8 +55,8 @@ const COLORS = {
 function TickIcon() {
   return (
     <svg
-      width="20"
-      height="20"
+      width="18"
+      height="18"
       viewBox="0 0 20 20"
       className="shrink-0"
       aria-hidden="true"
@@ -149,7 +149,7 @@ function CardTitle({ title }: { title: string }) {
         text-[${COLORS.primary}] font-semibold
         text-[20px]
         sm:text-[24px]
-        md:text-[26px]
+        xl:text-[28px]
       `}
     >
       {title}
@@ -162,11 +162,11 @@ function CardDescription({ text }: { text: string }) {
     <p
       className={`
         text-[${COLORS.textGray}]
-        mt-2 sm:mt-3
+        mt-2 sm:mt-2
         max-w-[640px]
         text-[14px] leading-[22px]
         sm:text-[15px] sm:leading-[24px]
-        lg:text-[16px] 
+        xl:text-[17px] xl:leading-[26px]
       `}
     >
       {text}
@@ -176,7 +176,7 @@ function CardDescription({ text }: { text: string }) {
 
 function UseCaseItem({ text }: { text: string }) {
   return (
-    <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+    <div className="flex items-start sm:items-center gap-3">
       <div className="mt-0.5 sm:mt-0">
         <TickIcon />
       </div>
@@ -200,14 +200,14 @@ function UseCasesBox({ useCases }: { useCases: string[] }) {
       className={`
         bg-[${COLORS.bgGray}]
         rounded-xl sm:rounded-2xl
-        p-3 sm:p-4
+        p-3 sm:p-3.5
         shadow-sm
       `}
     >
       <p
         className={`
           text-[${COLORS.primaryLight}] font-semibold
-          mb-3  lg:mb-4
+          mb-3
           text-[16px]
         `}
       >
@@ -221,7 +221,7 @@ function UseCasesBox({ useCases }: { useCases: string[] }) {
           sm:grid-cols-2
           gap-y-2 gap-x-3
           sm:gap-y-4 sm:gap-x-6
-          lg:gap-y-4 lg:gap-x-8
+          lg:gap-y-4 lg:gap-x-6
         "
       >
         {useCases.map((item) => (
@@ -244,7 +244,7 @@ function OutcomeBadge({ outcome }: { outcome: string }) {
       className="
         bg-teal-100
         px-1 py-1
-        sm:px-2 sm:py-1
+        sm:px-2 sm:py-0.5
         rounded-full
         text-[14px]
         sm:text-[15px]
@@ -271,14 +271,14 @@ function OutcomeBadge({ outcome }: { outcome: string }) {
 
 function OutcomesList({ outcomes }: { outcomes: string[] }) {
   return (
-    <div className="pt-5 sm:pt-6 ">
+    <div className="pt-4 xl:pt-5">
       <div className="flex flex-wrap gap-2 sm:gap-3">
 
         <div className="w-full xl:mb-3">
           <p
             className={`
             text-[${COLORS.textDark}] font-semibold
-            text-[16px] sm:text-[17px] lg:text-[18px]
+            text-[16px] sm:text-[17px] xl:text-[18px]
           `}
           >
             Expected Outcomes:
@@ -307,7 +307,7 @@ function IndustryCard({ data }: { data: IndustryData }) {
       {/* Content Section */}
       <div className="w-full lg:w-1/2 flex flex-col justify-between">
         {/* Top Content */}
-        <div className="space-y-3 lg:space-y-4 xl:space-y-6">
+        <div className="space-y-3  xl:space-y-6">
           <div>
             <CardTitle title={data.title} />
             <CardDescription text={data.description} />
@@ -390,39 +390,42 @@ export default function IndustriesSection({ moveToNextSection }: { moveToNextSec
   const handleNext = () => swiperRef.current?.slideNext();
 
   return (
-    <section
-      className="
+    <div ref={moveToNextSection}>
+      <section
+        className="
         bg-white w-full
         px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20
         py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16
       "
-      aria-label="Industries and use cases"
-      ref={moveToNextSection}
-    >
-      {/* Container with max-width for large screens */}
-      <div className="max-w-[1600px] mx-auto">
-        <SectionHeader onPrev={handlePrev} onNext={handleNext} />
+        aria-label="Industries and use cases"
+        ref={moveToNextSection}
+      >
+        {/* Container with max-width for large screens */}
+        <div className="max-w-[1600px] mx-auto">
+          <SectionHeader onPrev={handlePrev} onNext={handleNext} />
 
-        {/* Swiper Carousel */}
-        <Swiper
-          modules={[Navigation]}
-          slidesPerView={1}
-          spaceBetween={24}
-          onBeforeInit={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          breakpoints={{
-            640: { spaceBetween: 30 },
-            1024: { spaceBetween: 40 },
-          }}
-        >
-          {INDUSTRIES_DATA.map((item) => (
-            <SwiperSlide key={item.id}>
-              <IndustryCard data={item as IndustryData} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
+          {/* Swiper Carousel */}
+          <Swiper
+            modules={[Navigation]}
+            slidesPerView={1}
+            spaceBetween={24}
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            breakpoints={{
+              640: { spaceBetween: 30 },
+              1024: { spaceBetween: 40 },
+            }}
+          >
+            {INDUSTRIES_DATA.map((item) => (
+              <SwiperSlide key={item.id}>
+                <IndustryCard data={item as IndustryData} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+    </div>
+
   );
 }

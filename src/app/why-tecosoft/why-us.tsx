@@ -173,7 +173,7 @@ function IconContainer({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={GRADIENT_BG_STYLE}
-      className="flex items-center justify-center size-[46px] rounded-md p-3"
+      className="flex items-center justify-center size-[42px] lg:size-[44px] xl:size-[46px]  rounded-lg p-2 lg:p-3"
     >
       {children}
     </div>
@@ -184,18 +184,18 @@ function FeatureCard({ data }: { data: FeatureCardData }) {
   const Icon = data.icon;
 
   return (
-    <div className="bg-white rounded-lg p-4 flex flex-col gap-3 hover:shadow-md transition">
+    <div className="bg-white rounded-xl p-4 flex flex-col gap-3 lg:gap-4 hover:shadow-md transition">
       <IconContainer>
         <Icon />
       </IconContainer>
 
-      <h3 className="text-[18px] font-semibold text-black">{data.title}</h3>
+      <h3 className="text-[17px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px] font-semibold text-black">{data.title}</h3>
 
-      <p className="text-[15px] leading-[20px] text-[#777]">
+      <p className="text-[14px] lg:text-[15px] xl:text-[15px] 2xl:text-[16px]  font-medium leading-[22px] lg:leading-[24px] 2xl:leading-[26px] text-[#777]">
         {data.description}
       </p>
 
-      <div className="flex items-center gap-2 text-[#0098d4] text-[14px] font-medium">
+      <div className="flex items-center gap-2 text-[#0098d4] text-[13px] lg:text-[14px] xl:text-[14px] 2xl:text-[15px] font-medium">
         <ArrowRightIcon />
         {data.callout}
       </div>
@@ -205,15 +205,15 @@ function FeatureCard({ data }: { data: FeatureCardData }) {
 
 function SectionHeader() {
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-[28px] sm:text-[32px] md:text-[36px] xl:text-[40px] font-semibold text-[#282828]">
+    <div className="flex flex-col gap-5 lg:gap-6">
+      <h2 className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[34px] xl:text-[40px] 2xl:text-[46px] font-semibold text-[#282828] leading-[1.2]">
         {SECTION_CONTENT.title.main}
         <span className="text-[#0098d4]">
           {SECTION_CONTENT.title.highlight}
         </span>
       </h2>
 
-      <p className="text-[#8e8e8e] text-[14px] sm:text-[15px] md:text-[16px] max-w-[520px]">
+      <p className="text-[#8e8e8e] text-[14px] sm:text-[15px] md:text-[16px] lg:text-[15px] xl:text-[16px] 2xl:text-[17px] leading-[24px] lg:leading-[26px] max-w-[520px] lg:max-w-none">
         {SECTION_CONTENT.description}
       </p>
     </div>
@@ -222,11 +222,11 @@ function SectionHeader() {
 
 function HeroImage() {
   return (
-    <div className="w-full h-[220px] sm:h-[260px] md:h-[300px] rounded-xl overflow-hidden">
+    <div className="w-full h-[240px] sm:h-[280px] md:h-[320px] lg:h-[260px] xl:h-[300px] 2xl:h-[340px] rounded-xl overflow-hidden">
       <img
         src={ASSETS.heroImage}
         alt="Tecosoft team collaboration"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     </div>
   );
@@ -239,18 +239,16 @@ function HeroImage() {
 export function WhyUs() {
   return (
     <section className="bg-[#e0f6fa] w-full">
-      <div className="mx-auto max-w-[1536px] px-4 sm:px-6 md:px-10 lg:px-16 xl:px-[100px] py-10 md:py-14 lg:py-[60px]">
-        <div className="flex flex-col xl:flex-row gap-12 xl:gap-[60px] items-start">
+      <div className="mx-auto max-w-[1536px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-[100px] py-10 md:py-14 lg:py-[60px]">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-10 xl:gap-14 2xl:gap-[70px] lg:items-stretch">
           {/* Left */}
-          <div className="w-full xl:max-w-[580px] flex flex-col gap-10">
+          <div className="w-full lg:w-[45%] xl:w-[43%] 2xl:w-[45%] lg:shrink-0 flex flex-col justify-between gap-10 lg:gap-9">
             <SectionHeader />
-            <div className="xl:pt-40">
-              <HeroImage />
-            </div>
+            <HeroImage />
           </div>
 
           {/* Right */}
-          <div className="w-full flex flex-col gap-6">
+          <div className="w-full lg:flex-1 flex flex-col gap-5 lg:gap-5 xl:gap-6">
             {FEATURES_DATA.map((item) => (
               <FeatureCard key={item.id} data={item} />
             ))}

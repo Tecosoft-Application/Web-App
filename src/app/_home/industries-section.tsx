@@ -112,42 +112,40 @@ const IndustriesSection = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-[60px] relative self-stretch w-full flex-[0_0_auto]">
-        <div className="flex flex-col w-full lg:w-[572px] items-start gap-6 md:gap-[30px] relative">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-[40px] relative self-stretch w-full flex-[0_0_auto]">
+        <div className="flex flex-col w-full lg:w-[680px] items-start gap-6 md:gap-[20px] relative">
           {industries.map((industry, index) => (
             <React.Fragment key={industry.seletct}>
               <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
                 <button
                   onClick={() => setSelectedIndustry(industry.seletct)}
-                  className={`relative self-stretch mt-[-1.00px] font-semibold text-xl md:text-2xl lg:text-[26px] tracking-[0] leading-[normal] text-left transition-all duration-300 cursor-pointer ${
-                    selectedIndustry === industry.seletct
-                      ? "text-[#111111]"
-                      : "text-[#999999] hover:text-[#555555]"
-                  }`}
+                  className={`relative self-stretch mt-[-1.00px] font-semibold text-xl md:text-2xl lg:text-[26px] xl:text-[28px] tracking-[0] leading-[normal] text-left transition-all duration-300 cursor-pointer ${selectedIndustry === industry.seletct
+                    ? "text-[#111111]"
+                    : "text-[#999999] hover:text-[#555555]"
+                    }`}
                 >
                   {industry.name}
                 </button>
 
                 {/* Show description only for selected industry */}
                 {selectedIndustry === industry.seletct && (
-                  <p className="relative self-stretch font-normal text-base md:text-lg lg:text-xl tracking-[0] leading-relaxed md:leading-[26px] text-[#666666] transition-all duration-300">
+                  <p className="relative self-stretch font-normal text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] tracking-[0] leading-[18px] md:leading-[24px] text-[#666666] transition-all duration-300">
                     {selectedIndustryObj?.description}
                   </p>
                 )}
               </div>
 
               <div
-                className={`relative self-stretch h-px transition-all duration-300 ${
-                  selectedIndustry === industry.seletct
-                    ? "bg-gradient-to-r from-[#00B7FF] to-[#0EB05C]"
-                    : "bg-[#E5E5E5]"
-                }`}
+                className={`relative self-stretch h-px transition-all duration-300 ${selectedIndustry === industry.seletct
+                  ? "bg-gradient-to-r from-[#00B7FF] to-[#0EB05C]"
+                  : "bg-[#E5E5E5]"
+                  }`}
               />
             </React.Fragment>
           ))}
         </div>
 
-        <div className="relative w-full lg:w-[600px] max-w-full">
+        <div className="relative w-full lg:w-[560px] max-w-full">
           <motion.div
             key={currentDisplayImage}
             className="relative w-full h-auto"

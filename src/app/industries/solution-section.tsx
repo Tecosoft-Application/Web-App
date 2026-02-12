@@ -237,7 +237,9 @@ function SolutionsList() {
         title="Data Control"
         description="End-to-end data governance, role-based views, and audit-ready data lineage."
         icon={<DataIcon />}
+
       />
+
     </div>
   );
 }
@@ -262,7 +264,9 @@ export default function Solutions() {
         <SectionHeader />
         <Connector />
         <SolutionsList />
+
       </div>
+
     </section>
   );
 }

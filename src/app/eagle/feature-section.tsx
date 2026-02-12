@@ -163,9 +163,8 @@ function FeatureSection() {
         >
           <div
             aria-hidden="true"
-            className={`absolute inset-0 pointer-events-none rounded-[12px] ${
-              isMobile ? "" : "grayscale group-hover:grayscale-0"
-            } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
+            className={`absolute inset-0 pointer-events-none rounded-[12px] ${isMobile ? "" : "grayscale group-hover:grayscale-0"
+              } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
           >
             <Image
               alt=""
@@ -522,9 +521,8 @@ function FeatureSection() {
         >
           <div
             aria-hidden="true"
-            className={`absolute inset-0 pointer-events-none rounded-[12px] ${
-              isMobile ? "" : "grayscale group-hover:grayscale-0"
-            } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
+            className={`absolute inset-0 pointer-events-none rounded-[12px] ${isMobile ? "" : "grayscale group-hover:grayscale-0"
+              } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
           >
             <Image
               alt=""
@@ -660,7 +658,7 @@ function FeatureSection() {
                       <path
                         d={svgPathsFeatures.p2c3f66b4}
                         id="Vector"
-                        className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                        className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth="1.5"
@@ -669,7 +667,7 @@ function FeatureSection() {
                         <path
                           d="M2.03 8.5H22"
                           id="Vector_2"
-                          className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                          className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="1.5"
@@ -677,7 +675,7 @@ function FeatureSection() {
                         <path
                           d="M2.03 15.5H12"
                           id="Vector_3"
-                          className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                          className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="1.5"
@@ -687,7 +685,7 @@ function FeatureSection() {
                         <path
                           d="M8.51001 21.99V2.01001"
                           id="Vector_4"
-                          className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                          className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="1.5"
@@ -695,7 +693,7 @@ function FeatureSection() {
                         <path
                           d="M15.51 11.99V2.01001"
                           id="Vector_5"
-                          className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                          className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="1.5"
@@ -706,7 +704,7 @@ function FeatureSection() {
                       <path
                         d={svgPathsFeatures.p3fbc6340}
                         id="Vector_6"
-                        className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                        className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth="1.5"
@@ -714,7 +712,7 @@ function FeatureSection() {
                       <path
                         d={svgPathsFeatures.p2f453700}
                         id="Vector_7"
-                        className="stroke-white group-hover:stroke-[#00FF84] transition-[stroke] duration-500 ease-in-out"
+                        className="stroke-white  transition-[stroke] duration-500 ease-in-out"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth="1.5"
@@ -844,9 +842,8 @@ function FeatureSection() {
         >
           <div
             aria-hidden="true"
-            className={`absolute inset-0 pointer-events-none rounded-[12px] ${
-              isMobile ? "" : "grayscale group-hover:grayscale-0"
-            } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
+            className={`absolute inset-0 pointer-events-none rounded-[12px] ${isMobile ? "" : "grayscale group-hover:grayscale-0"
+              } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
           >
             <Image
               alt=""
@@ -884,6 +881,8 @@ function FeatureSection() {
                     stroke="white"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="stroke-white group-hover:stroke-[#00FF84]  transition-[stroke] duration-500 ease-in-out"
+
                     strokeMiterlimit="10"
                     strokeWidth="1.5"
                   />
@@ -892,6 +891,7 @@ function FeatureSection() {
                     id="Vector_2"
                     stroke="white"
                     strokeLinecap="round"
+                    className="stroke-white group-hover:stroke-[#00FF84]  transition-[stroke] duration-500 ease-in-out"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
                     strokeWidth="1.5"
@@ -910,9 +910,8 @@ function FeatureSection() {
 
         {/* Card 8: Operator Dashboard */}
         <motion.div
-          className={`group lg:absolute ${
-            isMobile ? "bg-[#243D70]" : ""
-          }   lg:hover:bg-[#243D70] box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[220px] lg:h-[43.33%] items-start justify-end lg:left-[70.63%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[15.12%] lg:w-[17.46%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-105 transition-transform duration-500 ease-out`}
+          className={`group lg:absolute ${isMobile ? "bg-[#243D70]" : ""
+            }   lg:hover:bg-[#243D70] box-border content-stretch cursor-pointer flex flex-col gap-[10px] xl:gap-[12px] h-[220px] lg:h-[43.33%] items-start justify-end lg:left-[70.63%] overflow-clip p-[14px] xl:p-[16px] rounded-[10px] xl:rounded-[12px] lg:top-[15.12%] lg:w-[17.46%] w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 max-lg:!opacity-100 hover:scale-105 transition-transform duration-500 ease-out`}
           custom={isMobile ? undefined : 7}
           initial={isMobile ? "visible" : "hidden"}
           whileInView={isMobile ? undefined : "visible"}
@@ -932,9 +931,8 @@ function FeatureSection() {
         >
           <div
             aria-hidden="true"
-            className={`absolute inset-0 pointer-events-none rounded-[12px] ${
-              isMobile ? "" : "grayscale group-hover:grayscale-0"
-            } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
+            className={`absolute inset-0 pointer-events-none rounded-[12px] ${isMobile ? "" : "grayscale group-hover:grayscale-0"
+              } transition-[filter] duration-500 ease-in-out flex items-center justify-center`}
           >
             <Image
               alt=""

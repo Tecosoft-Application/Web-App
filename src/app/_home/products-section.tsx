@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className="flex flex-col items-center justify-between p-6 md:p-8 lg:p-10 relative flex-1 rounded-xl transition-all duration-500 group "
+      className="flex flex-col items-center justify-between p-6 md:p-5 lg:p-7 xl:p-8  relative flex-1 rounded-xl transition-all duration-500 group "
       style={{
         position: "relative",
         backdropFilter: "blur(10px)",
@@ -86,16 +86,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
         onMouseLeave={handleMouseLeave}
       >
         {isHovered && videoPath ? (
-          <div className="w-full max-w-[400px] h-48 rounded-[10px] flex items-center justify-center">
+          <div className="w-full lg:max-w-[380px] h-48 rounded-[10px] flex items-center justify-center">
             <video
               src={videoPath}
               autoPlay
               loop
               muted
               playsInline
-              className="w-full h-full object-contain transition-transform duration-500 rounded-[10px]"
+              className="w-max-[380px] h-full object-contain transition-transform duration-500 rounded-[10px]"
               style={{
-                transform: isHovered ? "scale(1.3)" : "scale(1)",
+                transform: isHovered ? "scale(1.1)" : "scale(0.9)",
               }}
             />
           </div>
@@ -108,7 +108,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               height={192}
               className="w-full h-full object-contain transition-transform duration-500 rounded-[10px]"
               style={{
-                transform: isHovered ? "scale(1.3)" : "scale(1)",
+                transform: isHovered ? "scale(1.25)" : "scale(0.95)",
               }}
             />
           </div>
@@ -129,7 +129,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Description */}
         <p
-          className="text-white/75 text-sm md:text-base lg:text-lg font-medium text-center leading-relaxed transition-all duration-700"
+          className="text-white/75 text-[12px] md:text-[14px] lg:text-[16px] font-medium text-center leading-[16px] lg:leading-[18px] lg:leading-[24px] transition-all duration-700"
           style={{
             transitionDelay: `${delay + 300}ms`,
             textShadow: isHovered ? "0 2px 10px rgba(0,0,0,0.8)" : "none",

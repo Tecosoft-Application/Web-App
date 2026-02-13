@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
@@ -271,7 +271,7 @@ function OutcomeBadge({ outcome }: { outcome: string }) {
 
 function OutcomesList({ outcomes }: { outcomes: string[] }) {
   return (
-    <div className="pt-4 xl:pt-5">
+    <div className="pt-4 xl:pt-6">
       <div className="flex flex-wrap gap-2 sm:gap-3">
 
         <div className="w-full xl:mb-3">
@@ -305,7 +305,7 @@ function IndustryCard({ data }: { data: IndustryData }) {
       <CardImage src={data.image} alt={data.title} />
 
       {/* Content Section */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-between">
+      <div className="w-full lg:w-1/2 flex flex-col ">
         {/* Top Content */}
         <div className="space-y-3  xl:space-y-6">
           <div>
@@ -406,13 +406,17 @@ export default function IndustriesSection({ moveToNextSection }: { moveToNextSec
 
           {/* Swiper Carousel */}
           <Swiper
-            modules={[Navigation]}
+            modules={[Navigation, Autoplay]}
             slidesPerView={1}
             spaceBetween={24}
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper;
             }}
-            breakpoints={{
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            loop={true} breakpoints={{
               640: { spaceBetween: 30 },
               1024: { spaceBetween: 40 },
             }}

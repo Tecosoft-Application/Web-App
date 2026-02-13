@@ -232,8 +232,6 @@ export default function BlogDetailsContent({ slug }: { slug: string }) {
 
 
                     </div>
-
-                    {/* ================= RIGHT SIDEBAR ================= */}
                     <div className="
             w-full
             lg:w-[366px]
@@ -252,10 +250,9 @@ export default function BlogDetailsContent({ slug }: { slug: string }) {
 
                         <div className="border-t border-[#D2D2D2]" />
 
-                        {relatedBlogs.slice(0, 2).map((blog: any, index: number) => (
-                            <>
+                        {relatedBlogs.length > 0 ? (
+                            relatedBlogs.slice(0, 2).map((blog: any, index: number) => (
                                 <div key={index}>
-
                                     <RelatedBlog
                                         bannerImage={blog.cover_image_url}
                                         title={blog.title}
@@ -267,19 +264,33 @@ export default function BlogDetailsContent({ slug }: { slug: string }) {
                                             window.location.href = `/blogs/${blog?.slug}`
                                         }}
                                     />
-
-
-
-
+                                    {index === 0 && <div className="border-t border-[#D2D2D2] mt-6 pt-3" />}
                                 </div>
-                                {index === 0 && <div className="border-t border-[#D2D2D2] pt-3" />}
-                            </>
-                        ))
-                        }
+                            ))
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-10">
+                                <svg
+                                    className="w-16 h-16 text-gray-300 mb-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={1.2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5"
+                                    />
+                                </svg>
+                                <p className="text-base font-semibold text-gray-400">No related articles found</p>
+                                <p className="text-sm text-gray-400 mt-1 text-center">
+                                    Check back later for more articles.
+                                </p>
+                            </div>
+                        )}
 
 
                     </div>
-
                 </div>
             </div>
         </div>

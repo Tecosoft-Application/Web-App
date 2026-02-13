@@ -384,7 +384,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ navItems, isScrolled }) => {
           }`}
         style={{
           zIndex: Z_INDEX.MOBILE_MENU,
-          height: "100vh",
+          maxHeight: "95vh",
         }}
       >
         {/* Header in Slide-in */}
@@ -412,19 +412,19 @@ const MobileNav: React.FC<MobileNavProps> = ({ navItems, isScrolled }) => {
         <div
           className="w-full bg-[#1a4d8f]"
           style={{
-            height: "calc(100vh - 64px)",
-            maxHeight: "550px",
+            height: "calc(95vh - 64px)",
+            maxHeight: "95vh",
           }}
         >
-          <div className="pt-6 px-8 h-full overflow-y-auto">
-            <ul className="flex flex-col gap-6">
+          <div className="pt-6 pl-6  pr-8 h-full overflow-y-auto">
+            <ul className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <li key={item.name}>
                   {item.hasDropdown ? (
                     <div>
                       <button
                         onClick={() => toggleExpand(item.name)}
-                        className="text-xl font-medium block py-2 hover:text-[#0eb05c] transition-colors text-white w-full text-left flex items-center justify-between"
+                        className="text-xl font-medium block py-1.5 hover:text-[#0eb05c] transition-colors text-white w-full text-left flex items-center justify-between"
                       >
                         {item.name}
                         <ArrowDown
@@ -523,7 +523,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ navItems, isScrolled }) => {
               ))}
               <li className="mt-5 mb-3">
                 <BookDemoButton
-                  className="bg-[#0eb05c] text-white px-6 py-3 rounded-lg hover:bg-[#0d9d52] transition-colors font-medium flex items-center justify-center gap-2 cursor-pointer"
+                  className="bg-[#0eb05c] text-white px-8 py-3  w-[98%] rounded-lg hover:bg-[#0d9d52] transition-colors font-medium flex items-center justify-center gap-2 cursor-pointer"
                   onClick={() => {
                     setIsOpen(false);
                   }}
@@ -644,10 +644,19 @@ const Navbar = () => {
         { name: "Digital Twin Solutions", href: "/digital-twin-solutions" },
       ],
     },
-    { name: "Services", href: "#", hasDropdown: false },
+    // { name: "Services", href: "#", hasDropdown: false },
     { name: "Company", href: "/company", hasDropdown: false },
     { name: "Why TecoSoft", href: "/why-tecosoft", hasDropdown: false },
     { name: "Industries", href: "/industries", hasDropdown: false },
+    {
+      name: "Resources",
+      href: "#",
+      hasDropdown: true,
+      dropdownItems: [
+        { name: "Blogs", href: "/blogs" },
+        { name: "White Papers & Case stduies", href: "/white-papers" },
+      ],
+    },
   ];
 
   return (

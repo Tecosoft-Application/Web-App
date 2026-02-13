@@ -18,14 +18,14 @@ export default function CapabilityCard3() {
 
       <div className="relative overflow-hidden w-full">
         <div
-          className="flex animate-scroll gap-6 sm:gap-8 md:gap-10 lg:gap-[60px] xl:gap-[70px]"
+          className="flex animate-scroll gap-6 sm:gap-8 md:gap-10 lg:gap-[60px] xl:gap-[75px]"
           style={{ width: "max-content" }}
         >
           {/* Duplicate multiple times for seamless loop */}
           {[...protocols, ...protocols, ...protocols].map((protocol, index) => (
             <div
               key={index}
-              className="flex-shrink-0 flex items-center justify-center h-14 sm:h-16 md:h-20 lg:h-[138px] xl:h-[156px] w-20 sm:w-24 md:w-28 lg:min-w-[200px] xl:min-w-[240px]"
+              className="flex-shrink-0 flex items-center justify-center h-14 sm:h-16 md:h-20 lg:h-[138px] xl:h-[142x] w-20 sm:w-24 md:w-28 lg:min-w-[200px] xl:min-w-[240px]"
             >
               <Image
                 src={protocol.logo}

@@ -8,6 +8,7 @@ import { useLenis } from "../../../libs/react-lenis";
 import { createApplication } from "@/api/create";
 import { toast } from "react-toastify";
 import { allowOnlyLetters, allowOnlyNumbers, preventLeadingSpace, preventSpaces } from "@/utills/form-validation";
+import { log } from "node:console";
 
 export interface JobData {
   id: number;
@@ -37,6 +38,7 @@ interface ApplicationFormValues {
   workExperience: string;
   linkedinPortfolio: string;
   attachment: File | null;
+  jobTitle: string
 }
 
 const validationSchema = Yup.object({
@@ -264,6 +266,7 @@ function ApplicationFormView({
     workExperience: "",
     linkedinPortfolio: "",
     attachment: null,
+    jobTitle: job.title
   };
 
   const handleSubmit = async (
@@ -282,6 +285,10 @@ function ApplicationFormView({
     formData.append("work_experience", values.workExperience);
     formData.append("linkedin_portfolio", values.linkedinPortfolio);
     formData.append("attachment", values.attachment ?? new Blob());
+    formData.append("job_title", values.jobTitle)
+
+    console.log(formData, "hidden");
+
 
     await createApplication(formData);
     toast.success("Application submitted successfully");
@@ -329,7 +336,12 @@ function ApplicationFormView({
                   disabled={isSubmitting}
                   className="flex items-center gap-1 rounded-md bg-[#07af40] px-2 py-1.5 xs:px-3 xs:py-2 sm:px-5 sm:py-2 text-xs xs:text-sm sm:text-base font-semibold text-white hover:bg-[#069935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "..." : "Submit"}
+                  {isSubmitting ? (
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : "Submit"}
                   <svg
                     width="14"
                     height="13"
@@ -428,6 +440,9 @@ function ApplicationFormView({
                     name="email"
                     type="text"
                     onKeyDown={preventSpaces}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue("email", e.target.value.toLowerCase());
+                    }}
                     className={`w-full rounded-md border px-3 py-2 text-xs xs:text-sm outline-none focus:ring-1 focus:ring-green-500 ${errors.email && touched.email
                       ? "border-red-500 focus:border-red-500"
                       : "border-gray-300 focus:border-green-500"

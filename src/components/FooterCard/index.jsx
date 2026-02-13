@@ -11,6 +11,7 @@ const FooterCard = ({
   buttonText = "Talk to an Expert",
   backgroundImage = "/assets/footer-stroke.png",
   className = "",
+  redirectButton
 }) => {
   const router = useRouter();
 
@@ -63,10 +64,24 @@ const FooterCard = ({
             )}
           </div>
           <div className="w-full md:w-auto flex-shrink-0 ">
-            <BookDemoButton className="w-full md:w-auto  cursor-pointer bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#13F495]/30 transition-all flex items-center justify-center gap-2 whitespace-nowrap">
-              {buttonText}
-              <span>→</span>
-            </BookDemoButton>{" "}
+
+            {
+
+              redirectButton ?
+                (<button className="w-full md:w-auto  cursor-pointer bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#13F495]/30 transition-all flex items-center justify-center gap-2 whitespace-nowrap" onClick={
+                  () => {
+                    router.push(redirectButton)
+                  }
+                }>
+                  {buttonText}
+                  <span>→</span>
+                </button>) :
+                <BookDemoButton className="w-full md:w-auto  cursor-pointer bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#13F495]/30 transition-all flex items-center justify-center gap-2 whitespace-nowrap">
+                  {buttonText}
+                  <span>→</span>
+                </BookDemoButton>
+            }
+
           </div>
         </div>
       </div>

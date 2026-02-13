@@ -41,11 +41,11 @@ export const FooterLinks = {
       { name: "White Papers & Case Studies", href: "/white-papers" },
     ],
   },
-  legal: {
-    title: "Legal",
-    links: [
-      { name: "Terms and Conditions", href: "/legal/terms" },
-      { name: "Privacy Policy", href: "/legal/privacy" },
-    ],
-  },
+  // legal: {
+  //   title: "Legal",
+  //   links: [
+  //     { name: "Terms and Conditions", href: "/legal/terms" },
+  //     { name: "Privacy Policy", href: "/legal/privacy" },
+  //   ],
+  // },
 };

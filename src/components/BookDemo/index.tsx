@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { allowOnlyLetters, allowOnlyNumbers, preventLeadingSpace, preventSpaces } from "@/utills/form-validation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { COUNTRIES } from "@/utills/country";
 
 interface Props {
   isOpen: boolean;
@@ -64,18 +65,7 @@ const validationSchema = Yup.object({
   ),
 });
 
-const COUNTRIES = [
-  "India",
-  "United States",
-  "United Kingdom",
-  "Australia",
-  "Canada",
-  "Germany",
-  "France",
-  "Singapore",
-  "UAE",
-  "Other",
-];
+
 
 export default function BookDemoModal({ isOpen, onClose }: Props) {
   const lenis = useLenis();
@@ -177,7 +167,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
               lastName: "",
               email: "",
               phone: "",
-              country: "",
+              country: "India",
               message: "",
             }}
             validationSchema={validationSchema}
@@ -272,9 +262,17 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
                     value={values.phone}
                     enableSearch
                     searchPlaceholder="Search country"
-                    onChange={(value) => {
+                    onChange={(value, countryData: { name?: string }) => {
                       setFieldValue("phone", value);
                       setFieldTouched("phone", true);
+                      if (countryData?.name) {
+                        const match = COUNTRIES.find(
+                          (c) => c.toLowerCase() === countryData.name!.toLowerCase()
+                        );
+                        if (match) {
+                          setFieldValue("country", match);
+                        }
+                      }
                     }}
                     onBlur={() => setFieldTouched("phone", true)}
                     inputStyle={{

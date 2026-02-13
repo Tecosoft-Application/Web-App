@@ -28,9 +28,9 @@ type CTAButtonProps = {
   text: string;
 };
 
-function CTAButton({ text }: CTAButtonProps) {
+function CTAButton({ text, onClick }: CTAButtonProps & { onClick: () => void }) {
   return (
-    <button className="bg-[#07af40] hover:bg-[#06993a] transition-colors flex gap-2 items-center justify-center px-3.5 py-2.5 rounded-sm">
+    <button className="bg-[#07af40] hover:bg-[#06993a] transition-colors flex gap-2 items-center justify-center px-3.5 py-2.5 rounded-sm cursor-pointer" onClick={onClick}>
       <span className="font-semibold leading-5 text-[15px] text-white whitespace-nowrap">
         {text}
       </span>
@@ -41,7 +41,7 @@ function CTAButton({ text }: CTAButtonProps) {
   );
 }
 
-export default function MissionSection() {
+export default function MissionSection({ handleScroll }: { handleScroll: () => void }) {
   return (
     <section className="w-full bg-[#e0f6fa]">
       <div className="w-full overflow-clip max-w-[1600px] mx-auto">
@@ -63,7 +63,7 @@ export default function MissionSection() {
             <p className="font-normal leading-relaxed text-base sm:text-lg lg:text-[20px] lg:leading-[29px] text-[#4f4f4f] w-full">
               {companyMissionSection.description}
             </p>
-            <CTAButton text={companyMissionSection.ctaButton.text} />
+            <CTAButton text={companyMissionSection.ctaButton.text} onClick={handleScroll} />
           </div>
         </div>
       </div>

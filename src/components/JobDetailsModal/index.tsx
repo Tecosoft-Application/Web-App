@@ -8,6 +8,7 @@ import { useLenis } from "../../../libs/react-lenis";
 import { createApplication } from "@/api/create";
 import { toast } from "react-toastify";
 import { allowOnlyLetters, allowOnlyNumbers, preventLeadingSpace, preventSpaces } from "@/utills/form-validation";
+import { log } from "node:console";
 
 export interface JobData {
   id: number;
@@ -37,6 +38,7 @@ interface ApplicationFormValues {
   workExperience: string;
   linkedinPortfolio: string;
   attachment: File | null;
+  jobTitle: string
 }
 
 const validationSchema = Yup.object({
@@ -264,6 +266,7 @@ function ApplicationFormView({
     workExperience: "",
     linkedinPortfolio: "",
     attachment: null,
+    jobTitle: job.title
   };
 
   const handleSubmit = async (
@@ -282,6 +285,10 @@ function ApplicationFormView({
     formData.append("work_experience", values.workExperience);
     formData.append("linkedin_portfolio", values.linkedinPortfolio);
     formData.append("attachment", values.attachment ?? new Blob());
+    formData.append("job_title", values.jobTitle)
+
+    console.log(formData, "hidden");
+
 
     await createApplication(formData);
     toast.success("Application submitted successfully");
@@ -433,6 +440,9 @@ function ApplicationFormView({
                     name="email"
                     type="text"
                     onKeyDown={preventSpaces}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue("email", e.target.value.toLowerCase());
+                    }}
                     className={`w-full rounded-md border px-3 py-2 text-xs xs:text-sm outline-none focus:ring-1 focus:ring-green-500 ${errors.email && touched.email
                       ? "border-red-500 focus:border-red-500"
                       : "border-gray-300 focus:border-green-500"

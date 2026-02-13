@@ -457,18 +457,18 @@ function CoreFeatureCard({
     icon === "chart-relationship"
       ? ChartRelationship
       : icon === "artificial-intelligence"
-      ? ArtificialIntelligence
-      : icon === "database-export"
-      ? DatabaseExport
-      : icon === "energy"
-      ? Energy
-      : icon === "prediction"
-      ? Prediction
-      : icon === "sun"
-      ? Sun
-      : icon === "data"
-      ? Data
-      : VuesaxLinearDanger;
+        ? ArtificialIntelligence
+        : icon === "database-export"
+          ? DatabaseExport
+          : icon === "energy"
+            ? Energy
+            : icon === "prediction"
+              ? Prediction
+              : icon === "sun"
+                ? Sun
+                : icon === "data"
+                  ? Data
+                  : VuesaxLinearDanger;
 
   return (
     <div className="bg-[rgba(255,255,255,0.16)] backdrop-blur-md box-border flex flex-col gap-[20px] items-start p-[24px] rounded-[16px] h-full min-h-[280px] transition-all duration-300 hover:bg-[rgba(255,255,255,0.22)]">
@@ -520,7 +520,8 @@ function Frame40({ content }: any) {
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   // central place for breakpoints
   const breakpoints: SwiperOptions["breakpoints"] = {
@@ -547,11 +548,14 @@ function Frame40({ content }: any) {
   // store swiper instance when it's created
   const handleSwiper = (swiper: SwiperClass) => {
     swiperRef.current = swiper;
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
   };
 
   // Handle slide change
   const handleSlideChange = (swiper: SwiperClass) => {
-    setCurrentIndex(swiper.activeIndex);
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
   };
 
   // Custom navigation handlers
@@ -588,10 +592,11 @@ function Frame40({ content }: any) {
         type="button"
         ref={prevRef}
         aria-label="Previous slide"
-        className="core-features-prev slick-arrow slick-prev absolute top-1/2 -translate-y-1/2 left-0 z-50"
+        disabled={isBeginning}
+        className={`core-features-prev slick-arrow slick-prev absolute top-1/2 -translate-y-1/2 left-0 z-50 transition-opacity duration-300 ${isBeginning ? "opacity-30 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
         onClick={handlePrev}
         style={{
-          pointerEvents: "auto",
+          pointerEvents: isBeginning ? "none" : "auto",
         }}
       >
         <svg
@@ -616,10 +621,11 @@ function Frame40({ content }: any) {
         type="button"
         ref={nextRef}
         aria-label="Next slide"
-        className="core-features-next slick-arrow slick-next absolute top-1/2 -translate-y-1/2 right-0 z-50"
+        disabled={isEnd}
+        className={`core-features-next slick-arrow slick-next absolute top-1/2 -translate-y-1/2 right-0 z-50 transition-opacity duration-300 ${isEnd ? "opacity-30 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
         onClick={handleNext}
         style={{
-          pointerEvents: "auto",
+          pointerEvents: isEnd ? "none" : "auto",
         }}
       >
         <svg

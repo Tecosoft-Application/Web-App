@@ -19,6 +19,8 @@ export default function LatestWhitepapers() {
   }
     , []);
 
+    console.log(loading,"000");
+    
 
   const fetchLatestWhitepapers = async () => {
     try {

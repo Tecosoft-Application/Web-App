@@ -139,13 +139,13 @@ function Frame1({
       >
         <motion.p
           style={{ opacity: isSmallScreen ? 1 : opacity }}
-          className={`absolute font-semibold leading-[32px] min-[1024px]:leading-[26px] min-[1100px]:leading-[28px] min-[1200px]:leading-[30px] min-[1300px]:leading-[31px] min-[1400px]:leading-[32px] left-[34px] max-[1023px]:left-[5%] min-[1024px]:left-[24px] min-[1100px]:left-[28px] min-[1200px]:left-[30px] min-[1300px]:left-[32px] min-[1400px]:left-[34px] not-italic text-[20px] min-[1024px]:text-[20px] min-[1100px]:text-[22px] min-[1200px]:text-[24px] min-[1300px]:text-[23px] min-[1400px]:text-[24px] text-nowrap top-[34px] min-[1024px]:top-[28px] min-[1100px]:top-[30px] min-[1200px]:top-[32px] min-[1300px]:top-[33px] min-[1400px]:top-[34px] whitespace-pre transition-all ${isHovered ? "text-white" : "text-[#282828]"
+          className={`absolute font-semibold leading-[26px] md:leading-[28px] lg:leading-[30px] xl:leading-[31px]  left-[34px] max-[1023px]:left-[5%] min-[1024px]:left-[24px] min-[1100px]:left-[28px] min-[1200px]:left-[30px] min-[1300px]:left-[32px] min-[1400px]:left-[34px] not-italic text-[16px] lg:text-[18px] xl:text-[22px]   text-nowrap top-[34px] min-[1024px]:top-[28px] min-[1100px]:top-[30px] min-[1200px]:top-[32px] min-[1300px]:top-[33px] min-[1400px]:top-[34px] whitespace-pre transition-all ${isHovered ? "text-white" : "text-[#282828]"
             }`}
         >
           Connected Factory Solutions
         </motion.p>
         <FaArrowRightLong
-          className={`absolute top-3 right-5 text-[20px] lg:text-[26px] ${isHovered ? "text-white" : "text-[#282828]"
+          className={`absolute top-3 right-5 text-[20px] lg:text-[24px] ${isHovered ? "text-white" : "text-[#282828]"
             }`}
         >
           →
@@ -8539,7 +8539,7 @@ function Frame() {
         className="absolute border border-[#d2d2d2] border-solid inset-0 pointer-events-none rounded-[60px]"
       />
       <p className="font-semibold leading-[20px] not-italic relative shrink-0 text-[#282828] text-[15px] text-nowrap whitespace-pre">
-        Contact us
+        Book a Demo
       </p>
     </BookDemoButton>
   );

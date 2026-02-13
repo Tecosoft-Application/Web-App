@@ -33,19 +33,21 @@ const TEXT_STYLES = {
 interface ArrowIconProps {
   size?: 12 | 14;
   direction?: "down" | "right";
+  color?: any
 }
 
 interface ButtonProps {
   label: string;
-  variant: "primary" | "outline";
+  variant: "primary" | "outline" | "secondary";
   showArrow?: boolean;
+
 }
 
 // =============================================================================
 // ICONS
 // =============================================================================
 
-function ArrowIcon({ size = 14, direction = "down" }: ArrowIconProps) {
+function ArrowIcon({ size = 14, direction = "down", color }: ArrowIconProps) {
   const svgPath = size === 12 ? svgPaths.p1bf4c500 : svgPaths.p1feb4d00;
   const rotationClass = direction === "right" ? "rotate-[-90deg]" : "";
 
@@ -62,7 +64,7 @@ function ArrowIcon({ size = 14, direction = "down" }: ArrowIconProps) {
       >
         <path
           d={svgPath}
-          stroke="white"
+          stroke={color}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.35"
@@ -78,11 +80,12 @@ function ArrowIcon({ size = 14, direction = "down" }: ArrowIconProps) {
 
 function CTAButton({ label, variant, showArrow = true, onClick }: ButtonProps & { onClick?: () => void }) {
   const base =
-    "flex items-center justify-center gap-2 px-4 py-3 relative text-white cursor-pointer";
+    "flex items-center justify-center gap-2 px-4 py-3 relative  cursor-pointer";
+
   const variantClass =
     variant === "primary"
-      ? `bg-[${COLORS.PRIMARY_GREEN}]`
-      : "bg-transparent border border-white";
+      ? `bg-[${COLORS.PRIMARY_GREEN}]  text-white`
+      : `bg-white text-[#07af40]`;
 
   return (
     <div
@@ -96,7 +99,7 @@ function CTAButton({ label, variant, showArrow = true, onClick }: ButtonProps & 
 
       {showArrow && (
         <div className="rotate-[-90deg]">
-          <ArrowIcon size={14} />
+          <ArrowIcon size={14} color={variant === "primary" ? "white" : "#07AF40"} />
         </div>
       )}
     </div>
@@ -157,7 +160,8 @@ function HeroCTAButtons({ onboardClick }: { onboardClick: () => void }) {
   return (
     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
       <CTAButton label="Explore Industries" variant="primary" onClick={onboardClick} />
-      <CTAButton label="Why Tecosoft" variant="outline" onClick={() => window.location.href = "/why-tecosoft/"} />
+      <CTAButton label="Why Tecosoft" variant="secondary"
+        onClick={() => window.location.href = "/why-tecosoft/"} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Avatar from "../Avathar";
 
 export default function ArticleCard({
@@ -24,9 +25,10 @@ export default function ArticleCard({
         <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition h-full flex flex-col cursor-pointer" onClick={onClick}>
             {/* Image */}
             <div className="relative h-[200px] w-full rounded-xl overflow-hidden">
-                <img
+                <Image
                     src={image}
                     alt={title}
+                    fill
                     className="absolute inset-0 w-full h-full object-cover"
                 />
             </div>

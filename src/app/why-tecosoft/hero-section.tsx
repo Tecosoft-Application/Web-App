@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import BookDemoButton from "@/components/BookDemoButton";
 import svgPaths from "../../imports/svg-9v3kh9sdih";
 import { motion, type Variants } from "framer-motion";
@@ -364,10 +365,12 @@ function LogoContainer() {
         "
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img
+          <Image
             alt="Tecosoft Logo"
             className="absolute h-full left-[-0.11%] max-w-none top-0 w-[476.88%]"
             src={ASSETS.logo}
+            width={476}
+            height={120}
           />
         </div>
       </div>
@@ -540,10 +543,11 @@ function FloatingCardsContainer() {
 function HeroBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <img
+      <Image
         alt=""
         className="absolute h-[140%] left-0 max-w-none top-[-0.03%] w-full object-cover"
         src={ASSETS.heroBackground}
+        fill
       />
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { getBlogDetails, getBlogLatest, getWhitePaperDetails, getWhitePapersAll } from "@/api/list";
+import Image from "next/image";
 import Avatar from "@/components/Avathar";
 import RelatedBlog from "@/components/Blogs/RelatedCards";
 import { useRouter } from "next/navigation";
@@ -210,6 +211,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
                 {/* Main Banner */}
                 <div className="
+          relative
           w-full
           h-[220px]
           sm:h-[320px]
@@ -219,8 +221,9 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
           overflow-hidden
           mb-10
         ">
-                    <img
+                    <Image
                         src={blogData?.banner_url}
+                        fill
                         className="w-full h-full object-cover"
                         alt="banner"
                     />

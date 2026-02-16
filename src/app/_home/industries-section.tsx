@@ -162,27 +162,6 @@ const IndustriesSection = () => {
               className="relative w-full h-auto"
             />
           </motion.div>
-
-          {/* Image with grayscale filter that transitions */}
-          {/* <img
-            className="relative w-full transition-all duration-700 ease-in-out"
-            alt="Industry visualization"
-            src={currentDisplayImage}
-            style={{
-              filter: isTransitioning ? "grayscale(100%)" : "grayscale(0%)",
-            }}
-          /> */}
-
-          {/* Gradient overlay that fades in/out */}
-          {/* <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-800 ease-in-out"
-            style={{
-              background:
-                "linear-gradient(226.55deg, #00B7FF 21.48%, #0EB05C 76.42%)",
-              mixBlendMode: "overlay",
-              opacity: isTransitioning ? 0 : 1,
-            }}
-          /> */}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Avatar from "../Avathar";
 
 
@@ -34,8 +35,10 @@ export default function RelatedBlog({
         rounded-xl
         overflow-hidden
       ">
-                <img
+                <Image
                     src={bannerImage}
+                    width={400}
+                    height={160}
                     className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
                     alt="blog"
                 />

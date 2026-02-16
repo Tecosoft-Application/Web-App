@@ -3,13 +3,24 @@ import { hostConfig } from "../config/index";
 const responseHandler = (response: any) => {
   if (response.status === 200 || response.status === 201) {
     return response;
+  }
+  else if (response.status === 400) {
+    return response;
+  }
+  else if (response.status === 409) {
+    return { error: response.detail || "Email is already Exist" };
   } else {
     return false;
   }
 };
 
 const errorHandler = (error: any) => {
-  return false;
+  if (error.status === 409) {
+    return error;
+  } else {
+    return false;
+
+  }
 };
 
 const postDataApi = async (requestUrl: string, params: any) => {
@@ -24,9 +35,12 @@ const postDataApi = async (requestUrl: string, params: any) => {
       },
       body: isFormData ? params : JSON.stringify(params),
     });
+    console.log(response, 5656565555);
 
     return responseHandler(response);
   } catch (error) {
+    console.log(error, 676767676676767);
+
     errorHandler(error);
   }
 };

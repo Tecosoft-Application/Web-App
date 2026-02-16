@@ -1,16 +1,64 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import * as Yup from "yup";
 import FooterCard from "@/components/FooterCard";
 import { getFooterCardConfig } from "@/components/FooterCard/footerCardConfig";
 import { FooterLinks } from "@/constants/footer/footer";
 import BookDemoButton from "@/components/BookDemoButton";
+import { subscribeNewsletter } from "@/api/create";
+import { toast } from "react-toastify";
+import { allowOnlyLetters, preventLeadingSpace, preventSpaces } from "@/utills/form-validation";
+
+interface NewsletterValues {
+  name: string;
+  email: string;
+}
+
+const newsletterSchema = Yup.object({
+  name: Yup.string()
+    .required("Name is required")
+    .max(40, "Maximum 40 characters allowed")
+    .matches(/^[A-Za-z\s]+$/, "Only letters are allowed"),
+  email: Yup.string()
+    .required("Email is required")
+    .test("no-spaces", "Email cannot contain spaces", (value) => {
+      if (!value) return true;
+      return !/\s/.test(value);
+    })
+    .email("Invalid email format"),
+});
 
 const FooterSection = () => {
   const pathname = usePathname();
   const footerCardConfig = getFooterCardConfig(pathname);
+
+  const handleSubscribe = async (
+    values: NewsletterValues,
+    { setSubmitting, resetForm }: FormikHelpers<NewsletterValues>
+  ) => {
+    try {
+      const response = await subscribeNewsletter({
+        name: values.name.trim(),
+        email: values.email.trim(),
+      });
+      console.log(response, "0998898");
+
+      if (response.detail.success) {
+        toast.success("Subscribed successfully!");
+        resetForm();
+      } else {
+        toast.error(response.detail.message || "Subscription failed. Please try again.");
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -38,17 +86,90 @@ const FooterSection = () => {
 
             <div className="lg:col-span-8">
               {/* Newsletter */}
-              <div className="bg-blue-800/30 border border-white/10 rounded-xl p-6 md:p-8">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                  <div className="text-white font-medium text-lg md:text-xl lg:text-[22px] flex-1">
-                    Join Our Digital Twin Innovation Updates
+              <div className="bg-blue-800/30 border border-white/10 rounded-xl p-6 ">
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <h3 className="text-white font-medium text-lg md:text-xl lg:text-[22px]">
+                      Join Our Digital Twin Innovation Updates
+                    </h3>
                   </div>
-                  <div className="w-full md:w-auto">
-                    <BookDemoButton className="w-full md:w-auto bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
-                      Subscribe
-                      <span>→</span>
-                    </BookDemoButton>
-                  </div>
+                  <Formik
+                    initialValues={{ name: "", email: "" }}
+                    validationSchema={newsletterSchema}
+                    onSubmit={handleSubscribe}
+                    validateOnChange={true}
+                    validateOnBlur={true}
+                  >
+                    {({ errors, touched, isSubmitting }) => (
+                      <Form className="flex flex-col sm:flex-row sm:items-start gap-3">
+                        <div className="w-full sm:w-[40%]">
+                          <Field
+                            name="name"
+                            type="text"
+                            maxLength={30}
+                            placeholder="Enter your name"
+                            onKeyPress={allowOnlyLetters}
+                            onKeyDown={preventLeadingSpace}
+                            className={`w-full px-4 py-3 rounded-lg bg-white/10 border text-white placeholder-white/40 text-sm md:text-base outline-none focus:ring-2 focus:ring-[#4ACEFF] transition-all ${errors.name && touched.name
+                              ? "border-red-400 focus:ring-red-400"
+                              : "border-white/20 focus:border-[#4ACEFF]"
+                              }`}
+                          />
+                          <div className="h-4 mt-0.5">
+                            <ErrorMessage
+                              name="name"
+                              component="p"
+                              className="text-red-400 text-xs"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-full sm:w-[60%]">
+                          <Field
+                            name="email"
+                            type="text"
+                            placeholder="Enter your email address"
+                            onKeyDown={preventSpaces}
+                            className={`w-full px-4 py-3 rounded-lg bg-white/10 border text-white placeholder-white/40 text-sm md:text-base outline-none focus:ring-2 focus:ring-[#4ACEFF] transition-all ${errors.email && touched.email
+                              ? "border-red-400 focus:ring-red-400"
+                              : "border-white/20 focus:border-[#4ACEFF]"
+                              }`}
+                          />
+                          <div className="h-4 mt-0.5">
+                            <ErrorMessage
+                              name="email"
+                              component="p"
+                              className="text-red-400 text-xs"
+                            />
+                          </div>
+                        </div>
+                        <div className="sm:shrink-0">
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="bg-gradient-to-r from-[#4ACEFF] to-[#13F495] text-[#222222] px-6 lg:px-8 py-3 h-[46px] w-[150px] rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                          >
+                            {isSubmitting ? (
+                              <svg
+                                className="animate-spin h-5 w-5 text-[#222222]"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                              </svg>
+                            ) : (
+                              <>
+                                Subscribe
+                                <span>→</span>
+                              </>
+                            )}
+                          </button>
+                          <div className="h-4 mt-0.5 hidden sm:block" />
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
                 </div>
               </div>
             </div>

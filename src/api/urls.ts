@@ -4,6 +4,7 @@ const URL_CONSTANTS = {
   blogs: "blogs",
   whitePapers: "whitepapers",
   blogLatest: "blogs/latest/list",
+  newsletter: "news-letter",
 };
 
 export { URL_CONSTANTS };

@@ -1,7 +1,7 @@
 const config = {
   local: {
     url: "http://localhost:3000/",
-    apiUrl: "http://localhost:8000/api/tecosoft-admin/",
+    apiUrl: "http://localhost:7001/api/tecosoft-admin/",
     adminUrl: "http://localhost:3033/",
 
   },

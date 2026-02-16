@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 
 import { FEATURES } from "@/constants/industries";
@@ -21,7 +22,7 @@ function FeatureCard({
     <div className="bg-white rounded-[10px] shadow-[0_0_16px_rgba(0,0,0,0.06)]">
       <div className="flex gap-[14px] p-[14px] sm:p-[16px]">
         <div className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] shrink-0">
-          <img src={icon} alt={title} className="w-full h-full object-contain" />
+          <Image src={icon} alt={title} width={22} height={22} className="w-full h-full object-contain" />
         </div>
 
         <div className="flex flex-col gap-[4px]">

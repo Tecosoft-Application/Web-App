@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 // =============================================================================
@@ -222,10 +223,11 @@ function SectionHeader() {
 
 function HeroImage() {
   return (
-    <div className="w-full h-[240px] sm:h-[280px] md:h-[320px] lg:h-[260px] xl:h-[300px] 2xl:h-[340px] rounded-xl overflow-hidden">
-      <img
+    <div className="relative w-full h-[240px] sm:h-[280px] md:h-[320px] lg:h-[260px] xl:h-[300px] 2xl:h-[340px] rounded-xl overflow-hidden">
+      <Image
         src={ASSETS.heroImage}
         alt="Tecosoft team collaboration"
+        fill
         className="w-full h-full object-contain"
       />
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -119,12 +120,13 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div
       className="
+        relative
         w-full
         h-[240px]
         sm:h-[300px]
         md:h-[360px]
         lg:h-[480px]
-        
+
         lg:w-1/2
         rounded-xl
         sm:rounded-2xl
@@ -132,11 +134,11 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
         shrink-0
       "
     >
-      <img
+      <Image
         src={src}
         alt={alt}
+        fill
         className="w-full h-full object-cover"
-        loading="lazy"
       />
     </div>
   );

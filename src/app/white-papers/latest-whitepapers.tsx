@@ -2,6 +2,7 @@
 
 import { getWhitePapersAll } from "@/api/list";
 import ToggleTabs from "@/components/ToggleButton";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 
@@ -149,9 +150,11 @@ export default function LatestWhitepapers() {
               <div className="relative rounded-2xl overflow-hidden group">
 
                 {/* Image */}
-                <img
+                <Image
                   src={latestBlogs[0]?.banner_url}
                   alt="Featured Blog"
+                  width={800}
+                  height={520}
                   className="w-full h-[280px] sm:h-[400px] lg:h-[520px] object-cover transition duration-500 group-hover:scale-105"
                 />
 
@@ -187,9 +190,11 @@ export default function LatestWhitepapers() {
                       window.location.href = `/white-papers/${data?.id}`;
                     }}
                   >
-                    <img
+                    <Image
                       src={data?.banner_url}
                       alt={data?.title}
+                      width={80}
+                      height={80}
                       className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0"
                     />
 

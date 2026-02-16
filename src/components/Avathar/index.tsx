@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 interface AvatarProps {
   src?: string;
@@ -20,9 +21,10 @@ export default function Avatar({
   return (
     <>
       {src && !imgError ? (
-        <img
+        <Image
           src={src}
           alt={name}
+          fill
           onError={() => setImgError(true)}
           className={`${size} rounded-full object-cover`}
         />

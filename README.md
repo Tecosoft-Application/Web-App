@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tecosoft Web App
+
+**Building Intelligent Ecosystems for Next-Gen Industries**
+
+Tecosoft's marketing and product website built with Next.js. Showcases IIoT, AI, and Digital Twin solutions that transform industrial operations into intelligent, connected ecosystems.
+
+## Tech Stack
+
+- **Framework** - Next.js 16 (App Router, Turbopack)
+- **Language** - TypeScript
+- **Styling** - Tailwind CSS 4
+- **State Management** - Redux Toolkit
+- **Animations** - Framer Motion, GSAP, Lenis (smooth scroll)
+- **Forms** - Formik + Yup
+- **UI** - Lucide React, React Icons, Swiper
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                  # Next.js pages & routes
+├── api/                  # API integration & endpoints
+├── components/           # Reusable UI components
+├── config/               # Environment configuration
+├── constants/            # Static data & content
+├── container/            # Layout components (header, footer)
+├── imports/              # SVG assets
+├── store/                # Redux store & slices
+└── utills/               # Utility functions & helpers
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Pages & Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Route | Description |
+|-------|-------------|
+| `/` | Home / Landing page |
+| `/company` | Company info & team |
+| `/why-tecosoft` | Why choose Tecosoft |
+| `/analytics` | Analytics dashboard |
+| `/industries` | Industries showcase |
+| `/eagle` | Eagle product page |
+| `/blogs` | Blog listing |
+| `/blogs/[slug]` | Blog detail |
+| `/white-papers` | White papers listing |
+| `/white-papers/[slug]` | White paper detail |
+| `/connected-factories-solutions` | Connected Factories solutions |
+| `/ai-enabled-solutions` | AI-Enabled solutions |
+| `/digital-twin-solutions` | Digital Twin platform |
 
-## Deploy on Vercel
+### Solution Sub-Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Connected Factories:**
+`/condition-monitoring`, `/inspection-digitization`, `/maintenance-digitization`, `/manufacturing-condition-monitoring`, `/production-digitization`, `/tool-life-monitoring-digitization`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**AI-Enabled:**
+`/predictive-maintenance`, `/smart-energy-management`
+
+## Environment Configuration
+
+Configuration is managed in `src/config/index.js` with three environments:
+
+| Environment | API URL |
+|-------------|---------|
+| `local` | `http://localhost:7001/api/tecosoft-admin/` |
+| `staging` | `https://crr2m74m-7001.inc1.devtunnels.ms/api/tecosoft-admin/` |
+| `production` | `https://api.tecosoft.ai/api/tecosoft-admin/` |
+
+Update the `environment` variable in `src/config/index.js` to switch environments.
+
+## API Endpoints
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/book-demo` | Demo booking requests |
+| `/applicants` | Job applications |
+| `/blogs` | Blog posts |
+| `/blogs/latest/list` | Latest blog posts |
+| `/whitepapers` | White papers |
+| `/news-letter` | Newsletter signup |
+
+## Key Features
+
+- **Solution Pages** - Connected Factories, AI-Enabled Services, Digital Twin Platform
+- **Blog & White Papers** - Content management with slug-based routing
+- **Demo Booking** - Modal-based booking flow with Redux state
+- **Job Applications** - Careers section with application modal
+- **Newsletter** - Email subscription
+- **Animations** - Smooth page transitions with Framer Motion, GSAP & Lenis
+- **Responsive Design** - Mobile-first with Tailwind CSS

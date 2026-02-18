@@ -50,7 +50,7 @@ export const TEAM_MEMBERS = [
     id: 5,
     // name: "VISHWANATH RAMANAKOPPA",
     name: "Vishwanath Ramanakoppa",
-    role: "Director – Product Devlivery",
+    role: "Director – Product Delivery",
     // image: "/assets/pages/company/team/vikramsingh.png",
     description:
       "Oversees end-to-end product and solution delivery, ensuring timely execution, quality outcomes, and seamless coordination between technology, operations, and customers. ",
@@ -82,7 +82,7 @@ export const CAREER_JOBS = [
     title: "Customer Success Manager",
     description:
       "We're seeking a customer success manager to ensure client satisfaction.",
-    tags: ["Remote", "Full time"],
+    tags: ["Full time"],
     category: "Customer services",
     intro:
       "You'll be the primary point of contact for our customers, ensuring they get maximum value from our platforms. You'll build lasting relationships, drive adoption, and help customers achieve their business goals through our solutions.",
@@ -111,7 +111,7 @@ export const CAREER_JOBS = [
     title: "Pre-Sales Executive",
     description:
       "We're seeking a pre sales executive to ensure client satisfaction.",
-    tags: ["Remote", "Full time"],
+    tags: ["Full time"],
     category: "Operations",
     intro:
       "You'll work closely with sales teams to provide technical expertise during the sales process. You'll help prospects understand how our platforms can solve their business challenges through demonstrations, proposals, and technical consultations.",

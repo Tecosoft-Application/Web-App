@@ -323,7 +323,7 @@ function DemoButton() {
         flex items-center justify-center gap-2
         px-3.5 py-2.5 sm:px-4 sm:py-3
         border-none cursor-pointer
-        hover:opacity-90 transition-opacity
+        hover:opacity-90 transition-opacity hidden
       `}
     >
       <span className="font-semibold text-white text-[14px] sm:text-[15px]">
@@ -615,7 +615,7 @@ export function HeroSection() {
           >
             <HeroHeadline />
             <HeroDescription />
-            <DemoButton />
+            {/* <DemoButton /> */}
           </div>
 
           {/* Right Column - Floating Cards */}

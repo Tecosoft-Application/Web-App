@@ -10,37 +10,32 @@ import { useEffect, useState } from "react";
 export default function LatestWhitepapers() {
 
   const [latestBlogs, setLatestBlogs] = useState([]) as any;
-  const [category, setCategory] = useState("whitepaper");
+  const [category, setCategory] = useState("casestudy");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
 
-    fetchLatestWhitepapers();
 
-  }
-    , []);
+  console.log(loading, "000");
 
-    console.log(loading,"000");
-    
 
-  const fetchLatestWhitepapers = async () => {
-    try {
-      setLoading(true);
-      await getWhitePapersAll({ pageLimit: 5, status: "published", type: "whitepaper" }).then((data: any) => {
-        console.log("Latest White Papers Data:", data);
-        const blogListData = data.detail.data || [];
+  // const fetchLatestWhitepapers = async () => {
+  //   try {
+  //     setLoading(true);
+  //     await getWhitePapersAll({ pageLimit: 5, status: "published", type: "whitepaper" }).then((data: any) => {
+  //       console.log("Latest White Papers Data:", data);
+  //       const blogListData = data.detail.data || [];
 
-        blogListData.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        console.log("Sorted Latest White Papers:", blogListData);
+  //       blogListData.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  //       console.log("Sorted Latest White Papers:", blogListData);
 
-        setLatestBlogs(blogListData);
-      });
-    } catch (error) {
-      console.error("Error fetching latest white papers:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  //       setLatestBlogs(blogListData);
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching latest white papers:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
 
   const fetchfilterWhitepapers = async (categoryValue: any) => {
@@ -70,6 +65,11 @@ export default function LatestWhitepapers() {
     }
   }
 
+  useEffect(() => {
+
+    fetchfilterWhitepapers(category)
+  }
+    , []);
 
   return (
     <section className="w-full bg-white">
@@ -84,10 +84,11 @@ export default function LatestWhitepapers() {
 
             <ToggleTabs
               tabs={[
-                { label: "Whitepapers", value: "whitepaper" },
+
                 { label: "Case Studies", value: "casestudy" },
+                { label: "Whitepapers", value: "whitepaper" },
               ]}
-              defaultValue="whitepaper"
+              defaultValue="casestudy"
               onChange={fetchfilterWhitepapers}
             />
           </div>

@@ -234,6 +234,7 @@ export default function BlogDetailsContent({ slug }: { slug: string }) {
                         <div dangerouslySetInnerHTML={{ __html: blogData?.content || "" }} className="blog-content" />
 
 
+
                     </div>
                     <div className="
             w-full

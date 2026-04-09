@@ -180,3 +180,143 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
+/* --- Blog/Whitepaper Content Alignment Support --- */
+.blog-content {
+  line-height: 1.6;
+}
+
+.blog-content ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #282828;
+}
+
+.blog-content p {
+  margin-bottom: 1rem;
+}
+
+
+.blog-content .ql-align-center,
+.blog-content .text-center,
+.blog-content .align-center {
+  text-align: center;
+}
+
+.blog-content .ql-align-right,
+.blog-content .text-right,
+.blog-content .align-right {
+  text-align: right;
+}
+
+.blog-content .ql-align-left,
+.blog-content .text-left,
+.blog-content .align-left {
+  text-align: left;
+}
+
+.blog-content .ql-align-justify,
+.blog-content .text-justify,
+.blog-content .align-justify {
+  text-align: justify;
+}
+
+/* Support for elements with align attribute */
+.blog-content [align="center"] {
+  text-align: center;
+}
+.blog-content [align="right"] {
+  text-align: right;
+}
+.blog-content [align="left"] {
+  text-align: left;
+}
+
+/* Support for images alignment in rich text */
+.blog-content img.ql-align-center,
+.blog-content img.text-center,
+.blog-content img.align-center {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block;
+}
+
+.blog-content img.ql-align-right,
+.blog-content img.text-right,
+.blog-content img.align-right {
+  margin-left: auto !important;
+  display: block;
+}
+
+/* Font size support (Quill) */
+.blog-content .ql-size-small { font-size: 0.8em; }
+.blog-content .ql-size-large { font-size: 1.5em; }
+.blog-content .ql-size-huge { font-size: 2.5em; }
+
+/* Font family support (Quill) */
+.blog-content .ql-font-serif { font-family: Georgia, Times New Roman, serif; }
+.blog-content .ql-font-monospace { font-family: Monaco, Courier New, monospace; }
+
+/* Handle list points (bullets/numbers) with indentation */
+.blog-content li.ql-indent-1 { list-style-type: none; padding-left: 3.5em; position: relative; }
+.blog-content li.ql-indent-2 { list-style-type: none; padding-left: 7em; position: relative; }
+.blog-content li.ql-indent-3 { list-style-type: none; padding-left: 10.5em; position: relative; }
+.blog-content li.ql-indent-4 { list-style-type: none; padding-left: 14em; position: relative; }
+
+.blog-content li.ql-indent-1::before { content: "\2022"; position: absolute; left: 2em; }
+.blog-content li.ql-indent-2::before { content: "\25E6"; position: absolute; left: 5.5em; }
+.blog-content li.ql-indent-3::before { content: "\25AA"; position: absolute; left: 9.3em; }
+.blog-content li.ql-indent-4::before { content: "\25AB"; position: absolute; left: 12.8em; }
+
+
+.blog-content iframe {
+
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* Support for indentation levels (Quill) */
+.blog-content .ql-indent-1 { padding-left: 3em; }
+.blog-content .ql-indent-2 { padding-left: 6em; }
+.blog-content .ql-indent-3 { padding-left: 9em; }
+.blog-content .ql-indent-4 { padding-left: 12em; }
+.blog-content .ql-indent-5 { padding-left: 15em; }
+.blog-content .ql-indent-6 { padding-left: 18em; }
+.blog-content .ql-indent-7 { padding-left: 21em; }
+.blog-content .ql-indent-8 { padding-left: 24em; }
+
+@media (max-width: 768px) {
+  .blog-content .ql-indent-1 { padding-left: 1.5em; }
+  .blog-content .ql-indent-2 { padding-left: 3em; }
+  .blog-content .ql-indent-3 { padding-left: 4.5em; }
+  .blog-content .ql-indent-4 { padding-left: 6em; }
+  .blog-content .ql-indent-5 { padding-left: 7.5em; }
+  .blog-content .ql-indent-6 { padding-left: 9em; }
+  .blog-content .ql-indent-7 { padding-left: 10.5em; }
+  .blog-content .ql-indent-8 { padding-left: 12em; }
+}
+
+
+
+

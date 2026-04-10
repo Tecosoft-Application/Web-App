@@ -104,7 +104,7 @@ export default function LatestWhitepapers() {
             </div>
 
             {/* Right Side Skeleton */}
-            <div className="lg:col-span-4 flex flex-col justify-center">
+            <div className="lg:col-span-4 flex flex-col">
               <div className="h-6 w-40 bg-gray-200 rounded mb-6" />
               <div className="flex flex-col divide-y divide-gray-200">
                 {[...Array(4)].map((_, index) => (
@@ -177,33 +177,55 @@ export default function LatestWhitepapers() {
             </div>
 
             {/* Right Side Posts */}
-            <div className="lg:col-span-4 flex flex-col justify-center">
+            <div className="lg:col-span-4 flex flex-col">
               <h4 className="text-xl font-semibold text-[#181818] mb-6">
                 Other {category === "whitepaper" ? "Whitepapers" : "Case Studies"}
               </h4>
 
               <div className="flex flex-col divide-y divide-gray-200">
-                {latestBlogs?.slice(1, 5).map((data: any, index: number) => (
-                  <div
-                    key={data?.id || index}
-                    className="flex items-center gap-4 py-5 group cursor-pointer"
-                    onClick={() => {
-                      window.location.href = `/white-papers/${data?.id}`;
-                    }}
-                  >
-                    <Image
-                      src={data?.banner_url}
-                      alt={data?.title}
-                      width={80}
-                      height={80}
-                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0"
-                    />
+                {latestBlogs.length > 1 ? (
+                  latestBlogs.slice(1, 5).map((data: any, index: number) => (
+                    <div
+                      key={data?.id || index}
+                      className="flex items-center gap-4 py-5 group cursor-pointer"
+                      onClick={() => {
+                        window.location.href = `/white-papers/${data?.id}`;
+                      }}
+                    >
+                      <Image
+                        src={data?.banner_url}
+                        alt={data?.title}
+                        width={80}
+                        height={80}
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0"
+                      />
 
-                    <p className="text-sm sm:text-base lg:text-lg font-semibold text-[#4f4f4f] group-hover:text-[#0098d4] transition line-clamp-2 ">
-                      {data?.title}
+                      <p className="text-sm sm:text-base lg:text-lg font-semibold text-[#4f4f4f] group-hover:text-[#0098d4] transition line-clamp-2 ">
+                        {data?.title}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-10 w-full">
+                    <svg
+                      className="w-16 h-16 text-gray-300 mb-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5"
+                      />
+                    </svg>
+                    <p className="text-base font-semibold text-gray-400">No related articles found</p>
+                    <p className="text-sm text-gray-400 mt-1 text-center">
+                      Check back later for more {category === "whitepaper" ? "whitepapers" : "case studies"}.
                     </p>
                   </div>
-                ))}
+                )}
               </div>
 
             </div>

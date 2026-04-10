@@ -1,6 +1,6 @@
 export const whitePapersHeroContent = {
   badge: "White Papers",
-  title: "Research Findings and Developments",
+  title: "Insights That Inform. Results That Prove",
   description:
-    "Deploy connected operations with EAGLE at the Edge and Tecosoft Analytics in the Cloud. We bring dashboards, alerts, monitoring, digital twins and AI to every industry."
+    "Explore our white papers and case studies to gain in-depth industry insights and see how structured strategies translate into measurable industrial success"
 };

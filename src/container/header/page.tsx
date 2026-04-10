@@ -654,7 +654,7 @@ const Navbar = () => {
       hasDropdown: true,
       dropdownItems: [
         { name: "Blogs", href: "/blogs" },
-        { name: "White Papers & Case stduies", href: "/white-papers" },
+        { name: "White Papers & Case Studies", href: "/white-papers" },
       ],
     },
   ];

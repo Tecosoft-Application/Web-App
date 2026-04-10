@@ -1,6 +1,6 @@
 export const blogsHeroContent = {
   badge: "Blogs",
-  title: "Insights and Updates",
+  title: "Insights That Drive Digital Transformation",
   description:
-    "Deploy connected operations with EAGLE at the Edge and Tecosoft Analytics in the Cloud. We bring dashboards, alerts, monitoring, digital twins and AI to every industry.",
+"Explore expert insights, practical strategies, and real-world innovations that help industries embrace digital transformation with confidence."
 };

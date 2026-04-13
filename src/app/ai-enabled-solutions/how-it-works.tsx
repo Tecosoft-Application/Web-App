@@ -81,10 +81,9 @@ const StepNumber: React.FC<{ number: number; isActive?: boolean }> = ({
             ${gradientStyle} bg-clip-text text-transparent font-medium leading-none
             transform transition-all duration-700
             [transition-timing-function:cubic-bezier(0.65,0,-0.15,1.5)]
-            ${
-              isActive
-                ? "-translate-y-full opacity-0 rotate-x-90"
-                : "-translate-y-0 opacity-100 rotate-x-0"
+            ${isActive
+              ? "-translate-y-full opacity-0 rotate-x-90"
+              : "-translate-y-0 opacity-100 rotate-x-0"
             }
             group-hover:-translate-y-full group-hover:opacity-0 group-hover:rotate-x-90
           `}
@@ -100,10 +99,9 @@ const StepNumber: React.FC<{ number: number; isActive?: boolean }> = ({
             ${gradientStyle} bg-clip-text text-transparent font-medium leading-none
             transform transition-all duration-700
             [transition-timing-function:cubic-bezier(0.65,0,-0.15,1.5)]
-            ${
-              isActive
-                ? "translate-y-0 opacity-100 rotate-x-0"
-                : "translate-y-full opacity-0 rotate-x-90"
+            ${isActive
+              ? "translate-y-0 opacity-100 rotate-x-0"
+              : "translate-y-full opacity-0 rotate-x-90"
             }
             group-hover:translate-y-0 group-hover:opacity-100 group-hover:rotate-x-0
           `}
@@ -172,7 +170,7 @@ const HeroImage: React.FC = () => {
 
 const StepsList: React.FC<{
   activeIndex: number | null;
-  scrollRef: React.RefObject<HTMLDivElement | null> | null;
+  scrollRef: React.Ref<HTMLDivElement>;
 }> = ({ activeIndex, scrollRef }) => {
   return (
     <div
@@ -198,7 +196,7 @@ const StepsList: React.FC<{
 
 const HowItWorks: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.innerWidth >= 1024) return; // Disable scroll tracking on desktop

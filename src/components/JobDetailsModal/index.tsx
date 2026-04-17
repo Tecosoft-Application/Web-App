@@ -334,7 +334,7 @@ function ApplicationFormView({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center gap-1 rounded-md bg-[#07af40] px-2 py-1.5 xs:px-3 xs:py-2 sm:px-5 sm:py-2 text-xs xs:text-sm sm:text-base font-semibold text-white hover:bg-[#069935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="cursor-pointer flex items-center gap-1 rounded-md bg-[#07af40] px-2 py-1.5 xs:px-3 xs:py-2 sm:px-5 sm:py-2 text-xs xs:text-sm sm:text-base font-semibold text-white hover:bg-[#069935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -604,7 +604,7 @@ function ApplicationFormView({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="inline-flex items-center gap-1.5 xs:gap-2 rounded-md border border-[#0098d4] px-3 py-1.5 xs:px-4 xs:py-2 text-xs xs:text-sm font-medium text-[#0098d4] hover:bg-[#0098d4]/5 transition-colors"
+                      className="cursor-pointer inline-flex items-center gap-1.5 xs:gap-2 rounded-md border border-[#0098d4] px-3 py-1.5 xs:px-4 xs:py-2 text-xs xs:text-sm font-medium text-[#0098d4] hover:bg-[#0098d4]/5 transition-colors"
                     >
                       Upload file
                       <Upload className="h-3 w-3 xs:h-4 xs:w-4" />

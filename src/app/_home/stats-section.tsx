@@ -104,10 +104,10 @@ const StatsSection = () => {
     <div className="flex flex-col items-center gap-8 md:gap-10 lg:gap-[48px] px-4 sm:px-6 md:px-8 lg:px-0 py-10 md:py-12 lg:py-14 relative w-full bg-white">
       <div className="flex flex-col w-full max-w-[90%] items-center gap-4 md:gap-6 relative z-10">
         <div className="inline-flex flex-col items-center gap-1.5 relative">
-          <div className="relative w-full text-center px-2 font-medium text-[#333333] text-3xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[0] leading-tight lg:leading-[48px]">
+          <div className="relative w-full text-center px-2 font-medium text-[#333333] text-3xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[48px] tracking-[0] leading-tight lg:leading-[48px]">
             {statsSection.titleFirstLine}
           </div>
-          <div className="relative w-full text-center px-2 bg-[linear-gradient(227deg,rgba(0,183,255,1)_0%,rgba(14,176,92,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-semibold text-3xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[0] leading-tight lg:leading-[48px]">
+          <div className="relative w-full text-center px-2 bg-[linear-gradient(227deg,rgba(0,183,255,1)_0%,rgba(14,176,92,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-semibold text-3xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[48px] tracking-[0] leading-tight lg:leading-[48px]">
             {statsSection.titleSecondLine}
           </div>
         </div>

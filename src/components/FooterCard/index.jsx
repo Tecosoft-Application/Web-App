@@ -54,10 +54,10 @@ const FooterCard = ({
             ) : (
               // Layout for home page - stacked title and highlight
               <>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-normal text-white leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[32px] xl:text-[42px] font-normal text-white leading-tight">
                   {title}
                 </h2>
-                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-semibold text-[#13F495] leading-tight">
+                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-[32px] xl:text-[42px] font-semibold text-[#13F495] leading-tight">
                   {highlightText}
                 </p>
               </>

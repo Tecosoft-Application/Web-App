@@ -26,9 +26,22 @@ export default function EagePage() {
 
   return (
     <div
-      className="content-stretch flex flex-col items-start relative size-full"
+      className="content-stretch flex flex-col items-start relative size-full eagle-page-master-container"
       data-name="Eagle"
     >
+      <style>{`
+        @media (min-width: 1024px) and (max-width: 1199px) {
+          .eagle-page-master-container {
+            align-items: center !important;
+          }
+          .eagle-page-master-container > div {
+            width: 100% !important;
+            max-width: 1200px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+        }
+      `}</style>
       <HeroSection onboardClick={onboardClick} />
       <FeatureSection  />
       <HardwareSection />

@@ -103,11 +103,11 @@ const IndustriesSection = () => {
   return (
     <div className="flex flex-col items-start max-w-[1440px] m-auto gap-10 md:gap-[60px] px-4 sm:px-8 md:px-12 lg:px-[100px] py-12 md:py-20 relative self-stretch w-full flex-[0_0_auto] bg-white">
       <div className="flex flex-col items-start gap-1.5 relative self-stretch w-full flex-[0_0_auto]">
-        <p className="relative w-full mt-[-1.00px] font-medium text-[#111111] text-2xl sm:text-3xl md:text-4xl lg:text-[56px] tracking-[0] leading-tight md:leading-[60px]">
+        <p className="relative w-full mt-[-1.00px] font-medium text-[#111111] text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[56px] tracking-[0] leading-tight md:leading-[60px]">
           The Future of Industries Runs on Intelligence
         </p>
 
-        <div className="relative w-fit bg-gradient-to-r from-[#00B7FF] to-[#0EB05C] bg-clip-text text-transparent font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[56px] tracking-[0] leading-tight md:leading-[60px]">
+        <div className="relative w-fit bg-gradient-to-r from-[#00B7FF] to-[#0EB05C] bg-clip-text text-transparent font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[56px] tracking-[0] leading-tight md:leading-[60px]">
           Are You Ready?
         </div>
       </div>

@@ -127,7 +127,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ navItems, isScrolled }) => {
       className={`hidden lg:block fixed top-0 w-full ${navBg}`}
       style={{ zIndex: Z_INDEX.HEADER }}
     >
-      <nav className="max-w-full 2xl:max-w-7xl mx-auto flex items-center justify-between py-4 px-4 lg:px-8">
+      <nav className="max-w-full 2xl:max-w-7xl mx-auto flex items-center justify-between py-4 px-4 lg:px-6 xl:px-8">
         {/* Logo */}
         <div
           className="relative hover:cursor-pointer"
@@ -144,7 +144,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ navItems, isScrolled }) => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="flex gap-8 items-center">
+        <ul className="flex gap-4 xl:gap-8 items-center">
           {navItems.map((item) => (
             <li key={item.name} className="relative">
               {item.hasDropdown ? (
@@ -154,12 +154,13 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ navItems, isScrolled }) => {
                       ? dropdownRef
                       : null
                   }
+                  className={`${item?.hasDropdown ? "mt-0.5" : ""}`}
                   onMouseEnter={() => handleDropdownOpen(item.name)}
                   onMouseLeave={handleDropdownClose}
                 >
                   <button
                     onClick={() => handleDropdownClick(item.name)}
-                    className={`text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor} hover:cursor-pointer `}
+                    className={`text-[14px] xl:text-[16px] font-semibold transition-colors flex items-center gap-1 ${navTextColor} hover:cursor-pointer `}
                   >
                     {item.name}
                     <ArrowDown
@@ -265,7 +266,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ navItems, isScrolled }) => {
               ) : (
                 <a
                   href={item.href}
-                  className={`text-[16px] font-semibold transition-colors ${navTextColor}`}
+                  className={`text-[14px] xl:text-[16px] font-semibold transition-colors ${navTextColor}`}
                 >
                   {item.name}
                 </a>
@@ -275,7 +276,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ navItems, isScrolled }) => {
         </ul>
 
         {/* CTA Button - Desktop */}
-        <BookDemoButton className="flex bg-[#0eb05c] text-white px-6 py-2 rounded-lg hover:bg-[#0d9d52] transition-colors font-semibold items-center gap-2 cursor-pointer">
+        <BookDemoButton className="flex bg-[#0eb05c] text-white px-4 xl:px-6 py-2 rounded-lg hover:bg-[#0d9d52] transition-colors font-semibold items-center gap-1 xl:gap-2 cursor-pointer text-[14px] xl:text-[16px]">
           Book a Demo
           <span>→</span>
         </BookDemoButton>

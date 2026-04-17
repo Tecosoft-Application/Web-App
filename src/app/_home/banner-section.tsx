@@ -49,9 +49,9 @@ const BannerSection = () => {
       {/* Content */}
       <div className="relative" style={{ zIndex: Z_INDEX.CONTENT_LAYER }}>
         <div className="w-[90%]  mx-auto px-4 lg:px-4">
-          <div className="pt-24 pb-12 lg:pt-48 ">
+          <div className="pt-24 pb-12 lg:pt-30 xl:pt-48 ">
             {/* Hero Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[90px] font-bold text-white leading-tight lg:leading-[1.1] mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[60px] xl:text-[90px] font-bold text-white leading-tight lg:leading-[1.1] mb-6">
               Building Intelligent Ecosystems for the{" "}
               <span className="text-[#0eb05c] block lg:inline">
                 Next-Gen Industries

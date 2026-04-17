@@ -364,7 +364,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex w-full items-center justify-center gap-2 rounded-md bg-green-500 py-2.5 xs:py-3 text-sm xs:text-base font-medium text-white hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="cursor-pointer flex w-full items-center justify-center gap-2 rounded-md bg-green-500 py-2.5 xs:py-3 text-sm xs:text-base font-medium text-white hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? "Submitting..." : "Book a Demo"}
 

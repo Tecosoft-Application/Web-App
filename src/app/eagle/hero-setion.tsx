@@ -82,15 +82,16 @@ const useResponsiveValues = () => {
       // Reference width is 1536px (where the design works perfectly)
       const referenceWidth = 1536;
 
-      // For screens between 1024px and 1800px, calculate a scale factor
-      if (width >= 1024 && width <= 1800) {
-        // Calculate scale relative to reference width
-        // At 1536px: scale = 1.0 (perfect)
-        // At 1024px: scale = 0.667
-        // At 1800px: scale = 1.172
+      // For screens between 1200px and 1800px, calculate a dynamic scale factor
+      if (width >= 1200 && width <= 1800) {
         const scaleFactor = width / referenceWidth;
         setScale(scaleFactor);
-      } else if (width < 1024) {
+      } 
+      // For screens between 1024px and 1199px, fix the scale to match 1200px design
+      else if (width >= 1024 && width < 1200) {
+        setScale(1200 / referenceWidth);
+      }
+      else if (width < 1024) {
         setScale(1024 / referenceWidth);
       } else {
         setScale(1800 / referenceWidth);
@@ -370,7 +371,7 @@ function Frame40({ onboardClick }: { onboardClick: () => void }) {
 
   return (
     <motion.div
-      className="absolute content-stretch flex flex-col items-center transition-all duration-300 ease-out
+      className="absolute eagle-hero-content content-stretch flex flex-col items-center transition-all duration-300 ease-out
         max-lg:left-[50%] max-lg:translate-x-[-50%] max-lg:top-[52px] max-lg:w-[92%] max-lg:max-w-[700px] max-lg:gap-[12px] max-lg:px-5
         max-md:top-[47px] max-md:gap-[10px] max-md:px-4
         max-sm:top-[42px] max-sm:gap-[8px] max-sm:px-3
@@ -640,6 +641,16 @@ function HeroSection({ onboardClick }: { onboardClick: () => void }) {
       className="bg-white relative shrink-0 w-full"
       data-name="Hero section"
     >
+      <style>{`
+        @media (min-width: 1024px) and (max-width: 1199px) {
+          .eagle-hero-content {
+            left: 0 !important;
+            right: 0 !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+        }
+      `}</style>
       {/* Background elements */}
       <div
         className=" hidden lg:block absolute left-0 top-0 pointer-events-none transition-all duration-300 ease-out
@@ -652,7 +663,7 @@ function HeroSection({ onboardClick }: { onboardClick: () => void }) {
           !isMobile
             ? {
                 height: 680 * responsiveScale,
-                width: 1512 * responsiveScale,
+                width: "100%",
               }
             : undefined
         }
@@ -680,7 +691,7 @@ function HeroSection({ onboardClick }: { onboardClick: () => void }) {
             ? {
                 height: 649.752 * responsiveScale,
                 top: 70.25 * responsiveScale,
-                width: 1512.25 * responsiveScale,
+                width: "100%",
               }
             : undefined
         }

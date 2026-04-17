@@ -119,13 +119,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="flex flex-col items-center gap-4 md:gap-6 w-full">
         {/* Title and Subtitle */}
         <div className="flex flex-col items-center gap-0.5 md:gap-1">
-          <h3 className="text-white text-2xl md:text-3xl lg:text-[34px] font-semibold tracking-tight text-center">
+          <h3 className="text-white text-2xl md:text-3xl lg:text-[24px] lg:text-[34px] font-semibold tracking-tight text-center">
             {title}
           </h3>
-          <p className="text-[#00b7ff] text-lg md:text-xl lg:text-[22px] font-medium text-center">
+          <p className="text-[#00b7ff] text-lg md:text-xl lg:text-[22px]  font-medium text-center">
             {subtitle}
           </p>
         </div>
+        
 
         {/* Description */}
         <p
@@ -226,10 +227,10 @@ const Products = ({ products, hoveredProduct, setHoveredProduct }: any) => {
         {/* Header */}
         <div className="flex flex-col items-center gap-4 md:gap-6 mb-10 md:mb-12 lg:mb-16">
           <div className="flex flex-col items-center gap-1 md:gap-1.5">
-            <h2 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-medium text-center leading-tight">
+            <h2 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[36px] xl:text-[56px] font-medium text-center leading-tight">
               Our Platforms
             </h2>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-semibold text-center leading-tight bg-gradient-to-r from-[#00b7ff] to-[#0eb05c] bg-clip-text text-transparent">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[36px]  xl:text-[56px] font-semibold text-center leading-tight bg-gradient-to-r from-[#00b7ff] to-[#0eb05c] bg-clip-text text-transparent">
               From Edge to Insights
             </h3>
           </div>

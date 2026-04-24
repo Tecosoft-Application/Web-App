@@ -86,7 +86,7 @@ export default function LatestWhitepapers() {
               tabs={[
 
                 { label: "Case Studies", value: "casestudy" },
-                { label: "Whitepapers", value: "whitepaper" },
+                { label: "White Papers", value: "whitepaper" },
               ]}
               defaultValue="casestudy"
               onChange={fetchfilterWhitepapers}

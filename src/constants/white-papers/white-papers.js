@@ -4,3 +4,4 @@ export const whitePapersHeroContent = {
   description:
     "Explore our white papers and case studies to gain in-depth industry insights and see how structured strategies translate into measurable industrial success"
 };
+  

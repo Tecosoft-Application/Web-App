@@ -78,7 +78,7 @@ export default function LatestWhitepapers() {
         <div className="lg:flex lg:justify-between  items-center">
           <div> {/* Section Title */}
             <h2 className="text-[#0098d4] text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10">
-              Latest {category === "whitepaper" ? "Whitepapers" : "Case Studies"}
+              Latest {category === "whitepaper" ? "White Papers" : "Case Studies"}
             </h2> </div>
           <div>
 

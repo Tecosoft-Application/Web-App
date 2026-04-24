@@ -101,7 +101,7 @@ export default function LatestBlogs() {
 
               {/* Left Featured Blog */}
               <div className="lg:col-span-8 cursor-pointer" onClick={() => {
-                window.location.href = `/blogs/${latestBlogs[0]?.slug}`;
+                window.location.href = `/resources/blogs/${latestBlogs[0]?.slug}`;
               }}>
                 <div className="relative rounded-2xl overflow-hidden group">
 
@@ -144,7 +144,7 @@ export default function LatestBlogs() {
                         key={data?.id || index}
                         className="flex items-center gap-4 py-5 group cursor-pointer"
                         onClick={() => {
-                          window.location.href = `/blogs/${data?.slug}`;
+                          window.location.href = `/resources/blogs/${data?.slug}`;
                         }}
                       >
                         <Image

@@ -115,7 +115,7 @@ export const footerCardConfig = {
     buttonHref: "#contact",
     description: "",
   },
-  "/blogs": {
+  "/resources/blogs": {
     title: "Bring Your Operations to a",
     highlightText: "Single Pane of Glass",
     buttonText: "Book a Demo",
@@ -134,8 +134,8 @@ export const getFooterCardConfig = (pathname) => {
   }
 
   // Handle dynamic blog slugs
-  if (sanitizedPathname.startsWith("/blogs/")) {
-    return footerCardConfig["/blogs"];
+  if (sanitizedPathname.startsWith("/resources/blogs/")) {
+    return footerCardConfig["/resources/blogs"];
   }
 
   // Default fallback

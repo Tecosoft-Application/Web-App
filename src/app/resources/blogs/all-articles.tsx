@@ -1,17 +1,12 @@
 "use client";
 
-import { getWhitePapersAll } from "@/api/list";
+import { getBlogAll } from "@/api/list";
 import ArticleCard from "@/components/Blogs/ArticalCards";
+import { stat } from "fs";
 import { useState, useEffect, useCallback, useRef } from "react";
 
 const INITIAL_LIMIT = 6;
 const LOAD_MORE_COUNT = 6;
-
-const CATEGORIES = [
-  { label: "All", value: "" },
-  { label: "Case Study", value: "casestudy" },
-  { label: "White Papers", value: "whitepaper" },
-];
 
 /* =========================================================
    SEARCH ICON
@@ -68,10 +63,9 @@ interface Blog {
    MAIN COMPONENT
 ========================================================= */
 
-export default function ExploreArticles() {
+export default function AllArticles() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -79,37 +73,30 @@ export default function ExploreArticles() {
   const isFirstRender = useRef(true);
 
   // Fetch blogs function
-  const fetchBlogs = useCallback(async (searchTerm: string, skip: number, category: string, isLoadMore: boolean = false) => {
+  const fetchBlogs = useCallback(async (searchTerm: string, skip: number, isLoadMore: boolean = false) => {
 
     if (isLoadMore) {
+      //likely a load more action, set loading more state
       setLoadingMore(true);
     } else {
+      //initial load or new search, reset hasMore and set loading state
       setLoading(true);
     }
 
     try {
-      const params: any = {
+      const params = {
         search: searchTerm,
         pageLimit: LOAD_MORE_COUNT,
-        skip: skip,
         status: "published",
+        skip: skip,
       };
 
-      if (category) {
-        params.type = category;
-      }
-
-      const response = await getWhitePapersAll(params);
+      const response = await getBlogAll(params);
 
       if (response && response.detail.data) {
 
         const newBlogs = response.detail.data || [];
         const total = response.detail.total_count || 0;
-
-        console.log("Fetched Blogs:", newBlogs.length);
-        console.log("Total Count:", total);
-        console.log("Current Skip:", skip);
-
 
         if (isLoadMore) {
           setBlogs((prev) => [...prev, ...newBlogs]);
@@ -118,6 +105,7 @@ export default function ExploreArticles() {
         }
 
         setTotalCount(total);
+        console.log("Total Blogs:", skip, newBlogs.length, total);
         setHasMore(skip + newBlogs.length < total);
       }
     } catch (error) {
@@ -130,7 +118,7 @@ export default function ExploreArticles() {
 
   // Initial load
   useEffect(() => {
-    fetchBlogs("", 0, "", false);
+    fetchBlogs("", 0, false);
   }, []);
 
   // Handle search
@@ -147,82 +135,45 @@ export default function ExploreArticles() {
     }
 
     const debounceTimer = setTimeout(() => {
-      fetchBlogs(search, 0, activeCategory, false);
+      fetchBlogs(search, 0, false);
     }, 500);
 
     return () => clearTimeout(debounceTimer);
   }, [search]);
 
-  // Handle category change
-  const handleCategoryChange = (categoryValue: string) => {
-    let categorytype = categoryValue;
-    if (categoryValue === "all") {
-      categorytype = "";
-    } else if (categoryValue === "casestudy") {
-      categorytype = "casestudy";
-    } else if (categoryValue === "whitepaper") {
-      categorytype = "whitepaper";
-    }
-
-    setActiveCategory(categoryValue);
-    setBlogs([]);
-    setHasMore(true);
-    fetchBlogs(search, 0, categorytype, false);
-  };
-
   // Handle load more
   const handleLoadMore = () => {
+
     if (!loadingMore && hasMore) {
-      fetchBlogs(search, blogs.length, activeCategory, true);
+      fetchBlogs(search, blogs.length, true);
     }
   };
+
+
+
 
   return (
     <section className="w-full bg-[#f5f5f5] py-12 px-4 sm:px-8 lg:px-16 xl:px-24">
 
       {/* Header */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8">
-        <div>
-          <h2 className="text-3xl sm:text-4xl font-semibold text-[#282828]">
-            Read & Explore
-          </h2>
-        </div>
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-12">
+        <h2 className="text-3xl sm:text-4xl font-semibold text-[#282828]">
+          All Articles
+        </h2>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="w-full sm:w-[280px]">
-            <div className="bg-white rounded-lg border border-[#d2d2d2] px-4 py-3 flex items-center justify-between">
-              <input
-                type="text"
-                placeholder="Search Articles"
-                value={search}
-                onChange={handleSearch}
-                className="w-full text-sm text-[#282828] placeholder:text-[#bbb] outline-none bg-transparent"
-              />
-              <SearchIcon />
-            </div>
-          </div>
-
-          <div className="w-full sm:w-[200px]">
-            <div className="bg-white rounded-lg border border-[#d2d2d2] px-4 py-3 flex items-center justify-between">
-              <select
-                value={activeCategory}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                className="w-full text-sm text-[#282828] outline-none bg-transparent cursor-pointer"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat.value} value={cat.value}>
-                    {cat.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <div className="w-full sm:w-[420px]">
+          <div className="bg-white rounded-lg border border-[#d2d2d2] px-4 py-3 flex items-center justify-between">
+            <input
+              type="text"
+              placeholder="Search Blogs"
+              value={search}
+              onChange={handleSearch}
+              className="w-full text-sm text-[#282828] placeholder:text-[#bbb] outline-none bg-transparent"
+            />
+            <SearchIcon />
           </div>
         </div>
-
-
       </div>
-
-
 
       {/* Loading State */}
       {loading ? (
@@ -257,14 +208,14 @@ export default function ExploreArticles() {
 
                 <div key={index}>
                   <ArticleCard
-                    image={blog.banner_url}
+                    image={blog.cover_image_url}
                     title={blog.title}
                     description={blog.summary}
-                    author={blog.author}
+                    author={blog.author_name}
                     avatar={blog.author_image}
                     readTime={blog.read_time}
                     onClick={() => {
-                      window.location.href = `/white-papers/${blog?.id}`
+                      window.location.href = `/resources/blogs/${blog?.slug}`
                     }}
                   />
                 </div>

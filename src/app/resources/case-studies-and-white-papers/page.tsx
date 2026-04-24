@@ -3,8 +3,8 @@ import WhitePapersList from "./white-papers";
 
 
 export const metadata: Metadata = {
-  title: "Tecosoft - White Papers",
-  description: "Tecsoft White Papers",
+  title: "Tecosoft - Case studies & Whitepapers",
+  description: "Tecsoft Case studies & Whitepapers",
 };
 
 export default function page() {

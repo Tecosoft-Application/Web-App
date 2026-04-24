@@ -67,10 +67,10 @@ src/
 | `/analytics` | Analytics dashboard |
 | `/industries` | Industries showcase |
 | `/eagle` | Eagle product page |
-| `/blogs` | Blog listing |
-| `/blogs/[slug]` | Blog detail |
-| `/white-papers` | White papers listing |
-| `/white-papers/[slug]` | White paper detail |
+| `/resources/blogs` | Blog listing |
+| `/resources/blogs/[slug]` | Blog detail |
+| `/resources/white-papers` | White papers listing |
+| `/resources/white-papers/[slug]` | White paper detail |
 | `/connected-factories-solutions` | Connected Factories solutions |
 | `/ai-enabled-solutions` | AI-Enabled solutions |
 | `/digital-twin-solutions` | Digital Twin platform |
@@ -101,8 +101,8 @@ Update the `environment` variable in `src/config/index.js` to switch environment
 |----------|---------|
 | `/book-demo` | Demo booking requests |
 | `/applicants` | Job applications |
-| `/blogs` | Blog posts |
-| `/blogs/latest/list` | Latest blog posts |
+| `/resources/blogs` | Blog posts |
+| `/resources/blogs/latest/list` | Latest blog posts |
 | `/whitepapers` | White papers |
 | `/news-letter` | Newsletter signup |
 

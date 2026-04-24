@@ -146,7 +146,7 @@ export default function LatestWhitepapers() {
 
             {/* Left Featured Blog */}
             <div className="lg:col-span-8 cursor-pointer" onClick={() => {
-              window.location.href = `/white-papers/${latestBlogs[0]?.id}`;
+              window.location.href = `/resources/case-studies-and-white-papers/${latestBlogs[0]?.id}`;
             }}>
               <div className="relative rounded-2xl overflow-hidden group">
 
@@ -189,7 +189,7 @@ export default function LatestWhitepapers() {
                       key={data?.id || index}
                       className="flex items-center gap-4 py-5 group cursor-pointer"
                       onClick={() => {
-                        window.location.href = `/white-papers/${data?.id}`;
+                        window.location.href = `/resources/case-studies-and-white-papers/${data?.id}`;
                       }}
                     >
                       <Image

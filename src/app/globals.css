@@ -37,8 +37,13 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 
@@ -54,15 +59,21 @@ body {
 }
 
 /* rotate-x helpers (used for the cube-like face flip) */
-.rotate-x-90 { transform: rotateX(360deg); }
-.rotate-x-0 { transform: rotateX(0deg); }
+.rotate-x-90 {
+  transform: rotateX(360deg);
+}
+
+.rotate-x-0 {
+  transform: rotateX(0deg);
+}
 
 /* We already apply transforms via tailwind-arbitrary and inline class utility, but add fallback helpers */
 .group-hover\:rotate-x-90 {}
+
 .group-hover\:rotate-x-0 {}
 
 /* Optional: improve smoothing on transform/opacity transitions */
-.perspective-3d > * {
+.perspective-3d>* {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
@@ -173,12 +184,15 @@ body {
 
 /* Hide scrollbar but allow scroll */
 .no-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
+  /* Chrome, Safari */
 }
 
 /* --- Blog/Whitepaper Content Alignment Support --- */
@@ -189,30 +203,35 @@ body {
 .blog-content ul {
   list-style-type: disc;
   margin-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2px;
 }
 
 .blog-content ol {
   list-style-type: decimal;
   margin-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2px;
 }
 
 
 .blog-content li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2px;
   padding-left: 0.25rem;
 }
 
-.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
   font-weight: 600;
   color: #282828;
 }
 
 .blog-content p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
 }
 
 
@@ -244,9 +263,11 @@ body {
 .blog-content [align="center"] {
   text-align: center;
 }
+
 .blog-content [align="right"] {
   text-align: right;
 }
+
 .blog-content [align="left"] {
   text-align: left;
 }
@@ -268,55 +289,148 @@ body {
 }
 
 /* Font size support (Quill) */
-.blog-content .ql-size-small { font-size: 0.8em; }
-.blog-content .ql-size-large { font-size: 1.5em; }
-.blog-content .ql-size-huge { font-size: 2.5em; }
+.blog-content .ql-size-small {
+  font-size: 0.8em;
+}
+
+.blog-content .ql-size-large {
+  font-size: 1.5em;
+}
+
+.blog-content .ql-size-huge {
+  font-size: 2.5em;
+}
 
 /* Font family support (Quill) */
-.blog-content .ql-font-serif { font-family: Georgia, Times New Roman, serif; }
-.blog-content .ql-font-monospace { font-family: Monaco, Courier New, monospace; }
+.blog-content .ql-font-serif {
+  font-family: Georgia, Times New Roman, serif;
+}
+
+.blog-content .ql-font-monospace {
+  font-family: Monaco, Courier New, monospace;
+}
 
 /* Handle list points (bullets/numbers) with indentation */
-.blog-content li.ql-indent-1 { list-style-type: none; padding-left: 3.5em; position: relative; }
-.blog-content li.ql-indent-2 { list-style-type: none; padding-left: 7em; position: relative; }
-.blog-content li.ql-indent-3 { list-style-type: none; padding-left: 10.5em; position: relative; }
-.blog-content li.ql-indent-4 { list-style-type: none; padding-left: 14em; position: relative; }
+.blog-content li.ql-indent-1 {
+  list-style-type: none;
+  padding-left: 3.5em;
+  position: relative;
+}
 
-.blog-content li.ql-indent-1::before { content: "\2022"; position: absolute; left: 2em; }
-.blog-content li.ql-indent-2::before { content: "\25E6"; position: absolute; left: 5.5em; }
-.blog-content li.ql-indent-3::before { content: "\25AA"; position: absolute; left: 9.3em; }
-.blog-content li.ql-indent-4::before { content: "\25AB"; position: absolute; left: 12.8em; }
+.blog-content li.ql-indent-2 {
+  list-style-type: none;
+  padding-left: 7em;
+  position: relative;
+}
+
+.blog-content li.ql-indent-3 {
+  list-style-type: none;
+  padding-left: 10.5em;
+  position: relative;
+}
+
+.blog-content li.ql-indent-4 {
+  list-style-type: none;
+  padding-left: 14em;
+  position: relative;
+}
+
+.blog-content li.ql-indent-1::before {
+  content: "\2022";
+  position: absolute;
+  left: 2em;
+}
+
+.blog-content li.ql-indent-2::before {
+  content: "\25E6";
+  position: absolute;
+  left: 5.5em;
+}
+
+.blog-content li.ql-indent-3::before {
+  content: "\25AA";
+  position: absolute;
+  left: 9.3em;
+}
+
+.blog-content li.ql-indent-4::before {
+  content: "\25AB";
+  position: absolute;
+  left: 12.8em;
+}
 
 
 .blog-content iframe {
 
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 8px;
-    margin: 20px 0;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  margin: 20px 0;
 }
 
 /* Support for indentation levels (Quill) */
-.blog-content .ql-indent-1 { padding-left: 3em; }
-.blog-content .ql-indent-2 { padding-left: 6em; }
-.blog-content .ql-indent-3 { padding-left: 9em; }
-.blog-content .ql-indent-4 { padding-left: 12em; }
-.blog-content .ql-indent-5 { padding-left: 15em; }
-.blog-content .ql-indent-6 { padding-left: 18em; }
-.blog-content .ql-indent-7 { padding-left: 21em; }
-.blog-content .ql-indent-8 { padding-left: 24em; }
-
-@media (max-width: 768px) {
-  .blog-content .ql-indent-1 { padding-left: 1.5em; }
-  .blog-content .ql-indent-2 { padding-left: 3em; }
-  .blog-content .ql-indent-3 { padding-left: 4.5em; }
-  .blog-content .ql-indent-4 { padding-left: 6em; }
-  .blog-content .ql-indent-5 { padding-left: 7.5em; }
-  .blog-content .ql-indent-6 { padding-left: 9em; }
-  .blog-content .ql-indent-7 { padding-left: 10.5em; }
-  .blog-content .ql-indent-8 { padding-left: 12em; }
+.blog-content .ql-indent-1 {
+  padding-left: 3em;
 }
 
+.blog-content .ql-indent-2 {
+  padding-left: 6em;
+}
 
+.blog-content .ql-indent-3 {
+  padding-left: 9em;
+}
 
+.blog-content .ql-indent-4 {
+  padding-left: 12em;
+}
 
+.blog-content .ql-indent-5 {
+  padding-left: 15em;
+}
+
+.blog-content .ql-indent-6 {
+  padding-left: 18em;
+}
+
+.blog-content .ql-indent-7 {
+  padding-left: 21em;
+}
+
+.blog-content .ql-indent-8 {
+  padding-left: 24em;
+}
+
+@media (max-width: 768px) {
+  .blog-content .ql-indent-1 {
+    padding-left: 1.5em;
+  }
+
+  .blog-content .ql-indent-2 {
+    padding-left: 3em;
+  }
+
+  .blog-content .ql-indent-3 {
+    padding-left: 4.5em;
+  }
+
+  .blog-content .ql-indent-4 {
+    padding-left: 6em;
+  }
+
+  .blog-content .ql-indent-5 {
+    padding-left: 7.5em;
+  }
+
+  .blog-content .ql-indent-6 {
+    padding-left: 9em;
+  }
+
+  .blog-content .ql-indent-7 {
+    padding-left: 10.5em;
+  }
+
+  .blog-content .ql-indent-8 {
+    padding-left: 12em;
+  }
+}

@@ -1,5 +1,5 @@
 "use client";
-import { getBlogDetails, getBlogLatest, getWhitePaperDetails, getWhitePapersAll } from "@/api/list";
+import { getBlogDetails, getBlogLatest } from "@/api/list";
 import Image from "next/image";
 import Avatar from "@/components/Avathar";
 import RelatedBlog from "@/components/Blogs/RelatedCards";
@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-export default function WhitepapersDetails({ slug }: { slug: string }) {
+
+export default function BlogDetailsContent({ slug }: { slug: string }) {
 
     const [blogData, setBlogData] = useState([]) as any;
     const [relatedBlogs, setRelatedBlogs] = useState([]) as any;
@@ -24,28 +25,19 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
     const fetchBlogDetails = async () => {
         try {
             setLoading(true);
+            // Fetch blog details using the slug
+            const data = await getBlogDetails(slug);
+            console.log("Blog Details:", data);
 
-            // Fetch blog details
-            const data = await getWhitePaperDetails(slug);
-            const currentBlog = data?.detail?.data || null;
+            setBlogData(data?.detail?.data || null);
 
-            console.log("Blog Details:", currentBlog);
-            setBlogData(currentBlog);
-
-            // Fetch related blogs
-            const getRelatedBlogs = await getWhitePapersAll({
-                limit: 5,
-                status: "published",
-            });
+            //related blogs
+            const getRelatedBlogs = await getBlogLatest();
 
             const relatedBlogsData = getRelatedBlogs?.detail?.data || [];
             console.log("Related Blogs:", relatedBlogsData);
 
-            // Filter properly
-            const filteredRelatedBlogs = relatedBlogsData.filter(
-                (blog: any) => blog.id !== currentBlog?.id
-            );
-
+            const filteredRelatedBlogs = relatedBlogsData.filter((blog: any) => blog.id !== blogData?.id);
             console.log("Filtered Related Blogs:", filteredRelatedBlogs);
             setRelatedBlogs(filteredRelatedBlogs);
 
@@ -57,6 +49,8 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
     };
 
     console.log(blogData, "te");
+
+
 
     if (!loading && !blogData) {
         return (
@@ -77,9 +71,9 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                                 d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5"
                             />
                         </svg>
-                        <p className="text-xl font-semibold text-gray-400">Whitepaper not found</p>
+                        <p className="text-xl font-semibold text-gray-400">Blog not found</p>
                         <p className="text-sm text-gray-400 mt-2">
-                            The whitepaper you&apos;re looking for doesn&apos;t exist or has been removed.
+                            The blog you&apos;re looking for doesn&apos;t exist or has been removed.
                         </p>
                     </div>
                 </div>
@@ -95,7 +89,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                     {/* Back button skeleton */}
                     <div className="flex items-center gap-3 mb-8">
                         <div className="w-5 h-5 bg-gray-200 rounded" />
-                        <div className="h-4 bg-gray-200 rounded w-36" />
+                        <div className="h-4 bg-gray-200 rounded w-28" />
                     </div>
 
                     {/* Meta skeleton */}
@@ -137,7 +131,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
                         {/* Right sidebar skeleton */}
                         <div className="w-full lg:w-[366px] flex-shrink-0 space-y-6">
-                            <div className="h-6 bg-gray-200 rounded w-44" />
+                            <div className="h-6 bg-gray-200 rounded w-36" />
                             <div className="border-t border-gray-200" />
                             {[...Array(2)].map((_, i) => (
                                 <div key={i} className="space-y-3">
@@ -182,10 +176,10 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                     <div className="flex items-center gap-2">
                         <span className="text-[#282828]">by</span>
 
-                        <Avatar src={blogData?.author_image_url} name={blogData?.author} size="w-6 h-6" />
+                        <Avatar src={blogData?.author_image_url} name={blogData?.author_name} size="w-6 h-6" />
 
                         <span className="text-[#282828] font-medium text-capitalize">
-                            {blogData?.author}
+                            {blogData?.author_name}
                         </span>
                     </div>
                 </div>
@@ -222,7 +216,7 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
           mb-10
         ">
                     <Image
-                        src={blogData?.banner_url}
+                        src={blogData?.cover_image_url}
                         fill
                         className="w-full h-full object-cover"
                         alt="banner"
@@ -240,12 +234,8 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                         <div dangerouslySetInnerHTML={{ __html: blogData?.content || "" }} className="blog-content" />
 
 
+
                     </div>
-
-                    {/* ================= RIGHT SIDEBAR ================= */}
-
-
-
                     <div className="
             w-full
             lg:w-[366px]
@@ -264,39 +254,25 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
 
                         <div className="border-t border-[#D2D2D2]" />
 
-                        {relatedBlogs.length > 0 ?
-                            (
-
-
-                                relatedBlogs.slice(0, 2).map((blog: any, index: number) => (
-                                    <>
-                                        <div key={index}>
-
-                                            <RelatedBlog
-                                                bannerImage={blog.banner_url}
-                                                title={blog.title}
-                                                summary={blog.summary}
-                                                author={blog.author}
-                                                avatar={blog.author_image_url}
-                                                readTime={blog.read_time}
-                                                onClick={() => {
-                                                    window.location.href = `/white-papers/${blog?.id}`
-                                                }}
-                                            />
-
-
-
-
-                                        </div>
-                                        {index === 0 && <div className="border-t border-[#D2D2D2] pt-3" />}
-                                    </>
-                                ))
-
-
-
-                            )
-                            :
-                            (<div className="flex flex-col items-center justify-center py-10">
+                        {relatedBlogs.length > 0 ? (
+                            relatedBlogs.slice(0, 2).map((blog: any, index: number) => (
+                                <div key={index}>
+                                    <RelatedBlog
+                                        bannerImage={blog.cover_image_url}
+                                        title={blog.title}
+                                        summary={blog.summary}
+                                        author={blog.author_name}
+                                        avatar={blog.author_image_url}
+                                        readTime={blog.read_time}
+                                        onClick={() => {
+                                            window.location.href = `/resources/blogs/${blog?.slug}`
+                                        }}
+                                    />
+                                    {index === 0 && <div className="border-t border-[#D2D2D2] mt-6 pt-3" />}
+                                </div>
+                            ))
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-10">
                                 <svg
                                     className="w-16 h-16 text-gray-300 mb-4"
                                     fill="none"
@@ -314,8 +290,10 @@ export default function WhitepapersDetails({ slug }: { slug: string }) {
                                 <p className="text-sm text-gray-400 mt-1 text-center">
                                     Check back later for more articles.
                                 </p>
-                            </div>)
-                        }
+                            </div>
+                        )}
+
+
                     </div>
                 </div>
             </div>
@@ -340,8 +318,8 @@ function BackButton() {
             </svg>
 
 
-            <span className="text-[15px] sm:text-[16px] text-[#4f4f4f] font-normal leading-5">
-                Back to White Papers
+            <span className="text-[15px] sm:text-[18px]  text-[#4f4f4f] font-medium leading-5">
+                Back to Blogs
             </span>
         </button>
     );

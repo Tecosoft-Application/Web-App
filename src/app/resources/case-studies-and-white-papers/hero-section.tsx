@@ -6,9 +6,9 @@ import { whitePapersHeroContent } from "@/constants/white-papers/white-papers";
 export default function WhitePapersHeroSection() {
   return (
     <HeroSection
-      badge={whitePapersHeroContent.badge}
-      title={whitePapersHeroContent.title}
-      description={whitePapersHeroContent.description}
+      badge={whitePapersHeroContent?.badge}
+      title={whitePapersHeroContent?.title}
+      description={whitePapersHeroContent?.description}
     />
   );
 }

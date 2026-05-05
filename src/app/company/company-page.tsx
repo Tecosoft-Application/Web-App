@@ -39,7 +39,7 @@ export default function CompanyInfo() {
     <div>
       <HeroSection />
       <MissionSection handleScroll={handleScroll} />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <div ref={scrollTrigger} />
 
       <CareersSection
